@@ -1,0 +1,45 @@
+
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:beproject/loginscreen.dart';
+import 'package:beproject/usermanagement.dart';
+import 'package:flutter/material.dart';
+
+
+class AuthenticationService {
+  final FirebaseAuth _firebaseAuth;
+
+  AuthenticationService(this._firebaseAuth);
+
+  /// Changed to idTokenChanges as it updates depending on more cases.
+  Stream<User?> get authStateChanges => _firebaseAuth.idTokenChanges();
+
+  /// This won't pop routes so you could do something like
+  /// Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false);
+  /// after you called this method if you want to pop all routes.
+  Future<void> signOut({required context}) async {
+    await _firebaseAuth.signOut();
+
+    Navigator.of(context).pushReplacement(
+        new MaterialPageRoute(builder: (context) => new LoginScr()));
+
+  }
+
+  /// There are a lot of different ways on how you can do exception handling.
+  /// This is to make it as easy as possible but a better way would be to
+  /// use your own custom class that would take the exception and return better
+  /// error messages. That way you can throw, return or whatever you prefer with that instead.
+  Future<void> signIn({required String email, required String password, required context}) async {
+    try {
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new ManageUser()));
+    } on FirebaseAuthException catch (e) {
+
+    }
+
+  }
+
+
+
+
+}
