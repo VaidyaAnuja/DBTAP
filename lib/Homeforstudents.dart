@@ -1,11 +1,10 @@
+import 'package:beproject/commonapplications.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:beproject/authorization.dart';
-
 
 class HomeStudents extends StatefulWidget{
-  static const routeName = '/logout';
+
   @override
   _HomeStudentsState createState() => _HomeStudentsState();
 
@@ -37,134 +36,196 @@ class _HomeStudentsState extends State<HomeStudents>{
       ),
       //drawer: NavigationDrawerWidget(),
       body: Stack(
-        children: <Widget>[
-          // Container(
-          //     height: 130,
-          //     width: 60,
-          //   decoration: new BoxDecoration(
-          //       color:HexColor("#0E34A0"),
-          //     shape: BoxShape.rectangle,
-          //         borderRadius: BorderRadius.only(
-          //             topLeft: Radius.circular(15),
-          //             bottomLeft: Radius.circular(15),
-          //         )),
-          // margin: const EdgeInsets.only(left: 355.0,top: 220),
-          //   child: Column(
-          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //       children: <Widget>[
-          //
-          //          FlatButton(
-          //              onPressed: (){},
-          //              child: Icon(
-          //                Icons.notifications_none_rounded,
-          //                size: 40,
-          //                color: Colors.white,
-          //              ),),
-          //         FlatButton(
-          //           onPressed: (){},
-          //           child: Icon(
-          //             Icons.logout_rounded,
-          //             size: 40,
-          //             color: Colors.white,
-          //           ),)
-          // ])
-          // ),
-          Center(
-             child: Container(
 
-                padding: EdgeInsets.all(16),
+        children: <Widget>[
+            Container(
+
+
 
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
 
-
-                        Align(
+                        Container(
+                          margin: const EdgeInsets.only(left: 30.0,top:30),
                           alignment: Alignment.topLeft,
-                          child: Text('Logout',
+                          child: Text('Applications',
+                            style: TextStyle(fontSize: 30,color: HexColor("#0E34A0")),
+                          ),
+                    ),
+
+                        SizedBox(height: 20),
+                        Container(
+                          margin: const EdgeInsets.only(left: 290.0),
+                        child: FlatButton(
+                            onPressed: (){
+                              Navigator.of(context).pushReplacement(
+                                  new MaterialPageRoute(builder: (context) => new Common_App()));
+                            },
+                            child: Icon(
+                              Icons.my_library_add ,
+                              color: HexColor("#0E34A0"),
+                              size: 40,
+                            )
+
+                        ),),
+                         Divider(
+                            color: HexColor("#0E34A0"),
+                            height: 20,
+                            thickness: 2,
+                            indent: 30,
+                            endIndent: 30,
+                          ),
+                        SizedBox(height: 30),
+
+
+                        Container(
+                          margin: const EdgeInsets.only(left: 30.0,top:30),
+                          alignment: Alignment.topLeft,
+                          child: Text('Academics',
                             style: TextStyle(fontSize: 30,color: HexColor("#0E34A0")),
                           ),
                         ),
 
+                        SizedBox(height: 20),
                         Container(
-                          alignment: Alignment.bottomRight,
+                          margin: const EdgeInsets.only(left: 290.0),
+                          child: FlatButton(
+                              onPressed: (){},
+                              child: Icon(
+                                Icons.my_library_add ,
+                                color: HexColor("#0E34A0"),
+                                size: 40,
+                              )
 
-                          margin: const EdgeInsets.only(top: 15.0),
-                          child: RaisedButton(
-
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100)),
-                            onPressed: (){
-                              context.read<AuthenticationService>().signOut(context: context);
-
-                            },
-
-                            color: HexColor("#0E34A0"),
-                            child: Text('Logout',
-                              style: TextStyle(color:Colors.white),),
-                          ),
-
+                          ),),
+                        Divider(
+                          color: HexColor("#0E34A0"),
+                          height: 20,
+                          thickness: 2,
+                          indent: 30,
+                          endIndent: 30,
                         ),
 
+                        SizedBox(height: 30),
 
-                        // BottomNavigationBar(
-                        //   backgroundColor: HexColor("#0E34A0"),
-                        //   currentIndex: 0, // this will be set when a new tab is tapped
-                        //   items: [
-                        //     BottomNavigationBarItem(
-                        //       icon: new Icon(Icons.home),
-                        //       title: new Text('Home'),
-                        //     ),
-                        //     BottomNavigationBarItem(
-                        //       icon: new Icon(Icons.mail),
-                        //       title: new Text('Messages'),
-                        //     ),
-                        //
-                        //   ],
-                        // ),
+
+                        Container(
+                          margin: const EdgeInsets.only(left: 30.0,top:30),
+                          alignment: Alignment.topLeft,
+                          child: Text('Internships',
+                            style: TextStyle(fontSize: 30,color: HexColor("#0E34A0")),
+                          ),
+                        ),
+
+                        SizedBox(height: 20),
+                        Container(
+                          margin: const EdgeInsets.only(left: 290.0),
+                          child: FlatButton(
+                              onPressed: (){},
+                              child: Icon(
+                                Icons.my_library_add ,
+                                color: HexColor("#0E34A0"),
+                                size: 40,
+                              )
+
+                          ),),
+                        Divider(
+                          color: HexColor("#0E34A0"),
+                          height: 20,
+                          thickness: 2,
+                          indent: 30,
+                          endIndent: 30,
+                        ),
+
+                        SizedBox(height: 30),
+
+
+                        Container(
+                          margin: const EdgeInsets.only(left: 30.0,top:30),
+                          alignment: Alignment.topLeft,
+                          child: Text('Extra-curricular',
+                            style: TextStyle(fontSize: 30,color: HexColor("#0E34A0")),
+                          ),
+                        ),
+
+                        SizedBox(height: 20),
+                        Container(
+                          margin: const EdgeInsets.only(left: 290.0),
+                          child: FlatButton(
+                              onPressed: (){},
+                              child: Icon(
+                                Icons.my_library_add ,
+                                color: HexColor("#0E34A0"),
+                                size: 40,
+                              )
+
+                          ),),
+                        Divider(
+                          color: HexColor("#0E34A0"),
+                          height: 20,
+                          thickness: 2,
+                          indent: 30,
+                          endIndent: 30,
+                        ),
+                        SizedBox(height: 100),
                       ],
 
                     ),
                   ),
                 ),
-              ),
-          Container(
-              height: 130,
-              width: 60,
-              decoration: new BoxDecoration(
-                  color:HexColor("#0E34A0"),
-                  shape: BoxShape.rectangle,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    bottomLeft: Radius.circular(15),
-                  )),
-              margin: const EdgeInsets.only(left: 355.0,top: 220),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
 
-                    FlatButton(
-                      onPressed: (){},
-                      child: Icon(
-                        Icons.notifications_none_rounded,
-                        size: 40,
-                        color: Colors.white,
-                      ),),
-                    FlatButton(
-                      onPressed: (){},
-                      child: Icon(
-                        Icons.logout_rounded,
-                        size: 40,
-                        color: Colors.white,
-                      ),)
-                  ])
+
+    Container(
+      margin: const EdgeInsets.only(top: 564.0),
+    child: BottomNavigationBar(
+      backgroundColor: HexColor("#0E34A0"),
+
+      items: [
+        BottomNavigationBarItem(
+          icon: new Icon(Icons.home,
+          color: Colors.white,
+            size: 30,
           ),
-          Container(
-            height: 10,
-            margin: const EdgeInsets.only(top: 615.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: HexColor("#0E34A0"),),),
+          title: new Text('Home',
+          style: TextStyle(color:Colors.white),
+          ),
+
+        ),
+
+        BottomNavigationBarItem(
+          icon: new Icon(Icons.notifications,
+              color: Colors.white,
+            size: 30,
+          ),
+          title: new Text('Notifications',
+            style: TextStyle(color:Colors.white),),
+        ),
+
+        BottomNavigationBarItem(
+          icon: new Icon(Icons.manage_accounts,
+              color: Colors.white,
+            size: 30,
+          ),
+          title: new Text('Account',
+            style: TextStyle(color:Colors.white),),
+        ),
+
+
+        //
+        // BottomNavigationBarItem(
+        //   icon: new Icon(Icons.logout_rounded,
+        //       color: Colors.white),
+        //   title: new Text('Logout',
+        //     style: TextStyle(color:Colors.white),),
+        //  onPressed: (){
+        //    context.read<AuthenticationService>().signOut(context: context);
+        //   },
+        // ),
+
+      ],
+    ),
+    ),
         ],
       ),
     );
