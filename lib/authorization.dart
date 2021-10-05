@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:beproject/loginscreen.dart';
 import 'package:beproject/usermanagement.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 
 class AuthenticationService {
@@ -34,12 +35,27 @@ class AuthenticationService {
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => new ManageUser()));
     } on FirebaseAuthException catch (e) {
+      final text = 'Incorrect password. Please check again.';
+      final snackBar = SnackBar(
+
+        duration: Duration(seconds: 30),
+        content: Text(text,
+        style: TextStyle(fontSize: 16, color: Colors.white),),
+      action: SnackBarAction(
+
+        label: 'Dismiss',
+
+        textColor: Colors.yellow,
+        onPressed: (){
+        },
+      ),
+        backgroundColor: HexColor("#0E34A0"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
 
     }
 
   }
-
-
-
 
 }

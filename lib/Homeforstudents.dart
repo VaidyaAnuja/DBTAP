@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:beproject/authorization.dart';
 
 
-
 class HomeStudents extends StatefulWidget{
   static const routeName = '/logout';
   @override
@@ -36,8 +35,40 @@ class _HomeStudentsState extends State<HomeStudents>{
             ),),
             ],
       ),
+      //drawer: NavigationDrawerWidget(),
       body: Stack(
         children: <Widget>[
+          // Container(
+          //     height: 130,
+          //     width: 60,
+          //   decoration: new BoxDecoration(
+          //       color:HexColor("#0E34A0"),
+          //     shape: BoxShape.rectangle,
+          //         borderRadius: BorderRadius.only(
+          //             topLeft: Radius.circular(15),
+          //             bottomLeft: Radius.circular(15),
+          //         )),
+          // margin: const EdgeInsets.only(left: 355.0,top: 220),
+          //   child: Column(
+          //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          //       children: <Widget>[
+          //
+          //          FlatButton(
+          //              onPressed: (){},
+          //              child: Icon(
+          //                Icons.notifications_none_rounded,
+          //                size: 40,
+          //                color: Colors.white,
+          //              ),),
+          //         FlatButton(
+          //           onPressed: (){},
+          //           child: Icon(
+          //             Icons.logout_rounded,
+          //             size: 40,
+          //             color: Colors.white,
+          //           ),)
+          // ])
+          // ),
           Center(
              child: Container(
 
@@ -46,10 +77,6 @@ class _HomeStudentsState extends State<HomeStudents>{
                   child: SingleChildScrollView(
                     child: Column(
                       children: <Widget>[
-
-                        
-
-
 
 
                         Align(
@@ -101,6 +128,37 @@ class _HomeStudentsState extends State<HomeStudents>{
                   ),
                 ),
               ),
+          Container(
+              height: 130,
+              width: 60,
+              decoration: new BoxDecoration(
+                  color:HexColor("#0E34A0"),
+                  shape: BoxShape.rectangle,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                  )),
+              margin: const EdgeInsets.only(left: 355.0,top: 220),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+
+                    FlatButton(
+                      onPressed: (){},
+                      child: Icon(
+                        Icons.notifications_none_rounded,
+                        size: 40,
+                        color: Colors.white,
+                      ),),
+                    FlatButton(
+                      onPressed: (){},
+                      child: Icon(
+                        Icons.logout_rounded,
+                        size: 40,
+                        color: Colors.white,
+                      ),)
+                  ])
+          ),
           Container(
             height: 10,
             margin: const EdgeInsets.only(top: 615.0),

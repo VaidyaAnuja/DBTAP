@@ -10,7 +10,6 @@ class LoginScr extends StatefulWidget{
   static const routeName = '/login';
   @override
   _LoginScrState createState() => _LoginScrState();
-
 }
 
 class _LoginScrState extends State<LoginScr>{
@@ -18,16 +17,38 @@ class _LoginScrState extends State<LoginScr>{
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<String> _checkUser( TextEditingController usernameController) async {
-    print('$usernameController');
-    User? user = FirebaseAuth.instance.currentUser;
-    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
+  Future<void> _checkUser( TextEditingController usernameController, TextEditingController passwordController) async {
+    final snap = await FirebaseFirestore.instance.collection('users').where("username", isEqualTo: usernameController.text.trim()).get();
+    print('$snap.size');
+    if(snap.size != 0){
+      email = snap.docs[0].data()['email'];
+      context.read<AuthenticationService>().signIn(
+        email: email,
+        password: passwordController.text.trim(),
+        context: context,
+      );
+    }
+    else{
+      final text = 'Incorrect username. Please check again.';
+      final snackBar = SnackBar(
 
-    setState(() {
-      email = snap['email'];
-    });
+        duration: Duration(seconds: 30),
+        content: Text(text,
+          style: TextStyle(fontSize: 16, color: Colors.white),),
+        action: SnackBarAction(
 
-    return email;
+          label: 'Dismiss',
+
+          textColor: Colors.yellow,
+          onPressed: (){
+          },
+        ),
+        backgroundColor: HexColor("#0E34A0"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    }
+
   }
 
 
@@ -92,10 +113,12 @@ class _LoginScrState extends State<LoginScr>{
                           controller: usernameController,
                           decoration: InputDecoration(
                             labelText: "Username",
+
                               labelStyle: TextStyle(fontSize: 30)
                           ),
-                          style: TextStyle(fontSize: 22,),
+                          style: TextStyle(fontSize: 25,),
                         ),
+
                         TextField(
                           controller: passwordController,
                           decoration: InputDecoration(
@@ -118,12 +141,8 @@ class _LoginScrState extends State<LoginScr>{
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(100)),
                             onPressed: (){
-                              _checkUser(usernameController);
-                              context.read<AuthenticationService>().signIn(
-                                email: email,
-                                password: passwordController.text.trim(),
-                                context: context,
-                              );
+                              _checkUser(usernameController, passwordController);
+
                             },
 
                             color: HexColor("#0E34A0"),
