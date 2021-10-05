@@ -45,31 +45,15 @@ class _LC_APPLYState extends State<LC_APPLY>{
             child: Column(
 
               children: <Widget>[
-                FlatButton(
-                  onPressed: () {
 
-                  },
+                  Container(
 
-                  child: Container(
-
-                    width:350,
-                    height: 100,
-                    decoration: BoxDecoration(
-
-                        shape: BoxShape.rectangle,
-                        color: HexColor("#0E34A0")
+                    margin: const EdgeInsets.only(left: 30.0,top:75),
+                    alignment: Alignment.topLeft,
+                    child: Text('LC - Select your project guide.',
+                      style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
                     ),
-
-                    margin: const EdgeInsets.only(left: 15.0,top:75),
-                    alignment: Alignment.center,
-                    child: Text('LC',
-                      style: TextStyle(fontSize: 40,color: Colors.white),
-                    ),
-
                   ),
-
-                ),
-
 
               ],
 
