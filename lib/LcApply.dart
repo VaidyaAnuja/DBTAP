@@ -12,10 +12,22 @@ class LC_APPLY extends StatefulWidget{
 }
 
 class _LC_APPLYState extends State<LC_APPLY>{
-
+  bool isSana = false;
+  bool isDeepali = false;
 
   @override
   Widget build(BuildContext context){
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.green;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('DBTap', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
@@ -41,7 +53,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
         children: <Widget>[
           Container(
-
+          child: SingleChildScrollView(
             child: Column(
 
               children: <Widget>[
@@ -54,13 +66,62 @@ class _LC_APPLYState extends State<LC_APPLY>{
                       style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
                     ),
                   ),
+                SizedBox(height: 20),
+                Container(
+                  margin: const EdgeInsets.only(left: 20.0),
+                  child:Row(
+
+                    children: <Widget>[
+                      Text('Prof. Sana Sheikh',
+                      style: TextStyle(fontSize: 30),
+                      ),
+                      SizedBox(width: 86),
+                Transform.scale(
+                      scale: 2,
+                      child: Checkbox(
+
+                        checkColor: Colors.white,
+                        fillColor: MaterialStateProperty.resolveWith(getColor),
+                        value: isSana,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isSana = value!;
+                          });
+                        },
+                      ),),
+                    ],
+                ),),
+
+                SizedBox(height: 20),
+                Container(
+                  margin: const EdgeInsets.only(left: 20.0),
+                  child:Row(
+
+                    children: <Widget>[
+                      Text('Prof. Deepali Kayande',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      SizedBox(width: 30),
+                      Transform.scale(
+                        scale: 2,
+                        child: Checkbox(
+
+                          checkColor: Colors.white,
+                          fillColor: MaterialStateProperty.resolveWith(getColor),
+                          value: isDeepali,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isDeepali = value!;
+                            });
+                          },
+                        ),),
+                    ],
+                  ),),
 
               ],
 
             ),
-          ),
-
-
+          ),),
 
           Container(
             margin: const EdgeInsets.only(top: 564.0),

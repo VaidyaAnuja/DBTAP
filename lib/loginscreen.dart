@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:beproject/authorization.dart';
+ //import 'package:responsive_widgets/responsive_widgets.dart';
 
 
 class LoginScr extends StatefulWidget{
@@ -34,7 +35,7 @@ class _LoginScrState extends State<LoginScr>{
 
         duration: Duration(seconds: 30),
         content: Text(text,
-          style: TextStyle(fontSize: 16, color: Colors.white),),
+          style: TextStyle(fontSize:16, color: Colors.white),),
         action: SnackBarAction(
 
           label: 'Dismiss',
@@ -54,17 +55,19 @@ class _LoginScrState extends State<LoginScr>{
 
   @override
   Widget build(BuildContext context){
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('DBTap', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
-        toolbarHeight: 100,
-        centerTitle: true,
-        backgroundColor: HexColor("#0E34A0"),
-      ),
-      body: Stack(
+     return Scaffold(
+        appBar: AppBar(
+          title: Text('DBTap', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
+          toolbarHeight: 100,
+          centerTitle: true,
+          backgroundColor: HexColor("#0E34A0"),
+        ),
+        body: Stack(
         children: <Widget>[
           Container(
+
             decoration: BoxDecoration(
+
                 color: Colors.white
               // gradient: LinearGradient(
               //   begin: Alignment.topCenter,
@@ -84,7 +87,7 @@ class _LoginScrState extends State<LoginScr>{
 
           Container(
             height: 30,
-            margin: const EdgeInsets.only(top: 530.0),
+            margin:  const EdgeInsets.only(top: 530.0),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: HexColor("#0E34A0"),),),
