@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:beproject/authorization.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 
 class LC_APPLY extends StatefulWidget{
@@ -14,6 +15,41 @@ class LC_APPLY extends StatefulWidget{
 class _LC_APPLYState extends State<LC_APPLY>{
   bool isSana = false;
   bool isDeepali = false;
+
+  Future<void> apply(isSana, isDeepali) async
+  {
+     User? user = FirebaseAuth.instance.currentUser;
+
+
+
+    if(isSana == true){
+      FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('Applications').add(
+          {
+            'applicationtype': 'LC',
+            'projectguide1':'Prof. Sana Sheikh',
+          });
+    }
+    else if(isDeepali == true){
+      FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('Applications').add(
+          {
+            'applicationtype': 'LC',
+            'projectguide1':'Prof. Deepali Kayande',
+          });
+    }
+
+    else if(isDeepali == true && isSana == true){
+      FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('Applications').add(
+          {
+            'applicationtype': 'LC',
+            'projectguide1':'Prof. Deepali Kayande',
+            'projectguide2':'Prof. Sana Sheikh',
+          });
+
+    }
+    else(){
+
+    };
+  }
 
   @override
   Widget build(BuildContext context){
@@ -117,6 +153,12 @@ class _LC_APPLYState extends State<LC_APPLY>{
                         ),),
                     ],
                   ),),
+                SizedBox(height: 20),
+                TextButton(
+                    onPressed: (){
+                      apply(isSana,isDeepali);
+                },
+                    child: Text('Apply for LC', style:TextStyle(fontSize: 30, color:HexColor("#0E34A0")))),
 
               ],
 
