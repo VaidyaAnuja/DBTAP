@@ -1,4 +1,6 @@
+import 'package:beproject/Homeforstudents.dart';
 import 'package:beproject/LcApply.dart';
+import 'package:beproject/accounts_students.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +18,7 @@ class _Common_AppState extends State<Common_App>{
  static bool is_enabled_LC = true;
  static bool is_enabled_LOR = true;
  static bool is_enabled_CONVOCATION = true;
+ int currentIndex=0;
 
  void _checkifnull_LC(){
    if(is_enabled_LC){
@@ -153,49 +156,57 @@ class _Common_AppState extends State<Common_App>{
           Container(
             margin: const EdgeInsets.only(top: 564.0),
             child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              currentIndex: 0,
+              onTap: (index) { setState(() { currentIndex = index;});
+              if(currentIndex==0){
+                Navigator.of(context).pushReplacement(
+                    new MaterialPageRoute(builder: (context) => new HomeStudents()));
+              }
+              else if(currentIndex==2){
+                Navigator.of(context).pushReplacement(
+                    new MaterialPageRoute(builder: (context) => new AccountSettings()));
+              }
+              else{}
+              },
               backgroundColor: HexColor("#0E34A0"),
-
+              selectedItemColor: Colors.green,
+              unselectedItemColor: Colors.white,
+              iconSize: 30,
               items: [
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.home,
-                    color: Colors.white,
-                    size: 30,
+                    //color: Colors.white,
+
                   ),
                   title: new Text('Home',
-                    style: TextStyle(color:Colors.white),
+                    //style: TextStyle(color:Colors.white),
                   ),
 
                 ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.notifications,
-                    color: Colors.white,
-                    size: 30,
+                    //color: Colors.white,
+
                   ),
                   title: new Text('Notifications',
-                    style: TextStyle(color:Colors.white),),
+                    //  style: TextStyle(color:Colors.white),
+                  ),
                 ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.manage_accounts,
-                    color: Colors.white,
-                    size: 30,
+                    //color: Colors.white,
+
                   ),
                   title: new Text('Account',
-                    style: TextStyle(color:Colors.white),),
+                    //  style: TextStyle(color:Colors.white),
+                  ),
+
                 ),
 
 
-                //
-                // BottomNavigationBarItem(
-                //   icon: new Icon(Icons.logout_rounded,
-                //       color: Colors.white),
-                //   title: new Text('Logout',
-                //     style: TextStyle(color:Colors.white),),
-                //  onPressed: (){
-                //    context.read<AuthenticationService>().signOut(context: context);
-                //   },
-                // ),
 
               ],
             ),
