@@ -31,9 +31,11 @@ class AuthenticationService {
   /// error messages. That way you can throw, return or whatever you prefer with that instead.
   Future<void> signIn({required String email, required String password, required context}) async {
     try {
-      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password);
-      Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new ManageUser()));
+      await _firebaseAuth.signInWithEmailAndPassword(email: email, password: password)
+    .then((userCredential) => {
+    Navigator.of(context).pushReplacement(
+    new MaterialPageRoute(builder: (context) => new ManageUser()))
+    });
     } on FirebaseAuthException catch (e) {
       final text = 'Incorrect password. Please check again.';
       final snackBar = SnackBar(

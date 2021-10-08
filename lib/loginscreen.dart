@@ -20,6 +20,7 @@ class _LoginScrState extends State<LoginScr>{
 
   Future<void> _checkUser( TextEditingController usernameController, TextEditingController passwordController) async {
     final snap = await FirebaseFirestore.instance.collection('users').where("username", isEqualTo: usernameController.text.trim()).get();
+    print(snap.docs);
     if(snap.size != 0){
       email = snap.docs[0].data()['email'];
       context.read<AuthenticationService>().signIn(
@@ -28,26 +29,26 @@ class _LoginScrState extends State<LoginScr>{
         context: context,
       );
     }
-    // else{
-    //   final text = 'Incorrect username. Please check again.';
-    //   final snackBar = SnackBar(
-    //
-    //     duration: Duration(seconds: 30),
-    //     content: Text(text,
-    //       style: TextStyle(fontSize:16, color: Colors.white),),
-    //     action: SnackBarAction(
-    //
-    //       label: 'Dismiss',
-    //
-    //       textColor: Colors.yellow,
-    //       onPressed: (){
-    //       },
-    //     ),
-    //     backgroundColor: HexColor("#0E34A0"),
-    //   );
-    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-    //
-    // }
+    else{
+      final text = 'Incorrect username. Please check again.';
+      final snackBar = SnackBar(
+
+        duration: Duration(seconds: 30),
+        content: Text(text,
+          style: TextStyle(fontSize:16, color: Colors.white),),
+        action: SnackBarAction(
+
+          label: 'Dismiss',
+
+          textColor: Colors.yellow,
+          onPressed: (){
+          },
+        ),
+        backgroundColor: HexColor("#0E34A0"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+    }
 
   }
 
