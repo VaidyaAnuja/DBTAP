@@ -22,18 +22,18 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
 
 
-    if(isSana == true){
+    if(isSana == true && isDeepali != true){
       FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('Applications').add(
           {
             'applicationtype': 'LC',
-            'projectguide1':'Prof. Sana Sheikh',
+            'Prof. Sana Sheikh':'Pending',
           });
     }
-    else if(isDeepali == true){
+    else if(isDeepali == true && isSana != true){
       FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('Applications').add(
           {
             'applicationtype': 'LC',
-            'projectguide1':'Prof. Deepali Kayande',
+            'Prof. Deepali Kayande':'Pending',
           });
     }
 
@@ -41,8 +41,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
       FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('Applications').add(
           {
             'applicationtype': 'LC',
-            'projectguide1':'Prof. Deepali Kayande',
-            'projectguide2':'Prof. Sana Sheikh',
+            'Prof. Deepali Kayande':'Pending',
+            'Prof. Sana Sheikh':'Pending',
           });
 
     }

@@ -24,16 +24,13 @@ class _ManageUserState extends State<ManageUser> {
   void _checkRole() async {
     User? user = FirebaseAuth.instance.currentUser;
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
+    
 
-    setState(() {
-      role = snap['role'];
-    });
-
-    if(role == 'students'){
+    if(snap['role'] == 'students'){
 
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => new HomeStudents()));
-    } else if(role == 'teachers'){
+    } else if(snap['role'] == 'teachers'){
 
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => new HomeTeachers()));
