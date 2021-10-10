@@ -1,6 +1,8 @@
 import 'package:beproject/Homeforstudents.dart';
 import 'package:beproject/LcApply.dart';
 import 'package:beproject/accounts_students.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +22,10 @@ class _Common_AppState extends State<Common_App>{
  static bool is_enabled_CONVOCATION = true;
  int currentIndex=0;
 
- void _checkifnull_LC(){
-   if(is_enabled_LC){
+ void _checkifnull_LC() async{
+   User? user = FirebaseAuth.instance.currentUser;
+   final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
+   if(snap['is_enabled_LC']==true){
 
      Navigator.of(context).pushReplacement(
          new MaterialPageRoute(builder: (context) => new LC_APPLY()));

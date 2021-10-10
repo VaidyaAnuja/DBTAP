@@ -15,17 +15,19 @@ class AccountSettings extends StatefulWidget{
 }
 
 class _AccountSettingsState extends State<AccountSettings>{
-  String _username = '';
+  //  var _username = '';
   int currentIndex=0;
-  void _getusername() async{
-    User? user = FirebaseAuth.instance.currentUser;
-    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
-    _username = snap['username'];
-   // return _username;
-  }
+
+  _getusername() async{
+     User? user = FirebaseAuth.instance.currentUser;
+     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
+ //    _username = snap['username'];
+     return snap['username'];
+   }
 
   @override
   Widget build(BuildContext context){
+   //String username = _username;
 
     return Scaffold(
       appBar: AppBar(
@@ -66,7 +68,8 @@ class _AccountSettingsState extends State<AccountSettings>{
               child: Row(
                 children: <Widget>[
 
-                  Text('$_username',style: TextStyle(fontSize: 30, color: HexColor("#0E34A0")),)
+                 // Text('$username',style: TextStyle(fontSize: 30, color: HexColor("#0E34A0")),)
+
 
                 ],
 
