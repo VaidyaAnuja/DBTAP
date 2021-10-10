@@ -1,5 +1,7 @@
 import 'package:beproject/accounts_students.dart';
 import 'package:beproject/commonapplications.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +15,23 @@ class HomeStudents extends StatefulWidget{
 
 class _HomeStudentsState extends State<HomeStudents>{
   int currentIndex =0;
+
+ void deleteapplication(){
+   User user = FirebaseAuth.instance.currentUser!;
+
+   FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+     'is_enabled_LC' : true,
+   });
+
+  // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').where("applicationtype", isEqualTo: 'LC').delete();
+  }
+
+  Future<DocumentSnapshot>_getuserdetails() async{
+    User user = FirebaseAuth.instance.currentUser!;
+    return FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+  }
+
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -54,6 +73,41 @@ class _HomeStudentsState extends State<HomeStudents>{
                             style: TextStyle(fontSize: 30,color: HexColor("#0E34A0")),
                           ),
                     ),
+                        SizedBox(height: 20),
+
+                            FutureBuilder(
+                              future: _getuserdetails(),
+                              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                if (snapshot.data!['is_enabled_LC'] == true) {
+                                }
+
+                                else  {
+                                  return Container(
+                                      padding: EdgeInsets.only(left:75),
+                                      child:Row(
+                                      children: <Widget>[
+                                          TextButton(
+                                              onPressed: (){
+
+                                              },
+                                              child: Text('LC',
+                                              style: TextStyle(fontSize: 30, color:Colors.black),
+                                              )),
+                                        SizedBox(width: 125),
+                                            IconButton(onPressed: (){
+                                              deleteapplication();
+                                            },
+                                                iconSize: 30,
+                                                icon: Icon(Icons.delete),
+                                            )
+
+
+                                      ]));
+                                }
+
+                                return CircularProgressIndicator();
+                              },
+                            ),
 
                         SizedBox(height: 20),
                         Container(

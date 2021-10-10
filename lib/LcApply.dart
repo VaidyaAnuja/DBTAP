@@ -54,6 +54,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
     else(){
 
     };
+     Navigator.of(context).pushReplacement(
+         new MaterialPageRoute(builder: (context) => new HomeStudents()));
   }
 
   @override

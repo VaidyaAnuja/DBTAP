@@ -17,9 +17,7 @@ class Common_App extends StatefulWidget{
 }
 
 class _Common_AppState extends State<Common_App>{
- static bool is_enabled_LC = true;
- static bool is_enabled_LOR = true;
- static bool is_enabled_CONVOCATION = true;
+
  int currentIndex=0;
 
  void _checkifnull_LC() async{
