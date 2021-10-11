@@ -24,7 +24,11 @@ class _HomeStudentsState extends State<HomeStudents>{
    });
 
   // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').where("applicationtype", isEqualTo: 'LC').delete();
-  }
+
+   Navigator.of(context).pushReplacement(
+       new MaterialPageRoute(builder: (context) => new HomeStudents()));
+
+ }
 
   Future<DocumentSnapshot>_getuserdetails() async{
     User user = FirebaseAuth.instance.currentUser!;
