@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 
 class HomeStudents extends StatefulWidget{
 
@@ -23,7 +23,18 @@ class _HomeStudentsState extends State<HomeStudents>{
      'is_enabled_LC' : true,
    });
 
-  // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').where("applicationtype", isEqualTo: 'LC').delete();
+  FirebaseFirestore.instance.collection('users')
+      .doc(user.uid)
+      .collection('Applications')
+      .where("applicationtype", isEqualTo: 'LC')
+      .get()
+      .then((list) {
+    FirebaseFirestore.instance.collection('users')
+        .doc(user.uid)
+        .collection('Applications')
+        .doc(list.docs[0].id)
+        .delete();
+      });
 
    Navigator.of(context).pushReplacement(
        new MaterialPageRoute(builder: (context) => new HomeStudents()));
@@ -82,7 +93,8 @@ class _HomeStudentsState extends State<HomeStudents>{
                             FutureBuilder(
                               future: _getuserdetails(),
                               builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                if (snapshot.data!['is_enabled_LC'] == true) {
+                                if (snapshot.data!['is_enabled_LC']) {
+                                  return Text("");
                                 }
 
                                 else  {
@@ -109,7 +121,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                                       ]));
                                 }
 
-                                return CircularProgressIndicator();
+                                // return CircularProgressIndicator();
                               },
                             ),
 
