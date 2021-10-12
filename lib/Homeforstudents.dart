@@ -23,7 +23,18 @@ class _HomeStudentsState extends State<HomeStudents>{
      'is_enabled_LC' : true,
    });
 
-  // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').where("applicationtype", isEqualTo: 'LC').delete();
+   FirebaseFirestore.instance.collection('users')
+       .doc(user.uid)
+       .collection('Applications')
+       .where("applicationtype", isEqualTo: 'LC')
+       .get()
+       .then((list) {
+     FirebaseFirestore.instance.collection('users')
+         .doc(user.uid)
+         .collection('Applications')
+         .doc(list.docs[0].id)
+         .delete();
+   });
 
    Navigator.of(context).pushReplacement(
        new MaterialPageRoute(builder: (context) => new HomeStudents()));
@@ -82,35 +93,39 @@ class _HomeStudentsState extends State<HomeStudents>{
                             FutureBuilder(
                               future: _getuserdetails(),
                               builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                if (snapshot.data!['is_enabled_LC'] == true) {
-                                }
-
-                                else  {
+                          if (snapshot.hasData) {
+                                if (snapshot.data!['is_enabled_LC'] == false) {
                                   return Container(
                                       padding: EdgeInsets.only(left:75),
                                       child:Row(
-                                      children: <Widget>[
-                                          TextButton(
-                                              onPressed: (){
+                                          children: <Widget>[
+                                            TextButton(
+                                                onPressed: (){
 
-                                              },
-                                              child: Text('LC',
-                                              style: TextStyle(fontSize: 30, color:Colors.black),
-                                              )),
-                                        SizedBox(width: 125),
+                                                },
+                                                child: Text('LC',
+                                                  style: TextStyle(fontSize: 30, color:Colors.black),
+                                                )),
+                                            SizedBox(width: 125),
                                             IconButton(onPressed: (){
                                               deleteapplication();
                                             },
-                                                iconSize: 30,
-                                                icon: Icon(Icons.delete),
+                                              iconSize: 30,
+                                              icon: Icon(Icons.delete),
                                             )
 
 
-                                      ]));
+                                          ]));
                                 }
+                                else{
+                                  return Text('');
+                                }}
+                          else {
 
-                                return CircularProgressIndicator();
-                              },
+                            return CircularProgressIndicator();
+                          }
+
+                               },
                             ),
 
                         SizedBox(height: 20),
