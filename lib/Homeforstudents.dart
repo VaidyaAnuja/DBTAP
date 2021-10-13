@@ -23,18 +23,24 @@ class _HomeStudentsState extends State<HomeStudents>{
       'is_enabled_LC' : true,
     });
 
+    // FirebaseFirestore.instance.collection('users')
+    //     .doc(user.uid)
+    //     .collection('Applications')
+    //     .where("applicationtype", isEqualTo: 'LC')
+    //     .get()
+    //     .then((list) {
+    //   FirebaseFirestore.instance.collection('users')
+    //       .doc(user.uid)
+    //       .collection('Applications')
+    //       .doc(list.docs[0].id)
+    //       .delete();
+    // });
+
     FirebaseFirestore.instance.collection('users')
         .doc(user.uid)
         .collection('Applications')
-        .where("applicationtype", isEqualTo: 'LC')
-        .get()
-        .then((list) {
-      FirebaseFirestore.instance.collection('users')
-          .doc(user.uid)
-          .collection('Applications')
-          .doc(list.docs[0].id)
-          .delete();
-    });
+        .doc('LC')
+        .delete();
 
     Navigator.of(context).pushReplacement(
         new MaterialPageRoute(builder: (context) => new HomeStudents()));

@@ -7,6 +7,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 class LC_APPLY extends StatefulWidget{
+  int count =0;
+
 
   @override
   _LC_APPLYState createState() => _LC_APPLYState();
@@ -17,6 +19,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
   bool isSana = false;
   bool isDeepali = false;
   int currentIndex=0;
+  //int count=0;
 
   Future<void> apply(isSana, isDeepali) async
   {
@@ -27,28 +30,30 @@ class _LC_APPLYState extends State<LC_APPLY>{
      });
 
     if(isSana == true && isDeepali != true){
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').add(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').doc('LC').set(
           {
-            'applicationtype': 'LC',
+
             'Prof. Sana Sheikh':'Pending',
           });
+      LC_APPLY().count =1;
     }
     else if(isDeepali == true && isSana != true){
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').add(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').doc('LC').set(
           {
-            'applicationtype': 'LC',
+
             'Prof. Deepali Kayande':'Pending',
           });
+      LC_APPLY().count =1;
     }
 
     else if(isDeepali == true && isSana == true){
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').add(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').doc('LC').set(
           {
-            'applicationtype': 'LC',
+
             'Prof. Deepali Kayande':'Pending',
             'Prof. Sana Sheikh':'Pending',
           });
-
+      LC_APPLY().count = 2;
     }
     else(){
 
