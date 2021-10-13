@@ -1,5 +1,6 @@
 import 'package:beproject/accounts_students.dart';
 import 'package:beproject/commonapplications.dart';
+import 'package:beproject/lcprogress.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -87,7 +88,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                       style: TextStyle(fontSize: 30,color: HexColor("#0E34A0")),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  //SizedBox(height: 20),
 
                   FutureBuilder(
                     future: _getuserdetails(),
@@ -98,13 +99,17 @@ class _HomeStudentsState extends State<HomeStudents>{
                       }
 
                       else  {
-                        return Container(
+                        return Column(
+                            children: <Widget>[
+                            SizedBox(height: 20),
+                            Container(
                             padding: EdgeInsets.only(left:75),
                             child:Row(
                                 children: <Widget>[
                                   TextButton(
                                       onPressed: (){
-
+                                        Navigator.of(context).pushReplacement(
+                                            new MaterialPageRoute(builder: (context) => new LC_PROGRESS()));
                                       },
                                       child: Text('LC',
                                         style: TextStyle(fontSize: 30, color:Colors.black),
@@ -118,7 +123,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                                   )
 
 
-                                ]));
+                                ]))]);
                       }}
                       else{
                           return CircularProgressIndicator();
