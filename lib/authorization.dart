@@ -36,7 +36,7 @@ class AuthenticationService {
     Navigator.of(context).pushReplacement(
     new MaterialPageRoute(builder: (context) => new ManageUser()))
     });
-    } on FirebaseAuthException catch (e) {
+    } on FirebaseAuthException{
       final text = 'Incorrect password. Please check again.';
       final snackBar = SnackBar(
 

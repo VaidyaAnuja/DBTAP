@@ -138,16 +138,18 @@ class _LoginScrState extends State<LoginScr>{
                           width: 250,
                           height: 60,
                           margin: const EdgeInsets.only(top: 15.0),
-                          child: RaisedButton(
+                          child: ElevatedButton(
 
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0)),
+                            style: ElevatedButton.styleFrom(
+                              primary: HexColor("#0E34A0"),
+                              shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0)),
+                            ),
                             onPressed: (){
                               _checkUser(usernameController, passwordController);
 
                             },
 
-                            color: HexColor("#0E34A0"),
                             child: Text('Login',
                               style:TextStyle(fontSize: 30,
                                 color: Colors.white,)

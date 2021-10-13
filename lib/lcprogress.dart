@@ -131,33 +131,28 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Home',
+                  label:'Home',
                     //style: TextStyle(color:Colors.white),
                   ),
 
-                ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.notifications,
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Notifications',
+                  label:'Notifications',
                     //  style: TextStyle(color:Colors.white),
                   ),
-                ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.manage_accounts,
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Account',
+                  label:'Account',
                     //  style: TextStyle(color:Colors.white),
                   ),
-
-                ),
-
 
               ],
             ),

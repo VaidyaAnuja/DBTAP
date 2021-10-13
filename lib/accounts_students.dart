@@ -79,7 +79,7 @@ class _AccountSettingsState extends State<AccountSettings>{
             ),
           ),
           SizedBox(height: 10),
-          FlatButton(onPressed: (){
+          TextButton(onPressed: (){
             context.read<AuthenticationService>().signOut(context: context);
           },
               child: Card(
@@ -134,9 +134,9 @@ class _AccountSettingsState extends State<AccountSettings>{
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Home',
+                  label: 'Home',
                     //style: TextStyle(color:Colors.white),
-                  ),
+
 
                 ),
 
@@ -145,9 +145,9 @@ class _AccountSettingsState extends State<AccountSettings>{
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Notifications',
+                  label:'Notifications',
                     //  style: TextStyle(color:Colors.white),
-                  ),
+
                 ),
 
                 BottomNavigationBarItem(
@@ -155,13 +155,9 @@ class _AccountSettingsState extends State<AccountSettings>{
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Account',
+                  label:'Account',
                     //  style: TextStyle(color:Colors.white),
                   ),
-
-                ),
-
-
 
               ],
             ),

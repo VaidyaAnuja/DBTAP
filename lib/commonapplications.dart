@@ -78,7 +78,7 @@ class _Common_AppState extends State<Common_App>{
               child: Column(
 
                 children: <Widget>[
-                  FlatButton(
+                  TextButton(
                     onPressed: () {
                       _checkifnull_LC();
                     },
@@ -103,7 +103,7 @@ class _Common_AppState extends State<Common_App>{
 
                   ),
                   SizedBox(height: 50),
-                 FlatButton(onPressed: (){
+                 TextButton(onPressed: (){
 
                  }, child: Container(
 
@@ -124,7 +124,7 @@ class _Common_AppState extends State<Common_App>{
                  ),
                  ),
                   SizedBox(height: 50),
-                FlatButton(onPressed: () {
+                TextButton(onPressed: () {
 
                 },
                   child: Container(
@@ -179,34 +179,28 @@ class _Common_AppState extends State<Common_App>{
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Home',
+                  label:'Home',
                     //style: TextStyle(color:Colors.white),
                   ),
 
-                ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.notifications,
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Notifications',
+                  label:'Notifications',
                     //  style: TextStyle(color:Colors.white),
                   ),
-                ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.manage_accounts,
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Account',
+                  label:'Account',
                     //  style: TextStyle(color:Colors.white),
                   ),
-
-                ),
-
-
 
               ],
             ),

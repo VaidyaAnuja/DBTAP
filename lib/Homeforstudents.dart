@@ -142,7 +142,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                   SizedBox(height: 20),
                   Container(
                     margin: const EdgeInsets.only(left: 290.0),
-                    child: FlatButton(
+                    child: TextButton(
                         onPressed: (){
                           Navigator.of(context).pushReplacement(
                               new MaterialPageRoute(builder: (context) => new Common_App()));
@@ -175,7 +175,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                   SizedBox(height: 20),
                   Container(
                     margin: const EdgeInsets.only(left: 290.0),
-                    child: FlatButton(
+                    child: TextButton(
                         onPressed: (){},
                         child: Icon(
                           Icons.my_library_add ,
@@ -206,7 +206,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                   SizedBox(height: 20),
                   Container(
                     margin: const EdgeInsets.only(left: 290.0),
-                    child: FlatButton(
+                    child: TextButton(
                         onPressed: (){},
                         child: Icon(
                           Icons.my_library_add ,
@@ -237,7 +237,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                   SizedBox(height: 20),
                   Container(
                     margin: const EdgeInsets.only(left: 290.0),
-                    child: FlatButton(
+                    child: TextButton(
                         onPressed: (){},
                         child: Icon(
                           Icons.my_library_add ,
@@ -287,33 +287,28 @@ class _HomeStudentsState extends State<HomeStudents>{
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Home',
+                  label:'Home',
                     //style: TextStyle(color:Colors.white),
                   ),
 
-                ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.notifications,
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Notifications',
+                  label:'Notifications',
                     //  style: TextStyle(color:Colors.white),
                   ),
-                ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.manage_accounts,
                     //color: Colors.white,
 
                   ),
-                  title: new Text('Account',
+                  label:'Account',
                     //  style: TextStyle(color:Colors.white),
                   ),
-
-                ),
-
 
               ],
             ),
