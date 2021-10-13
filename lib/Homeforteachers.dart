@@ -1,122 +1,381 @@
+//import 'package:beproject/Homeforstudents.dart';
+import 'package:beproject/accounts_teachers.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:provider/provider.dart';
-import 'package:beproject/authorization.dart';
+//import 'package:provider/provider.dart';
+//import 'package:beproject/authorization.dart';
+import 'package:beproject/accounts_students.dart';
 
-
-class HomeTeachers extends StatefulWidget{
+class HomeTeachers extends StatefulWidget {
   //static const routeName = '/logout';
   @override
   _HomeTeachersState createState() => _HomeTeachersState();
-
 }
 
-class _HomeTeachersState extends State<HomeTeachers>{
-
+class _HomeTeachersState extends State<HomeTeachers> {
+  int currentIndex = 0;
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('DBTap', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
-        toolbarHeight: 100,
+        title: Text(
+          'DBTap',
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
+        toolbarHeight: 35,
         centerTitle: true,
         backgroundColor: HexColor("#0E34A0"),
+        actions: [
+          Container(
+            alignment: Alignment.topRight,
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.arrow_back_rounded,
+              ),
+            ),
+          )
+        ],
       ),
       body: Stack(
-        children: <Widget>[
+        children: [
           Container(
-            decoration: BoxDecoration(
-                color: Colors.white
-              // gradient: LinearGradient(
-              //   begin: Alignment.topCenter,
-              //   end: Alignment.bottomCenter,
-              //   colors: [
-              //
-              //     HexColor("#0E34A0"),
-              //     HexColor("#5497A7"),
-              //     HexColor("#FFFFFF"),
-              //     HexColor("#544B3D"),
-              //     HexColor("#140D4F"),
-              //
-              //   ]
-              // )
-            ),
-          ),
-
-          Container(
-            height: 30,
-            margin: const EdgeInsets.only(top: 530.0),
-            decoration: BoxDecoration(
-              shape: BoxShape.rectangle,
-              color: HexColor("#0E34A0"),),),
-          Center(
-            child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-
-              child: Container(
-                height: 150,
-                width: 300,
-                padding: EdgeInsets.all(16),
-
-                child: Form(
-
-                  child: SingleChildScrollView(
-                    child: Column(
-                      children: <Widget>[
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Text('Logout',
-                            style: TextStyle(fontSize: 30,color: HexColor("#0E34A0")),
-                          ),
-                        ),
-
-                        Container(
-                          alignment: Alignment.bottomRight,
-
-                          margin: const EdgeInsets.only(top: 15.0),
-                          child: RaisedButton(
-
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100)),
-                            onPressed: (){
-                              context.read<AuthenticationService>().signOut(context: context,);
-                            },
-
-                            color: HexColor("#5497A7"),
-                            child: Text('Logout',
-                              style: TextStyle(color:Colors.white),),
-                          ),
-
-                        ),
-
-
-                        // BottomNavigationBar(
-                        //   backgroundColor: HexColor("#0E34A0"),
-                        //   currentIndex: 0, // this will be set when a new tab is tapped
-                        //   items: [
-                        //     BottomNavigationBarItem(
-                        //       icon: new Icon(Icons.home),
-                        //       title: new Text('Home'),
-                        //     ),
-                        //     BottomNavigationBarItem(
-                        //       icon: new Icon(Icons.mail),
-                        //       title: new Text('Messages'),
-                        //     ),
-                        //
-                        //   ],
-                        // ),
-                      ],
-
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 30.0, top: 30),
+                    alignment: Alignment.topLeft,
+                    child: Text(
+                      'Applications',
+                      style:
+                          TextStyle(fontSize: 30, color: HexColor("#0E34A0")),
                     ),
                   ),
-                ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Divider(
+                    color: HexColor("#0E34A0"),
+                    height: 20,
+                    thickness: 2,
+                    indent: 30,
+                    endIndent: 30,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 30.0, top: 30),
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Anuja Vaidya',
+                          style: TextStyle(
+                              fontSize: 20, color: HexColor("#0E34A0")),
+                        ),
+                        FlatButton(
+                          onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text(
+                                  'Are you sure you want to approve??'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('YES'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: Container(
+                            width: 80,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: HexColor("#0E34A0"),
+                            ),
+                            margin: const EdgeInsets.only(left: 15.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Approve',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text(
+                                  'Are you sure you want to reject??'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('YES'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: Container(
+                            width: 80,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: HexColor("#0E34A0"),
+                            ),
+                            margin: const EdgeInsets.only(left: 0.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Reject',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 30.0, top: 30),
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Srushti Shetye',
+                          style: TextStyle(
+                              fontSize: 20, color: HexColor("#0E34A0")),
+                        ),
+                        FlatButton(
+                          onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text(
+                                  'Are you sure you want to approve??'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('YES'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: Container(
+                            width: 80,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: HexColor("#0E34A0"),
+                            ),
+                            margin: const EdgeInsets.only(left: 3.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Approve',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text(
+                                  'Are you sure you want to reject??'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('YES'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: Container(
+                            width: 80,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: HexColor("#0E34A0"),
+                            ),
+                            margin: const EdgeInsets.only(left: 0.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Reject',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(left: 30.0, top: 30),
+                    alignment: Alignment.topLeft,
+                    child: Row(
+                      children: [
+                        Text(
+                          'Joel Parakal',
+                          style: TextStyle(
+                              fontSize: 20, color: HexColor("#0E34A0")),
+                        ),
+                        FlatButton(
+                          onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text(
+                                  'Are you sure you want to approve??'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('YES'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: Container(
+                            width: 80,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: HexColor("#0E34A0"),
+                            ),
+                            margin: const EdgeInsets.only(left: 22.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Approve',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        FlatButton(
+                          onPressed: () => showDialog<String>(
+                            context: context,
+                            builder: (BuildContext context) => AlertDialog(
+                              title: const Text(
+                                  'Are you sure you want to reject??'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context, 'OK'),
+                                  child: const Text('YES'),
+                                ),
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(context, 'Cancel'),
+                                  child: const Text('Cancel'),
+                                ),
+                              ],
+                            ),
+                          ),
+                          child: Container(
+                            width: 80,
+                            height: 20,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: HexColor("#0E34A0"),
+                            ),
+                            margin: const EdgeInsets.only(left: 0.0),
+                            alignment: Alignment.center,
+                            child: Text(
+                              'Reject',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-
-
+          Container(
+            margin: const EdgeInsets.only(top: 564.0),
+            child: BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              currentIndex: 0,
+              onTap: (index) {
+                setState(() {
+                  currentIndex = index;
+                });
+                if (currentIndex == 0) {
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                      builder: (context) => new HomeTeachers()));
+                } else if (currentIndex == 2) {
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                      builder: (context) => new AccountSettingsTeachers()));
+                } else {}
+              },
+              backgroundColor: HexColor("#0E34A0"),
+              selectedItemColor: Colors.green,
+              unselectedItemColor: Colors.white,
+              iconSize: 30,
+              items: [
+                BottomNavigationBarItem(
+                  icon: new Icon(
+                    Icons.home,
+                  ),
+                  title: new Text('Home'),
+                ),
+                BottomNavigationBarItem(
+                  icon: new Icon(
+                    Icons.import_contacts_sharp,
+                  ),
+                  title: new Text(
+                    'LC',
+                  ),
+                ),
+                BottomNavigationBarItem(
+                  icon: new Icon(
+                    Icons.manage_accounts,
+                    //color: Colors.white,
+                  ),
+                  title: new Text(
+                    'Account',
+                    //  style: TextStyle(color:Colors.white),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
