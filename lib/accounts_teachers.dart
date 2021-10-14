@@ -141,10 +141,10 @@ class _AccountSettingsTeachersState extends State<AccountSettingsTeachers> {
                 ),
                 BottomNavigationBarItem(
                   icon: new Icon(
-                    Icons.notifications,
+                    Icons.import_contacts_sharp,
                     //color: Colors.white,
                   ),
-                  label: 'Notifications',
+                  label: 'LC',
                   //  style: TextStyle(color:Colors.white),
                 ),
                 BottomNavigationBarItem(

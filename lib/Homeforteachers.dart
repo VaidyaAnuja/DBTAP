@@ -1,10 +1,8 @@
-//import 'package:beproject/Homeforstudents.dart';
+
 import 'package:beproject/accounts_teachers.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
-//import 'package:provider/provider.dart';
-//import 'package:beproject/authorization.dart';
-import 'package:beproject/accounts_students.dart';
+
 
 class HomeTeachers extends StatefulWidget {
   //static const routeName = '/logout';
@@ -72,7 +70,7 @@ class _HomeTeachersState extends State<HomeTeachers> {
                           style: TextStyle(
                               fontSize: 20, color: HexColor("#0E34A0")),
                         ),
-                        FlatButton(
+                        TextButton(
                           onPressed: () => showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
@@ -109,7 +107,7 @@ class _HomeTeachersState extends State<HomeTeachers> {
                             ),
                           ),
                         ),
-                        FlatButton(
+                       TextButton(
                           onPressed: () => showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
@@ -159,7 +157,7 @@ class _HomeTeachersState extends State<HomeTeachers> {
                           style: TextStyle(
                               fontSize: 20, color: HexColor("#0E34A0")),
                         ),
-                        FlatButton(
+                       TextButton(
                           onPressed: () => showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
@@ -196,7 +194,7 @@ class _HomeTeachersState extends State<HomeTeachers> {
                             ),
                           ),
                         ),
-                        FlatButton(
+                        TextButton(
                           onPressed: () => showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
@@ -246,7 +244,7 @@ class _HomeTeachersState extends State<HomeTeachers> {
                           style: TextStyle(
                               fontSize: 20, color: HexColor("#0E34A0")),
                         ),
-                        FlatButton(
+                        TextButton(
                           onPressed: () => showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
@@ -283,7 +281,7 @@ class _HomeTeachersState extends State<HomeTeachers> {
                             ),
                           ),
                         ),
-                        FlatButton(
+                        TextButton(
                           onPressed: () => showDialog<String>(
                             context: context,
                             builder: (BuildContext context) => AlertDialog(
@@ -353,25 +351,23 @@ class _HomeTeachersState extends State<HomeTeachers> {
                   icon: new Icon(
                     Icons.home,
                   ),
-                  title: new Text('Home'),
+                 label:'Home'
                 ),
                 BottomNavigationBarItem(
                   icon: new Icon(
                     Icons.import_contacts_sharp,
                   ),
-                  title: new Text(
+                  label:
                     'LC',
-                  ),
                 ),
                 BottomNavigationBarItem(
                   icon: new Icon(
                     Icons.manage_accounts,
                     //color: Colors.white,
                   ),
-                  title: new Text(
+                  label:
                     'Account',
-                    //  style: TextStyle(color:Colors.white),
-                  ),
+
                 ),
               ],
             ),
