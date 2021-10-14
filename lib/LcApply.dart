@@ -23,9 +23,14 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
   Future<void> apply(isSana, isDeepali) async
   {
-     User user = FirebaseAuth.instance.currentUser!;
 
-     FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+    User user = FirebaseAuth.instance.currentUser!;
+
+    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    String username = snap['username'];
+
+
+    FirebaseFirestore.instance.collection('users').doc(user.uid).update({
        'is_enabled_LC' : false,
      });
 
@@ -35,6 +40,15 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
             'Prof. Sana Sheikh':'Pending',
           });
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'sana').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+              'status':'Pending',
+            });
+      });
       LC_APPLY().count =1;
     }
     else if(isDeepali == true && isSana != true){
