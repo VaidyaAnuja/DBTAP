@@ -35,7 +35,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
      });
 
     if(isSana == true && isDeepali != true){
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').doc('sana').set(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
           {
 
             'status':'pending',
@@ -52,7 +52,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
       LC_APPLY().count =1;
     }
     else if(isDeepali == true && isSana != true){
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').doc('deepali').set(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
           {
 
             'status':'pending',
@@ -71,11 +71,11 @@ class _LC_APPLYState extends State<LC_APPLY>{
     }
 
     else if(isDeepali == true && isSana == true){
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').doc('sana').set(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
           {
             'status':'pending',
           });
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').doc('deepali').set(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
           {
             'status':'pending',
           });
@@ -159,7 +159,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
                     margin: const EdgeInsets.only(left: 30.0,top:75),
                     alignment: Alignment.topLeft,
-                    child: Text('LC - Select your project guide.',
+                    child: Text('No Dues - Select your project guide.',
                       style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
                     ),
                   ),
@@ -219,7 +219,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
                     onPressed: (){
                       apply(isSana,isDeepali);
                 },
-                    child: Text('Apply for LC', style:TextStyle(fontSize: 30, color:HexColor("#0E34A0")))),
+                    child: Text('Apply for No Dues', style:TextStyle(fontSize: 30, color:HexColor("#0E34A0")))),
 
               ],
 

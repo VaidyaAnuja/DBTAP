@@ -18,12 +18,12 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
 
   int currentIndex=0;
   // Future<List> _getLCdetails() async{
-  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LC').get();
+  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').get();
   //   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
   //   return allData;
   //
   //   // User user = FirebaseAuth.instance.currentUser!;
-  //   // return FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').get();
+  //   // return FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').get();
   // }
 
  List a = [];

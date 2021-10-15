@@ -27,7 +27,7 @@ class _Common_AppState extends State<Common_App>{
          new MaterialPageRoute(builder: (context) => new LC_APPLY()));
    }
    else{
-     final text = 'You have already applied for LC.';
+     final text = 'You have already applied for No Dues.';
      final snackBar = SnackBar(
 
        duration: Duration(seconds: 30),
@@ -95,7 +95,7 @@ class _Common_AppState extends State<Common_App>{
 
                     margin: const EdgeInsets.only(left: 15.0,top:75),
                     alignment: Alignment.center,
-                    child: Text('LC',
+                    child: Text('No Dues',
                       style: TextStyle(fontSize: 40,color: Colors.white),
                     ),
 

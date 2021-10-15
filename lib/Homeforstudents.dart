@@ -16,17 +16,23 @@ class HomeStudents extends StatefulWidget{
 class _HomeStudentsState extends State<HomeStudents>{
   int currentIndex =0;
 
-  void deleteapplication(){
+  Future<void> deleteapplication() async {
     User user = FirebaseAuth.instance.currentUser!;
 
     FirebaseFirestore.instance.collection('users').doc(user.uid).update({
       'is_enabled_LC' : true,
     });
 
+    final collectionRef = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues');
+    final futureQuery = collectionRef.get();
+    await futureQuery.then((value) => value.docs.forEach((element) {
+      element.reference.delete();
+    }));
+
     // FirebaseFirestore.instance.collection('users')
     //     .doc(user.uid)
     //     .collection('Applications')
-    //     .where("applicationtype", isEqualTo: 'LC')
+    //     .where("applicationtype", isEqualTo: 'No Dues')
     //     .get()
     //     .then((list) {
     //   FirebaseFirestore.instance.collection('users')
@@ -36,14 +42,7 @@ class _HomeStudentsState extends State<HomeStudents>{
     //       .delete();
     // });
 
-    FirebaseFirestore.instance.collection('users')
-        .doc(user.uid)
-        .collection('LC')
-        .snapshots().forEach((element) {
-          for (QueryDocumentSnapshot snapshot in element.docs) {
-            snapshot.reference.delete();
-          }
-        });
+
 
     Navigator.of(context).pushReplacement(
         new MaterialPageRoute(builder: (context) => new HomeStudents()));
@@ -120,7 +119,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                                         Navigator.of(context).pushReplacement(
                                             new MaterialPageRoute(builder: (context) => new LC_PROGRESS()));
                                       },
-                                      child: Text('LC',
+                                      child: Text('No Dues',
                                         style: TextStyle(fontSize: 30, color:Colors.black),
                                       )),
                                   SizedBox(width: 125),
