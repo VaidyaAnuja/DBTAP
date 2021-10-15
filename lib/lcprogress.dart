@@ -15,19 +15,19 @@ class LC_PROGRESS extends StatefulWidget{
 }
 
 class _LC_PROGRESSState extends State<LC_PROGRESS>{
-
+  List a =[];
   int currentIndex=0;
-  // Future<List> _getLCdetails() async{
-  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').get();
-  //   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-  //   return allData;
-  //
-  //   // User user = FirebaseAuth.instance.currentUser!;
-  //   // return FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').get();
-  // }
+  Future<List> _getLCdetails() async{
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').get();
+    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+    return allData;
 
- List a = [];
-
+    // User user = FirebaseAuth.instance.currentUser!;
+    // return FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').get();
+  }
+_LC_PROGRESSState() {
+   a = _getLCdetails() as List;
+}
   @override
   Widget build(BuildContext context){
     Color getColor(Set<MaterialState> states) {
@@ -85,7 +85,6 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                       future:  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LC').get(),
                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                        if (snapshot.hasData){
-                          //a = _getLCdetails() as List;
                           return new Text('',
                               style: TextStyle(fontSize: 30, color:Colors.black
                           ),);
