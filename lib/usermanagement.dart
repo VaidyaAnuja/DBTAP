@@ -21,7 +21,7 @@ class _ManageUserState extends State<ManageUser> {
   void _checkRole() async {
     User? user = FirebaseAuth.instance.currentUser;
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
-    
+
 
     if(snap['role'] == 'students'){
 

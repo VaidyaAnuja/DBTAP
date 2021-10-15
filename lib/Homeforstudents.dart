@@ -29,6 +29,20 @@ class _HomeStudentsState extends State<HomeStudents>{
       element.reference.delete();
     }));
 
+
+
+    // for(i = 0 ; i<=numofdocs; i++){
+    //   String name = nameofteachers[i];
+    //
+    //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$name').get().then((list){
+    //
+    //     FirebaseFirestore.instance.collection('users')
+    //         .doc(list.docs[0].id)
+    //         .collection('NoDues')
+    //         .doc('$username')
+    //         .delete();
+    //   });
+    // }
     // FirebaseFirestore.instance.collection('users')
     //     .doc(user.uid)
     //     .collection('Applications')

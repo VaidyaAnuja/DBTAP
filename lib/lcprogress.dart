@@ -1,5 +1,4 @@
 import 'package:beproject/Homeforstudents.dart';
-import 'package:beproject/LcApply.dart';
 import 'package:beproject/accounts_students.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,17 +13,13 @@ class LC_PROGRESS extends StatefulWidget{
 
 }
 
-class _LC_PROGRESSState extends State<LC_PROGRESS>{
-  List a =[];
-  int currentIndex=0;
-  Future<List> _getLCdetails() async{
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').get();
-    final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
-    return allData;
 
-    // User user = FirebaseAuth.instance.currentUser!;
-    // return FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').get();
-  }
+class _LC_PROGRESSState extends State<LC_PROGRESS>{
+
+  int currentIndex=0;
+
+ int numofdocs =0 ;
+ List nameofteachers = [];
 
   @override
   Widget build(BuildContext context){
@@ -83,7 +78,15 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                       future:  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').get(),
                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                        if (snapshot.hasData){
-                         print(snapshot.data!.docs);
+                         numofdocs = snapshot.data!.docs.length;
+                         var i;
+                         for(i = 0 ; i<numofdocs; i++){
+                           nameofteachers.add(snapshot.data!.docs[i].id);
+
+                         }
+
+
+                         var s = snapshot.data!.docs[0].get('status');
                           return new Text('',
                               style: TextStyle(fontSize: 30, color:Colors.black
                           ),);

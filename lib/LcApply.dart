@@ -49,7 +49,6 @@ class _LC_APPLYState extends State<LC_APPLY>{
               'status':'pending',
             });
       });
-      LC_APPLY().count =1;
     }
     else if(isDeepali == true && isSana != true){
       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
@@ -66,8 +65,6 @@ class _LC_APPLYState extends State<LC_APPLY>{
           'status':'pending',
         });
       });
-
-      LC_APPLY().count =1;
     }
 
     else if(isDeepali == true && isSana == true){
@@ -102,8 +99,6 @@ class _LC_APPLYState extends State<LC_APPLY>{
           'status':'pending',
         });
       });
-
-      LC_APPLY().count = 2;
     }
     else(){
 
