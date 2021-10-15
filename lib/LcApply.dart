@@ -35,10 +35,10 @@ class _LC_APPLYState extends State<LC_APPLY>{
      });
 
     if(isSana == true && isDeepali != true){
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').doc('LC').set(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').doc('sana').set(
           {
 
-            'Prof. Sana Sheikh':'Pending',
+            'status':'pending',
           });
       FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'sana').get().then((list){
         FirebaseFirestore.instance.collection('users')
@@ -46,27 +46,63 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .collection('NoDues')
             .doc('$username')
             .set({
-              'status':'Pending',
+              'status':'pending',
             });
       });
       LC_APPLY().count =1;
     }
     else if(isDeepali == true && isSana != true){
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').doc('LC').set(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').doc('deepali').set(
           {
 
-            'Prof. Deepali Kayande':'Pending',
+            'status':'pending',
           });
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'deepali').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+        });
+      });
+
       LC_APPLY().count =1;
     }
 
     else if(isDeepali == true && isSana == true){
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').doc('LC').set(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').doc('sana').set(
           {
-
-            'Prof. Deepali Kayande':'Pending',
-            'Prof. Sana Sheikh':'Pending',
+            'status':'pending',
           });
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').doc('deepali').set(
+          {
+            'status':'pending',
+          });
+
+      FirebaseFirestore.instance.collection('users')
+          .where("username", isEqualTo: 'sana')
+          .get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+        });
+      });
+      FirebaseFirestore.instance.collection('users')
+    .where("username", isEqualTo: 'deepali')
+          .get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+        });
+      });
+
       LC_APPLY().count = 2;
     }
     else(){

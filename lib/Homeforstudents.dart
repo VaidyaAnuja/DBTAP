@@ -38,9 +38,12 @@ class _HomeStudentsState extends State<HomeStudents>{
 
     FirebaseFirestore.instance.collection('users')
         .doc(user.uid)
-        .collection('Applications')
-        .doc('LC')
-        .delete();
+        .collection('LC')
+        .snapshots().forEach((element) {
+          for (QueryDocumentSnapshot snapshot in element.docs) {
+            snapshot.reference.delete();
+          }
+        });
 
     Navigator.of(context).pushReplacement(
         new MaterialPageRoute(builder: (context) => new HomeStudents()));

@@ -17,11 +17,16 @@ class LC_PROGRESS extends StatefulWidget{
 class _LC_PROGRESSState extends State<LC_PROGRESS>{
 
   int currentIndex=0;
-  Future<DocumentSnapshot>_getLCdetails() async{
-    User user = FirebaseAuth.instance.currentUser!;
-    return FirebaseFirestore.instance.collection('users').doc(user.uid).collection('Applications').doc('LC').get();
-  }
+  // Future<List> _getLCdetails() async{
+  //   QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LC').get();
+  //   final allData = querySnapshot.docs.map((doc) => doc.data()).toList();
+  //   return allData;
+  //
+  //   // User user = FirebaseAuth.instance.currentUser!;
+  //   // return FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LC').get();
+  // }
 
+ List a = [];
 
   @override
   Widget build(BuildContext context){
@@ -75,29 +80,22 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                     ),
                   ),
 
-                  FutureBuilder(
-                    future: _getLCdetails(),
-                    builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                      if (snapshot.hasData){
-                        for (var i = 0; i < LC_APPLY().count; i++) {
-                          // return Column(
-                          //     children: <Widget>[
-                          //     SizedBox(height: 20),
-                          // Container(
-                          //    padding: EdgeInsets.only(left:75),
-                          //
-                          // )]);
-                        }
-                        return Text('$snapshot.data![0]',
-                          style: TextStyle(fontSize: 30, color:Colors.black),);
-                       }
-                      else{
-                        return CircularProgressIndicator();
-                      }
 
-                      // return CircularProgressIndicator();
-                    },
-                  ),
+                 FutureBuilder(
+                      future:  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LC').get(),
+                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                       if (snapshot.hasData){
+                          //a = _getLCdetails() as List;
+                          return new Text('',
+                              style: TextStyle(fontSize: 30, color:Colors.black
+                          ),);
+                       }
+                       else{
+                         return CircularProgressIndicator();
+                       }
+                     }
+
+                 ),
 
 
                 ],
