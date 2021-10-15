@@ -25,9 +25,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
     // User user = FirebaseAuth.instance.currentUser!;
     // return FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').get();
   }
-_LC_PROGRESSState() {
-   a = _getLCdetails() as List;
-}
+
   @override
   Widget build(BuildContext context){
     Color getColor(Set<MaterialState> states) {
@@ -82,9 +80,10 @@ _LC_PROGRESSState() {
 
 
                  FutureBuilder(
-                      future:  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LC').get(),
+                      future:  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').get(),
                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                        if (snapshot.hasData){
+                         print(snapshot.data!.docs);
                           return new Text('',
                               style: TextStyle(fontSize: 30, color:Colors.black
                           ),);
