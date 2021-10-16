@@ -18,6 +18,7 @@ class LC_APPLY extends StatefulWidget{
 class _LC_APPLYState extends State<LC_APPLY>{
   bool isSana = false;
   bool isDeepali = false;
+  bool isSejal = false;
   int currentIndex=0;
 
   Future<void> apply(isSana, isDeepali) async
@@ -33,11 +34,109 @@ class _LC_APPLYState extends State<LC_APPLY>{
        'is_enabled_LC' : false,
      });
 
-    if(isSana == true && isDeepali != true){
+    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('workshop').set(
+        {
+          'status':'pending',
+          'reason':'',
+        });
+    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('library').set(
+        {
+          'status':'pending',
+          'reason':'',
+        });
+    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('accounts').set(
+        {
+          'status':'pending',
+          'reason':'',
+        });
+    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('admin').set(
+        {
+          'status':'pending',
+          'reason':'',
+        });
+    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
+        {
+          'status':'pending',
+          'reason':'',
+        });
+    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
+        {
+          'status':'pending',
+          'reason':'',
+        });
+    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'admin').get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .collection('NoDues')
+          .doc('$username')
+          .set({
+        'status':'pending',
+        'reason':'',
+      });
+    });
+
+    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'workshop').get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .collection('NoDues')
+          .doc('$username')
+          .set({
+        'status':'pending',
+        'reason':'',
+      });
+    });
+
+    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'library').get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .collection('NoDues')
+          .doc('$username')
+          .set({
+        'status':'pending',
+        'reason':'',
+      });
+    });
+
+    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'ExamCell').get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .collection('NoDues')
+          .doc('$username')
+          .set({
+        'status':'pending',
+        'reason':'',
+      });
+    });
+
+    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'TPO').get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .collection('NoDues')
+          .doc('$username')
+          .set({
+        'status':'pending',
+        'reason':'',
+      });
+    });
+    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'accounts').get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .collection('NoDues')
+          .doc('$username')
+          .set({
+        'status':'pending',
+        'reason':'',
+      });
+    });
+
+
+
+    if(isSana == true && isDeepali != true && isSejal != true){
       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
           {
 
             'status':'pending',
+            'reason':'',
           });
       FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'sana').get().then((list){
         FirebaseFirestore.instance.collection('users')
@@ -46,14 +145,16 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .doc('$username')
             .set({
               'status':'pending',
+          'reason':'',
             });
       });
     }
-    else if(isDeepali == true && isSana != true){
+    else if(isDeepali == true && isSana != true && isSejal != true){
       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
           {
 
             'status':'pending',
+            'reason':'',
           });
       FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'deepali').get().then((list){
         FirebaseFirestore.instance.collection('users')
@@ -62,18 +163,40 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .doc('$username')
             .set({
           'status':'pending',
+          'reason':'',
         });
       });
     }
 
-    else if(isDeepali == true && isSana == true){
+    else if(isSejal == true && isSana != true && isDeepali != true){
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
+          {
+
+            'status':'pending',
+            'reason':'',
+          });
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'sejal').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+        });
+      });
+    }
+
+    else if(isDeepali == true && isSana == true && isSejal != true){
       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
           {
             'status':'pending',
+            'reason':'',
           });
       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
           {
             'status':'pending',
+            'reason':'',
           });
 
       FirebaseFirestore.instance.collection('users')
@@ -85,6 +208,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .doc('$username')
             .set({
           'status':'pending',
+          'reason':'',
         });
       });
       FirebaseFirestore.instance.collection('users')
@@ -96,12 +220,143 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .doc('$username')
             .set({
           'status':'pending',
+          'reason':'',
         });
       });
     }
-    else(){
 
-    };
+    else if(isDeepali == true && isSana != true && isSejal == true){
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
+          {
+            'status':'pending',
+            'reason':'',
+          });
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
+          {
+            'status':'pending',
+            'reason':'',
+          });
+
+      FirebaseFirestore.instance.collection('users')
+          .where("username", isEqualTo: 'sejal')
+          .get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+        });
+      });
+      FirebaseFirestore.instance.collection('users')
+          .where("username", isEqualTo: 'deepali')
+          .get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+        });
+      });
+    }
+
+    else if(isDeepali != true && isSana == true && isSejal == true){
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
+          {
+            'status':'pending',
+            'reason':'',
+          });
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
+          {
+            'status':'pending',
+            'reason':'',
+          });
+
+      FirebaseFirestore.instance.collection('users')
+          .where("username", isEqualTo: 'sana')
+          .get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+        });
+      });
+      FirebaseFirestore.instance.collection('users')
+          .where("username", isEqualTo: 'sejal')
+          .get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+        });
+      });
+    }
+
+    else {
+        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
+            {
+              'status':'pending',
+              'reason':'',
+            });
+        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
+            {
+              'status':'pending',
+              'reason':'',
+            });
+
+        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
+            {
+              'status':'pending',
+              'reason':'',
+            });
+
+        FirebaseFirestore.instance.collection('users')
+            .where("username", isEqualTo: 'sana')
+            .get().then((list){
+          FirebaseFirestore.instance.collection('users')
+              .doc(list.docs[0].id)
+              .collection('NoDues')
+              .doc('$username')
+              .set({
+            'status':'pending',
+            'reason':'',
+          });
+        });
+        FirebaseFirestore.instance.collection('users')
+            .where("username", isEqualTo: 'sejal')
+            .get().then((list){
+          FirebaseFirestore.instance.collection('users')
+              .doc(list.docs[0].id)
+              .collection('NoDues')
+              .doc('$username')
+              .set({
+            'status':'pending',
+            'reason':'',
+          });
+        });
+
+        FirebaseFirestore.instance.collection('users')
+            .where("username", isEqualTo: 'deepali')
+            .get().then((list){
+          FirebaseFirestore.instance.collection('users')
+              .doc(list.docs[0].id)
+              .collection('NoDues')
+              .doc('$username')
+              .set({
+            'status':'pending',
+            'reason':'',
+          });
+        });
+    }
      Navigator.of(context).pushReplacement(
          new MaterialPageRoute(builder: (context) => new HomeStudents()));
   }
@@ -184,6 +439,34 @@ class _LC_APPLYState extends State<LC_APPLY>{
                 ),),
 
                 SizedBox(height: 20),
+
+                Container(
+                  margin: const EdgeInsets.only(left: 20.0),
+                  child:Row(
+
+                    children: <Widget>[
+                      Text('Prof. Sejal Chopra',
+                        style: TextStyle(fontSize: 30),
+                      ),
+                      SizedBox(width: 86),
+                      Transform.scale(
+                        scale: 2,
+                        child: Checkbox(
+
+                          checkColor: Colors.white,
+                          fillColor: MaterialStateProperty.resolveWith(getColor),
+                          value: isSejal,
+                          onChanged: (bool? value) {
+                            setState(() {
+                              isSejal = value!;
+                            });
+                          },
+                        ),),
+                    ],
+                  ),),
+
+                SizedBox(height: 20),
+
                 Container(
                   margin: const EdgeInsets.only(left: 20.0),
                   child:Row(

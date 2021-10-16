@@ -70,7 +70,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                       style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
                     ),
                   ),
-
+                  SizedBox(height: 20,),
 
 
                   StreamBuilder(
@@ -79,6 +79,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                       if (snapshot.hasData) {
                         return ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
                           itemCount: snapshot.data!.docs.length,
@@ -89,7 +90,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                               // Access the fields as defined in FireStore
                               title: Column(
                                 children: <Widget>[
-                                  SizedBox(height: 20,),
+                                  SizedBox(height: 10,),
                                   Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                                       children: <Widget>[
@@ -101,6 +102,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                         Text('Pending', style: TextStyle(fontSize: 30, color:Colors.blue),),
                                       ]
                                   ),
+                                  SizedBox(height: 10,),
                                 ],
                               ),
                             );}
@@ -110,7 +112,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                 // Access the fields as defined in FireStore
                                 title: Column(
                                   children: <Widget>[
-                                    SizedBox(height: 20,),
+                                    SizedBox(height: 10,),
                                     Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: <Widget>[
@@ -122,6 +124,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                           Text('Approved', style: TextStyle(fontSize: 30, color:Colors.green),),
                                         ]
                                     ),
+                                    SizedBox(height: 10,),
                                   ],
                                 ),
                               );}
@@ -131,7 +134,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                   // Access the fields as defined in FireStore
                                   title: Column(
                                     children: <Widget>[
-                                      SizedBox(height: 20,),
+                                      SizedBox(height: 10,),
                                       Row(
 
                                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -147,10 +150,14 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                       Row(
                                           children: <Widget>[
                                             SizedBox(width: 35,),
-                                            TextButton(onPressed: (){},
+                                            TextButton(onPressed: ()=> showDialog<String>(
+                                                context: context,
+                                                builder: (BuildContext context) => AlertDialog(
+                                                  title: Text(nodues.get('reason')),)),
                                                 child: Text('See Reason', style: TextStyle(fontSize: 20, color:Colors.green),),),
                                           ]
                                       ),
+                                      SizedBox(height: 10,),
                                     ],
                                   ),
                                 );
@@ -164,6 +171,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                       }
                     }
                   ),
+
                 ],
 
               ),

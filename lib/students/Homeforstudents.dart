@@ -28,25 +28,7 @@ class _HomeStudentsState extends State<HomeStudents>{
   //   await futureQuery.then((value) => value.docs.forEach((element) {
   //     element.reference.delete();
   //   }));
-  //   print(numofdocs);
-  //   print(nameofteachers);
-  //   final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-  //   String username = snap['username'];
   //
-  //   var i;
-  //   // for(i = 0 ; i<numofdocs; i++){
-  //   //   //String name = nameofteachers[i];
-  //   //
-  //   //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: nameofteachers[i]).get().then((list){
-  //   //
-  //   //     FirebaseFirestore.instance.collection('users')
-  //   //         .doc(list.docs[0].id)
-  //   //         .collection('NoDues')
-  //   //         .doc('$username')
-  //   //         .delete();
-  //   //   });
-  //   // }
-  //   nameofteachers.clear();
   //   // FirebaseFirestore.instance.collection('users')
   //   //     .doc(user.uid)
   //   //     .collection('Applications')
@@ -159,6 +141,8 @@ class _HomeStudentsState extends State<HomeStudents>{
                       // return CircularProgressIndicator();
                     },
                   ),
+
+
 
 
                   SizedBox(height: 20),
