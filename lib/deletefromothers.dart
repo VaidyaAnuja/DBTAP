@@ -79,7 +79,7 @@ class _delete_OthersState extends State<delete_Others>{
 
 
              // var s = snapshot.data!.docs[0].get('status');
-              change = false;
+
               // print(numofdocs);
               // print(nameofteachers);
               deleteapplication(numofdocs, nameofteachers);

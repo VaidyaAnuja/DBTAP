@@ -72,26 +72,95 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                   ),
 
 
-                 FutureBuilder(
-                      future:  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').get(),
-                     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                       if (snapshot.hasData){
-                          snapshot.data!.docs.length;
-                         var i;
-                         var s = snapshot.data!.docs[0].get('status');
-                          return new Text('',
-                              style: TextStyle(fontSize: 30, color:Colors.black
-                          ),);
-                         }
 
-                       else{
-                         return CircularProgressIndicator();
-                       }
-                     }
+                  StreamBuilder(
+                    stream:
+                    FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').snapshots(),
+                    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            DocumentSnapshot nodues = snapshot.data!.docs[index];
+                              if(nodues.get('status') == 'pending'){
+                             return ListTile(
+                              // Access the fields as defined in FireStore
+                              title: Column(
+                                children: <Widget>[
+                                  //SizedBox(height: 20,),
+                                  Row(
+                                      children: <Widget>[
+                                       // SizedBox(width: 50,),
+                                        Text(nodues.id,
+                                          style: TextStyle(fontSize: 30, color:Colors.black),
+                                        ),
+                                        //SizedBox(width: 150,),
+                                        Text('Pending', style: TextStyle(fontSize: 30, color:Colors.blue),),
+                                      ]
+                                  ),
+                                ],
+                              ),
+                            );}
 
-                 ),
+                            else if(nodues.get('status') == 'approved'){
+                              return ListTile(
+                                // Access the fields as defined in FireStore
+                                title: Column(
+                                  children: <Widget>[
+                                    //SizedBox(height: 20,),
+                                    Row(
+                                        children: <Widget>[
+                                          //SizedBox(width: 50,),
+                                          Text(nodues.id,
+                                            style: TextStyle(fontSize: 30, color:Colors.black),
+                                          ),
+                                          //SizedBox(width: 150,),
+                                          Text('Approved', style: TextStyle(fontSize: 30, color:Colors.green),),
+                                        ]
+                                    ),
+                                  ],
+                                ),
+                              );}
 
+                            else{
+                                return ListTile(
+                                  // Access the fields as defined in FireStore
+                                  title: Column(
+                                    children: <Widget>[
+                                      //SizedBox(height: 20,),
+                                      Row(
+                                          children: <Widget>[
+                                           // SizedBox(width: 50,),
+                                            Text(nodues.id,
+                                              style: TextStyle(fontSize: 30, color:Colors.black),
+                                            ),
+                                           // SizedBox(width: 150,),
+                                            Text('Pending', style: TextStyle(fontSize: 30, color:Colors.blue),),
+                                          ]
+                                      ),
+                                      //SizedBox(height: 10,),
+                                      Row(
+                                          children: <Widget>[
+                                           // SizedBox(width: 50,),
+                                            TextButton(onPressed: (){},
+                                                child: Text('See Reason', style: TextStyle(fontSize: 20, color:Colors.green),),),
+                                          ]
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
 
+                          },
+                        );
+                      }  else {
+                      // Still loading
+                      return CircularProgressIndicator();
+                      }
+                    }
+                  ),
                 ],
 
               ),
