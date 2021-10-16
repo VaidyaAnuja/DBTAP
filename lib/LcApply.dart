@@ -7,7 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 
 class LC_APPLY extends StatefulWidget{
-  int count =0;
+
 
 
   @override
@@ -19,7 +19,6 @@ class _LC_APPLYState extends State<LC_APPLY>{
   bool isSana = false;
   bool isDeepali = false;
   int currentIndex=0;
-  //int count=0;
 
   Future<void> apply(isSana, isDeepali) async
   {

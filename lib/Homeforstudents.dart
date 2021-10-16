@@ -1,5 +1,6 @@
 import 'package:beproject/accounts_students.dart';
 import 'package:beproject/commonapplications.dart';
+import 'package:beproject/deletefromothers.dart';
 import 'package:beproject/lcprogress.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,53 +16,56 @@ class HomeStudents extends StatefulWidget{
 
 class _HomeStudentsState extends State<HomeStudents>{
   int currentIndex =0;
-
-  Future<void> deleteapplication() async {
-    User user = FirebaseAuth.instance.currentUser!;
-
-    FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-      'is_enabled_LC' : true,
-    });
-
-    final collectionRef = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues');
-    final futureQuery = collectionRef.get();
-    await futureQuery.then((value) => value.docs.forEach((element) {
-      element.reference.delete();
-    }));
-
-
-
-    // for(i = 0 ; i<=numofdocs; i++){
-    //   String name = nameofteachers[i];
-    //
-    //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$name').get().then((list){
-    //
-    //     FirebaseFirestore.instance.collection('users')
-    //         .doc(list.docs[0].id)
-    //         .collection('NoDues')
-    //         .doc('$username')
-    //         .delete();
-    //   });
-    // }
-    // FirebaseFirestore.instance.collection('users')
-    //     .doc(user.uid)
-    //     .collection('Applications')
-    //     .where("applicationtype", isEqualTo: 'No Dues')
-    //     .get()
-    //     .then((list) {
-    //   FirebaseFirestore.instance.collection('users')
-    //       .doc(user.uid)
-    //       .collection('Applications')
-    //       .doc(list.docs[0].id)
-    //       .delete();
-    // });
-
-
-
-    Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new HomeStudents()));
-
-  }
+  // Future<void> deleteapplication() async {
+  //   User user = FirebaseAuth.instance.currentUser!;
+  //
+  //   FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+  //     'is_enabled_LC' : true,
+  //   });
+  //
+  //   final collectionRef = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues');
+  //   final futureQuery = collectionRef.get();
+  //   await futureQuery.then((value) => value.docs.forEach((element) {
+  //     element.reference.delete();
+  //   }));
+  //   print(numofdocs);
+  //   print(nameofteachers);
+  //   final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+  //   String username = snap['username'];
+  //
+  //   var i;
+  //   // for(i = 0 ; i<numofdocs; i++){
+  //   //   //String name = nameofteachers[i];
+  //   //
+  //   //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: nameofteachers[i]).get().then((list){
+  //   //
+  //   //     FirebaseFirestore.instance.collection('users')
+  //   //         .doc(list.docs[0].id)
+  //   //         .collection('NoDues')
+  //   //         .doc('$username')
+  //   //         .delete();
+  //   //   });
+  //   // }
+  //   nameofteachers.clear();
+  //   // FirebaseFirestore.instance.collection('users')
+  //   //     .doc(user.uid)
+  //   //     .collection('Applications')
+  //   //     .where("applicationtype", isEqualTo: 'No Dues')
+  //   //     .get()
+  //   //     .then((list) {
+  //   //   FirebaseFirestore.instance.collection('users')
+  //   //       .doc(user.uid)
+  //   //       .collection('Applications')
+  //   //       .doc(list.docs[0].id)
+  //   //       .delete();
+  //   // });
+  //
+  //
+  //
+  //   Navigator.of(context).pushReplacement(
+  //       new MaterialPageRoute(builder: (context) => new HomeStudents()));
+  //
+  // }
 
   Future<DocumentSnapshot>_getuserdetails() async{
     User user = FirebaseAuth.instance.currentUser!;
@@ -138,7 +142,8 @@ class _HomeStudentsState extends State<HomeStudents>{
                                       )),
                                   SizedBox(width: 125),
                                   IconButton(onPressed: (){
-                                    deleteapplication();
+                                    Navigator.of(context).pushReplacement(
+                                        new MaterialPageRoute(builder: (context) => new delete_Others()));
                                   },
                                     iconSize: 30,
                                     icon: Icon(Icons.delete),
@@ -154,6 +159,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                       // return CircularProgressIndicator();
                     },
                   ),
+
 
                   SizedBox(height: 20),
                   Container(

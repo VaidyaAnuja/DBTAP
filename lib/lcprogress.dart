@@ -18,8 +18,6 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
 
   int currentIndex=0;
 
- int numofdocs =0 ;
- List nameofteachers = [];
 
   @override
   Widget build(BuildContext context){
@@ -78,19 +76,14 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                       future:  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').get(),
                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                        if (snapshot.hasData){
-                         numofdocs = snapshot.data!.docs.length;
+                          snapshot.data!.docs.length;
                          var i;
-                         for(i = 0 ; i<numofdocs; i++){
-                           nameofteachers.add(snapshot.data!.docs[i].id);
-
-                         }
-
-
                          var s = snapshot.data!.docs[0].get('status');
                           return new Text('',
                               style: TextStyle(fontSize: 30, color:Colors.black
                           ),);
-                       }
+                         }
+
                        else{
                          return CircularProgressIndicator();
                        }
