@@ -4,8 +4,8 @@ import 'package:beproject/loginscreen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
-import 'package:beproject/authorization.dart';
-import 'package:beproject/usermanagement.dart';
+import 'package:beproject/authorization/authorization.dart';
+import 'package:beproject/authorization/usermanagement.dart';
 
 
 Future<void> main() async {

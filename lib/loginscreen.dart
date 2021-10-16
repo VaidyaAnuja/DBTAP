@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
-import 'package:beproject/authorization.dart';
+import 'package:beproject/authorization/authorization.dart';
 
 
 class LoginScr extends StatefulWidget{
