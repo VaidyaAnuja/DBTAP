@@ -26,8 +26,6 @@ class _delete_OthersState extends State<delete_Others>{
     await futureQuery.then((value) => value.docs.forEach((element) {
       element.reference.delete();
     }));
-    print(numofdocs);
-    print(nameofteachers);
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
     String username = snap['username'];
 

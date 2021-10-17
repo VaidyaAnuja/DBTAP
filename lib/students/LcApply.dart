@@ -31,8 +31,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
 
     FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-       'is_enabled_LC' : false,
-     });
+      'is_enabled_LC' : false,
+    });
 
     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('workshop').set(
         {
@@ -150,10 +150,10 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .collection('NoDues')
             .doc('$username')
             .set({
-              'status':'pending',
+          'status':'pending',
           'reason':'',
           'time':Timestamp.now(),
-            });
+        });
       });
     }
     else if(isDeepali == true && isSana != true && isSejal != true){
@@ -222,7 +222,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
         });
       });
       FirebaseFirestore.instance.collection('users')
-    .where("username", isEqualTo: 'deepali')
+          .where("username", isEqualTo: 'deepali')
           .get().then((list){
         FirebaseFirestore.instance.collection('users')
             .doc(list.docs[0].id)
@@ -317,66 +317,66 @@ class _LC_APPLYState extends State<LC_APPLY>{
     }
 
     else {
-        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
-            {
-              'status':'pending',
-              'reason':'',
-            });
-        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
-            {
-              'status':'pending',
-              'reason':'',
-            });
-
-        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
-            {
-              'status':'pending',
-              'reason':'',
-            });
-
-        FirebaseFirestore.instance.collection('users')
-            .where("username", isEqualTo: 'sana')
-            .get().then((list){
-          FirebaseFirestore.instance.collection('users')
-              .doc(list.docs[0].id)
-              .collection('NoDues')
-              .doc('$username')
-              .set({
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
+          {
             'status':'pending',
             'reason':'',
-            'time':Timestamp.now(),
           });
-        });
-        FirebaseFirestore.instance.collection('users')
-            .where("username", isEqualTo: 'sejal')
-            .get().then((list){
-          FirebaseFirestore.instance.collection('users')
-              .doc(list.docs[0].id)
-              .collection('NoDues')
-              .doc('$username')
-              .set({
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
+          {
             'status':'pending',
             'reason':'',
-            'time':Timestamp.now(),
           });
-        });
 
-        FirebaseFirestore.instance.collection('users')
-            .where("username", isEqualTo: 'deepali')
-            .get().then((list){
-          FirebaseFirestore.instance.collection('users')
-              .doc(list.docs[0].id)
-              .collection('NoDues')
-              .doc('$username')
-              .set({
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
+          {
             'status':'pending',
             'reason':'',
-            'time':Timestamp.now(),
           });
+
+      FirebaseFirestore.instance.collection('users')
+          .where("username", isEqualTo: 'sana')
+          .get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+          'time':Timestamp.now(),
         });
+      });
+      FirebaseFirestore.instance.collection('users')
+          .where("username", isEqualTo: 'sejal')
+          .get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+          'time':Timestamp.now(),
+        });
+      });
+
+      FirebaseFirestore.instance.collection('users')
+          .where("username", isEqualTo: 'deepali')
+          .get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+          'time':Timestamp.now(),
+        });
+      });
     }
-     Navigator.of(context).pushReplacement(
-         new MaterialPageRoute(builder: (context) => new HomeStudents()));
+    Navigator.of(context).pushReplacement(
+        new MaterialPageRoute(builder: (context) => new HomeStudents()));
   }
 
   @override
@@ -417,10 +417,10 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
         children: <Widget>[
           Container(
-          child: SingleChildScrollView(
-            child: Column(
+            child: SingleChildScrollView(
+              child: Column(
 
-              children: <Widget>[
+                children: <Widget>[
 
                   Container(
 
@@ -430,96 +430,96 @@ class _LC_APPLYState extends State<LC_APPLY>{
                       style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
                     ),
                   ),
-                SizedBox(height: 20),
-                Container(
-                  margin: const EdgeInsets.only(left: 20.0),
-                  child:Row(
+                  SizedBox(height: 20),
+                  Container(
+                    margin: const EdgeInsets.only(left: 20.0),
+                    child:Row(
 
-                    children: <Widget>[
-                      Text('Prof. Sana Sheikh',
-                      style: TextStyle(fontSize: 30),
-                      ),
-                      SizedBox(width: 86),
-                Transform.scale(
-                      scale: 2,
-                      child: Checkbox(
+                      children: <Widget>[
+                        Text('Prof. Sana Sheikh',
+                          style: TextStyle(fontSize: 30),
+                        ),
+                        SizedBox(width: 86),
+                        Transform.scale(
+                          scale: 2,
+                          child: Checkbox(
 
-                        checkColor: Colors.white,
-                        fillColor: MaterialStateProperty.resolveWith(getColor),
-                        value: isSana,
-                        onChanged: (bool? value) {
-                          setState(() {
-                            isSana = value!;
-                          });
-                        },
-                      ),),
-                    ],
-                ),),
+                            checkColor: Colors.white,
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
+                            value: isSana,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                isSana = value!;
+                              });
+                            },
+                          ),),
+                      ],
+                    ),),
 
-                SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-                Container(
-                  margin: const EdgeInsets.only(left: 20.0),
-                  child:Row(
+                  Container(
+                    margin: const EdgeInsets.only(left: 20.0),
+                    child:Row(
 
-                    children: <Widget>[
-                      Text('Prof. Sejal Chopra',
-                        style: TextStyle(fontSize: 30),
-                      ),
-                      SizedBox(width: 86),
-                      Transform.scale(
-                        scale: 2,
-                        child: Checkbox(
+                      children: <Widget>[
+                        Text('Prof. Sejal Chopra',
+                          style: TextStyle(fontSize: 30),
+                        ),
+                        SizedBox(width: 86),
+                        Transform.scale(
+                          scale: 2,
+                          child: Checkbox(
 
-                          checkColor: Colors.white,
-                          fillColor: MaterialStateProperty.resolveWith(getColor),
-                          value: isSejal,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              isSejal = value!;
-                            });
-                          },
-                        ),),
-                    ],
-                  ),),
+                            checkColor: Colors.white,
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
+                            value: isSejal,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                isSejal = value!;
+                              });
+                            },
+                          ),),
+                      ],
+                    ),),
 
-                SizedBox(height: 20),
+                  SizedBox(height: 20),
 
-                Container(
-                  margin: const EdgeInsets.only(left: 20.0),
-                  child:Row(
+                  Container(
+                    margin: const EdgeInsets.only(left: 20.0),
+                    child:Row(
 
-                    children: <Widget>[
-                      Text('Prof. Deepali Kayande',
-                        style: TextStyle(fontSize: 30),
-                      ),
-                      SizedBox(width: 30),
-                      Transform.scale(
-                        scale: 2,
-                        child: Checkbox(
+                      children: <Widget>[
+                        Text('Prof. Deepali Kayande',
+                          style: TextStyle(fontSize: 30),
+                        ),
+                        SizedBox(width: 30),
+                        Transform.scale(
+                          scale: 2,
+                          child: Checkbox(
 
-                          checkColor: Colors.white,
-                          fillColor: MaterialStateProperty.resolveWith(getColor),
-                          value: isDeepali,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              isDeepali = value!;
-                            });
-                          },
-                        ),),
-                    ],
-                  ),),
-                SizedBox(height: 20),
-                TextButton(
-                    onPressed: (){
-                      apply(isSana,isDeepali);
-                },
-                    child: Text('Apply for No Dues', style:TextStyle(fontSize: 30, color:HexColor("#0E34A0")))),
+                            checkColor: Colors.white,
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
+                            value: isDeepali,
+                            onChanged: (bool? value) {
+                              setState(() {
+                                isDeepali = value!;
+                              });
+                            },
+                          ),),
+                      ],
+                    ),),
+                  SizedBox(height: 20),
+                  TextButton(
+                      onPressed: (){
+                        apply(isSana,isDeepali);
+                      },
+                      child: Text('Apply for No Dues', style:TextStyle(fontSize: 30, color:HexColor("#0E34A0")))),
 
-              ],
+                ],
 
-            ),
-          ),),
+              ),
+            ),),
 
           Container(
             margin: const EdgeInsets.only(top: 564.0),
@@ -548,8 +548,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
                   ),
                   label:'Home',
-                    //style: TextStyle(color:Colors.white),
-                  ),
+                  //style: TextStyle(color:Colors.white),
+                ),
 
 
                 BottomNavigationBarItem(
@@ -559,7 +559,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
                   ),
                   label:'Notifications',
                   //  style: TextStyle(color:Colors.white),
-                  ),
+                ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.manage_accounts,
@@ -568,7 +568,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
                   ),
                   label:'Account',
                   //  style: TextStyle(color:Colors.white),
-                  ),
+                ),
 
 
 

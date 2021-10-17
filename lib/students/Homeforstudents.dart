@@ -41,12 +41,6 @@ class _HomeStudentsState extends State<HomeStudents>{
   //   //       .doc(list.docs[0].id)
   //   //       .delete();
   //   // });
-  //
-  //
-  //
-  //   Navigator.of(context).pushReplacement(
-  //       new MaterialPageRoute(builder: (context) => new HomeStudents()));
-  //
   // }
 
   Future<DocumentSnapshot>_getuserdetails() async{
