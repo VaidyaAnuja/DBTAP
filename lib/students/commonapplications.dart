@@ -21,13 +21,13 @@ class _Common_AppState extends State<Common_App>{
  void _checkifnull_LC() async{
    User? user = FirebaseAuth.instance.currentUser;
    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
-   if(snap['is_enabled_LC']==true ){
+   if(snap['is_enabled_LC']==true && DateTime.now().isAfter(snap['batch'].toDate())){
 
      Navigator.of(context).pushReplacement(
          new MaterialPageRoute(builder: (context) => new LC_APPLY()));
    }
 
-   else
+   else if(snap['is_enabled_LC']!=true && DateTime.now().isAfter(snap['batch'].toDate()))
      {
      final text = 'You have already applied for No Dues.';
      final snackBar = SnackBar(
@@ -48,25 +48,25 @@ class _Common_AppState extends State<Common_App>{
      ScaffoldMessenger.of(context).showSnackBar(snackBar);
    }
 
-   // else{
-   //   final text = 'You are still to complete BE.';
-   //   final snackBar = SnackBar(
-   //
-   //     duration: Duration(seconds: 30),
-   //     content: Text(text,
-   //       style: TextStyle(fontSize: 16, color: Colors.white),),
-   //     action: SnackBarAction(
-   //
-   //       label: 'Dismiss',
-   //
-   //       textColor: Colors.yellow,
-   //       onPressed: (){
-   //       },
-   //     ),
-   //     backgroundColor: HexColor("#0E34A0"),
-   //   );
-   //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-   // }
+   else{
+     final text = 'You are still to complete BE.';
+     final snackBar = SnackBar(
+
+       duration: Duration(seconds: 30),
+       content: Text(text,
+         style: TextStyle(fontSize: 16, color: Colors.white),),
+       action: SnackBarAction(
+
+         label: 'Dismiss',
+
+         textColor: Colors.yellow,
+         onPressed: (){
+         },
+       ),
+       backgroundColor: HexColor("#0E34A0"),
+     );
+     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+   }
  }
 
   @override

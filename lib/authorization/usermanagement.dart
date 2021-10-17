@@ -1,3 +1,4 @@
+import 'package:beproject/admin/Homeforadmin.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:beproject/students/Homeforstudents.dart';
@@ -31,6 +32,11 @@ class _ManageUserState extends State<ManageUser> {
 
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => new HomeTeachers()));
+    }
+    else if(snap['role'] == 'admin'){
+
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new HomeAdmin()));
     }
   }
 

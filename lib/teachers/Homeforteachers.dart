@@ -133,7 +133,8 @@ class _HomeTeachersState extends State<HomeTeachers> {
                   ),
 
               StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').snapshots(),
+              stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').orderBy(
+                  'time', descending: true).snapshots(),
               builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
               if (snapshot.hasData) {
               return ListView.builder(
@@ -408,9 +409,10 @@ class _HomeTeachersState extends State<HomeTeachers> {
                 BottomNavigationBarItem(
                   icon: new Icon(
                     Icons.import_contacts_sharp,
+                    //color: Colors.white,
                   ),
-                  label:
-                    'LC',
+                  label: 'LOR',
+                  //  style: TextStyle(color:Colors.white),
                 ),
                 BottomNavigationBarItem(
                   icon: new Icon(

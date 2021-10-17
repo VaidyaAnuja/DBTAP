@@ -64,7 +64,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
 
                   Container(
 
-                    margin: const EdgeInsets.only(left: 30.0,top:75),
+                    margin: const EdgeInsets.only(left: 30.0),
                     alignment: Alignment.topLeft,
                     child: Text('Check your application progress below.',
                       style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),

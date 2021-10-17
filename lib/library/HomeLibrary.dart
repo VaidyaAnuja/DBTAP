@@ -1,31 +1,17 @@
 
-import 'package:beproject/admin/accountadmin.dart';
-import 'package:beproject/admin/checklistofstudents.dart';
+import 'package:beproject/library/account_library.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 
-class HomeAdmin extends StatefulWidget {
+class HomeLibrary extends StatefulWidget {
   @override
-  _HomeAdminState createState() => _HomeAdminState();
+  _HomeLibraryState createState() => _HomeLibraryState();
 }
-String namestudentprogress = '';
-String usernameofstudent = '';
-String currentusername = '';
-class _HomeAdminState extends State<HomeAdmin> {
 
-  Future<void> check_studentprogress(String id) async {
-    usernameofstudent = id;
-    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
-    currentusername = snap['username'];
-    final snaps = await FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get();
-    namestudentprogress = snaps.docs[0].data()['uid'];
-    Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new student_checklist()));
-  }
-
+class _HomeLibraryState extends State<HomeLibrary> {
 
   Future<void> approve(id) async {
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
@@ -42,7 +28,7 @@ class _HomeAdminState extends State<HomeAdmin> {
       });
     });
     Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new HomeAdmin()));
+        new MaterialPageRoute(builder: (context) => new HomeLibrary()));
   }
 
   Future<void> reject(id, TextEditingController reason) async {
@@ -74,7 +60,7 @@ class _HomeAdminState extends State<HomeAdmin> {
       });
     });
     Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new HomeAdmin()));
+        new MaterialPageRoute(builder: (context) => new HomeLibrary()));
   }
 
   Future<void> undo(id) async {
@@ -92,7 +78,7 @@ class _HomeAdminState extends State<HomeAdmin> {
       });
     });
     Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new HomeAdmin()));
+        new MaterialPageRoute(builder: (context) => new HomeLibrary()));
   }
 
   int currentIndex = 0;
@@ -256,13 +242,6 @@ class _HomeAdminState extends State<HomeAdmin> {
                                               ),
                                             ),
                                           ),
-                                          IconButton(onPressed: (){
-                                            check_studentprogress(nodues.id);
-
-                                          },
-                                              icon: Icon(Icons.double_arrow),
-                                            iconSize: 20,
-                                          ),
                                         ],
                                       ),
                                     ),);
@@ -316,13 +295,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                                               ),
                                             ),
                                           ),
-                                          IconButton(onPressed: (){
-                                            check_studentprogress(nodues.id);
 
-                                          },
-                                            icon: Icon(Icons.double_arrow),
-                                            iconSize: 20,
-                                          ),
                                         ],
                                       ),
                                     ),);
@@ -379,13 +352,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                                                       ),
                                                     ),
                                                   ),
-                                                  IconButton(onPressed: (){
-                                                    check_studentprogress(nodues.id);
 
-                                                  },
-                                                    icon: Icon(Icons.double_arrow),
-                                                    iconSize: 20,
-                                                  ),
                                                 ],
                                               ),
                                               TextButton(onPressed: ()=> showDialog<String>(
@@ -422,16 +389,16 @@ class _HomeAdminState extends State<HomeAdmin> {
                 });
                 if (currentIndex == 0) {
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (context) => new HomeAdmin()));
-                } else if (currentIndex == 2) {
+                      builder: (context) => new HomeLibrary()));
+                } else  {
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (context) => new AccountSettingsAdmin()));
-                } else {}
+                      builder: (context) => new AccountSettingsLibrary()));
+                }
               },
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,
               unselectedItemColor: Colors.white,
-              iconSize: 30,
+              iconSize: 35,
               items: [
                 BottomNavigationBarItem(
                     icon: new Icon(
@@ -439,14 +406,7 @@ class _HomeAdminState extends State<HomeAdmin> {
                     ),
                     label:'Home'
                 ),
-                BottomNavigationBarItem(
-                  icon: new Icon(
-                    Icons.import_contacts_sharp,
-                    //color: Colors.white,
-                  ),
-                  label: 'LOR',
-                  //  style: TextStyle(color:Colors.white),
-                ),
+
                 BottomNavigationBarItem(
                   icon: new Icon(
                     Icons.manage_accounts,

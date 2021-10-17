@@ -1,19 +1,19 @@
+import 'package:beproject/accounts/HomeAccounts.dart';
 import 'package:beproject/authorization/authorization.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:beproject/teachers/Homeforteachers.dart';
 
-class AccountSettingsTeachers extends StatefulWidget {
+class AccountSettingsAccount extends StatefulWidget {
   @override
-  _AccountSettingsTeachersState createState() =>
-      _AccountSettingsTeachersState();
+  _AccountSettingsAccountState createState() =>
+      _AccountSettingsAccountState();
 }
 
-class _AccountSettingsTeachersState extends State<AccountSettingsTeachers> {
-  int currentIndex = 2;
+class _AccountSettingsAccountState extends State<AccountSettingsAccount> {
+  int currentIndex = 1;
 
   Future<DocumentSnapshot> _getusername() async {
     User user = FirebaseAuth.instance.currentUser!;
@@ -100,7 +100,7 @@ class _AccountSettingsTeachersState extends State<AccountSettingsTeachers> {
                       Text(
                         'Logout',
                         style:
-                            TextStyle(fontSize: 30, color: HexColor("#0E34A0")),
+                        TextStyle(fontSize: 30, color: HexColor("#0E34A0")),
                       )
                     ],
                   ),
@@ -112,23 +112,23 @@ class _AccountSettingsTeachersState extends State<AccountSettingsTeachers> {
             margin: const EdgeInsets.only(top: 564.0),
             child: BottomNavigationBar(
               type: BottomNavigationBarType.fixed,
-              currentIndex: 2,
+              currentIndex: 1,
               onTap: (index) {
                 setState(() {
                   currentIndex = index;
                 });
                 if (currentIndex == 0) {
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (context) => new HomeTeachers()));
-                } else if (currentIndex == 2) {
+                      builder: (context) => new HomeAccounts()));
+                } else{
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (context) => new AccountSettingsTeachers()));
-                } else {}
+                      builder: (context) => new AccountSettingsAccount()));
+                }
               },
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,
               unselectedItemColor: Colors.white,
-              iconSize: 30,
+              iconSize: 35,
               items: [
                 BottomNavigationBarItem(
                   icon: new Icon(
@@ -138,14 +138,7 @@ class _AccountSettingsTeachersState extends State<AccountSettingsTeachers> {
                   label: 'Home',
                   //style: TextStyle(color:Colors.white),
                 ),
-                BottomNavigationBarItem(
-                  icon: new Icon(
-                    Icons.import_contacts_sharp,
-                    //color: Colors.white,
-                  ),
-                  label: 'LOR',
-                  //  style: TextStyle(color:Colors.white),
-                ),
+
                 BottomNavigationBarItem(
                   icon: new Icon(
                     Icons.manage_accounts,

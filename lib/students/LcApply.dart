@@ -72,6 +72,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
           .set({
         'status':'pending',
         'reason':'',
+        'time':Timestamp.now(),
       });
     });
 
@@ -83,6 +84,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
           .set({
         'status':'pending',
         'reason':'',
+        'time':Timestamp.now(),
       });
     });
 
@@ -94,6 +96,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
           .set({
         'status':'pending',
         'reason':'',
+        'time':Timestamp.now(),
       });
     });
 
@@ -105,6 +108,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
           .set({
         'status':'pending',
         'reason':'',
+        'time':Timestamp.now(),
       });
     });
 
@@ -116,6 +120,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
           .set({
         'status':'pending',
         'reason':'',
+        'time':Timestamp.now(),
       });
     });
     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'accounts').get().then((list){
@@ -126,6 +131,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
           .set({
         'status':'pending',
         'reason':'',
+        'time':Timestamp.now(),
       });
     });
 
@@ -146,6 +152,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .set({
               'status':'pending',
           'reason':'',
+          'time':Timestamp.now(),
             });
       });
     }
@@ -164,6 +171,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .set({
           'status':'pending',
           'reason':'',
+          'time':Timestamp.now(),
         });
       });
     }
@@ -183,6 +191,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .set({
           'status':'pending',
           'reason':'',
+          'time':Timestamp.now(),
         });
       });
     }
@@ -209,6 +218,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .set({
           'status':'pending',
           'reason':'',
+          'time':Timestamp.now(),
         });
       });
       FirebaseFirestore.instance.collection('users')
@@ -221,6 +231,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .set({
           'status':'pending',
           'reason':'',
+          'time':Timestamp.now(),
         });
       });
     }
@@ -247,6 +258,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .set({
           'status':'pending',
           'reason':'',
+          'time':Timestamp.now(),
         });
       });
       FirebaseFirestore.instance.collection('users')
@@ -259,6 +271,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .set({
           'status':'pending',
           'reason':'',
+          'time':Timestamp.now(),
         });
       });
     }
@@ -285,6 +298,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .set({
           'status':'pending',
           'reason':'',
+          'time':Timestamp.now(),
         });
       });
       FirebaseFirestore.instance.collection('users')
@@ -297,6 +311,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             .set({
           'status':'pending',
           'reason':'',
+          'time':Timestamp.now(),
         });
       });
     }
@@ -329,6 +344,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
               .set({
             'status':'pending',
             'reason':'',
+            'time':Timestamp.now(),
           });
         });
         FirebaseFirestore.instance.collection('users')
@@ -341,6 +357,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
               .set({
             'status':'pending',
             'reason':'',
+            'time':Timestamp.now(),
           });
         });
 
@@ -354,6 +371,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
               .set({
             'status':'pending',
             'reason':'',
+            'time':Timestamp.now(),
           });
         });
     }

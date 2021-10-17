@@ -1,18 +1,18 @@
+import 'package:beproject/admin/Homeforadmin.dart';
 import 'package:beproject/authorization/authorization.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:beproject/teachers/Homeforteachers.dart';
 
-class AccountSettingsTeachers extends StatefulWidget {
+class AccountSettingsAdmin extends StatefulWidget {
   @override
-  _AccountSettingsTeachersState createState() =>
-      _AccountSettingsTeachersState();
+  _AccountSettingsAdminState createState() =>
+      _AccountSettingsAdminState();
 }
 
-class _AccountSettingsTeachersState extends State<AccountSettingsTeachers> {
+class _AccountSettingsAdminState extends State<AccountSettingsAdmin> {
   int currentIndex = 2;
 
   Future<DocumentSnapshot> _getusername() async {
@@ -100,7 +100,7 @@ class _AccountSettingsTeachersState extends State<AccountSettingsTeachers> {
                       Text(
                         'Logout',
                         style:
-                            TextStyle(fontSize: 30, color: HexColor("#0E34A0")),
+                        TextStyle(fontSize: 30, color: HexColor("#0E34A0")),
                       )
                     ],
                   ),
@@ -119,10 +119,10 @@ class _AccountSettingsTeachersState extends State<AccountSettingsTeachers> {
                 });
                 if (currentIndex == 0) {
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (context) => new HomeTeachers()));
+                      builder: (context) => new HomeAdmin()));
                 } else if (currentIndex == 2) {
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (context) => new AccountSettingsTeachers()));
+                      builder: (context) => new AccountSettingsAdmin()));
                 } else {}
               },
               backgroundColor: HexColor("#0E34A0"),
