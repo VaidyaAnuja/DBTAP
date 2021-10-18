@@ -23,7 +23,7 @@ class _Common_AppState extends State<Common_App>{
    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
    if(snap['is_enabled_LC']==true && DateTime.now().isAfter(snap['batch'].toDate())){
 
-     Navigator.of(context).pushReplacement(
+     Navigator.of(context).push(
          new MaterialPageRoute(builder: (context) => new LC_APPLY()));
    }
 
@@ -73,23 +73,27 @@ class _Common_AppState extends State<Common_App>{
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
+
         title: Text('DBTap', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
         toolbarHeight: 35,
         centerTitle: true,
         backgroundColor: HexColor("#0E34A0"),
-        actions: <Widget>[
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_rounded ,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                // do something
-              },
-            ),),
-        ],
+    //     actions: <Widget>[
+    //        Container(
+    //          alignment: Alignment.topRight,
+    //          child:
+    //         IconButton(
+    //           icon: Icon(
+    //             Icons.arrow_back_rounded ,
+    //             color: Colors.white,
+    //           ),
+    //           onPressed: () {
+    //             // do something
+    //             Navigator.of(context).pop();
+    //           },
+    //         ),
+    // ),
+    //     ],
       ),
       //drawer: NavigationDrawerWidget(),
       body: Stack(
@@ -182,11 +186,10 @@ class _Common_AppState extends State<Common_App>{
               currentIndex: 0,
               onTap: (index) { setState(() { currentIndex = index;});
               if(currentIndex==0){
-                Navigator.of(context).pushReplacement(
-                    new MaterialPageRoute(builder: (context) => new HomeStudents()));
+                Navigator.of(context).pushNamedAndRemoveUntil('/firststudents', (Route<dynamic> route) => false);
               }
               else if(currentIndex==2){
-                Navigator.of(context).pushReplacement(
+                Navigator.of(context).push(
                     new MaterialPageRoute(builder: (context) => new AccountSettings()));
               }
               else{}

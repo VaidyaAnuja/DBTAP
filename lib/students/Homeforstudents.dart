@@ -14,6 +14,8 @@ class HomeStudents extends StatefulWidget{
 
 }
 
+
+
 class _HomeStudentsState extends State<HomeStudents>{
   int currentIndex =0;
   // Future<void> deleteapplication() async {
@@ -57,19 +59,19 @@ class _HomeStudentsState extends State<HomeStudents>{
         toolbarHeight: 35,
         centerTitle: true,
         backgroundColor: HexColor("#0E34A0"),
-        actions: <Widget>[
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_rounded ,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                // do something
-              },
-            ),),
-        ],
+        // actions: <Widget>[
+        //   Container(
+        //     alignment: Alignment.topRight,
+        //     child: IconButton(
+        //       icon: Icon(
+        //         Icons.arrow_back_rounded ,
+        //         color: Colors.white,
+        //       ),
+        //       onPressed: () {
+        //         // do something
+        //       },
+        //     ),),
+        // ],
       ),
       //drawer: NavigationDrawerWidget(),
       body: Stack(
@@ -110,7 +112,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                                 children: <Widget>[
                                   TextButton(
                                       onPressed: (){
-                                        Navigator.of(context).pushReplacement(
+                                        Navigator.of(context).push(
                                             new MaterialPageRoute(builder: (context) => new LC_PROGRESS()));
                                       },
                                       child: Text('No Dues',
@@ -144,7 +146,7 @@ class _HomeStudentsState extends State<HomeStudents>{
                     margin: const EdgeInsets.only(left: 290.0),
                     child: TextButton(
                         onPressed: (){
-                          Navigator.of(context).pushReplacement(
+                          Navigator.of(context).push(
                               new MaterialPageRoute(builder: (context) => new Common_App()));
                         },
                         child: Icon(

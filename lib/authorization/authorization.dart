@@ -20,8 +20,7 @@ class AuthenticationService {
   Future<void> signOut({required context}) async {
     await _firebaseAuth.signOut();
 
-    Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new LoginScr()));
+    Navigator.of(context).pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => false);
 
   }
 

@@ -22,7 +22,7 @@ class _HomeAdminState extends State<HomeAdmin> {
     currentusername = snap['username'];
     final snaps = await FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get();
     namestudentprogress = snaps.docs[0].data()['uid'];
-    Navigator.of(context).pushReplacement(
+    Navigator.of(context).push(
         new MaterialPageRoute(builder: (context) => new student_checklist()));
   }
 
@@ -108,17 +108,17 @@ class _HomeAdminState extends State<HomeAdmin> {
         toolbarHeight: 35,
         centerTitle: true,
         backgroundColor: HexColor("#0E34A0"),
-        actions: [
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.arrow_back_rounded,
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   Container(
+        //     alignment: Alignment.topRight,
+        //     child: IconButton(
+        //       onPressed: () {},
+        //       icon: Icon(
+        //         Icons.arrow_back_rounded,
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
       body: Stack(
         children: [

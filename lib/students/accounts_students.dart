@@ -32,19 +32,20 @@ class _AccountSettingsState extends State<AccountSettings>{
         toolbarHeight: 35,
         centerTitle: true,
         backgroundColor: HexColor("#0E34A0"),
-        actions: <Widget>[
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_rounded ,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                // do something
-              },
-            ),),
-        ],
+        // actions: <Widget>[
+        //   Container(
+        //     alignment: Alignment.topRight,
+        //     child: IconButton(
+        //       icon: Icon(
+        //         Icons.arrow_back_rounded ,
+        //         color: Colors.white,
+        //       ),
+        //       onPressed: () {
+        //         // do something
+        //         Navigator.of(context).maybePop();
+        //       },
+        //     ),),
+        // ],
       ),
       //drawer: NavigationDrawerWidget(),
       body: Stack(
@@ -115,8 +116,7 @@ class _AccountSettingsState extends State<AccountSettings>{
               currentIndex: 2,
               onTap: (index) { setState(() { currentIndex = index;});
               if(currentIndex==0){
-                Navigator.of(context).pushReplacement(
-                    new MaterialPageRoute(builder: (context) => new HomeStudents()));
+                Navigator.of(context).pushNamedAndRemoveUntil('/firststudents', (Route<dynamic> route) => false);
               }
               else if(currentIndex==2){
                 Navigator.of(context).pushReplacement(
