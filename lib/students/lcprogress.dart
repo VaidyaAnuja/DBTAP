@@ -1,5 +1,6 @@
 import 'package:beproject/students/Homeforstudents.dart';
 import 'package:beproject/students/accounts_students.dart';
+import 'package:beproject/students/notificationforstudents.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -191,7 +192,10 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                 Navigator.of(context).push(
                     new MaterialPageRoute(builder: (context) => new AccountSettings()));
               }
-              else{}
+              else{
+                Navigator.of(context).push(
+                    new MaterialPageRoute(builder: (context) => new notifications_Students()));
+              }
               },
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,

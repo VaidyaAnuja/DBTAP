@@ -17,7 +17,9 @@ class _HomeLibraryState extends State<HomeLibrary> {
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
     String username = snap['username'];
     FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
-        {'status':'approved'});
+        {'status':'approved',
+        'reason':''
+        });
     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
       FirebaseFirestore.instance.collection('users')
           .doc(list.docs[0].id)
@@ -25,6 +27,7 @@ class _HomeLibraryState extends State<HomeLibrary> {
           .doc('$username')
           .update({
         'status':'approved',
+        'reason':'',
       });
     });
     Navigator.of(context).pushReplacement(
@@ -35,11 +38,12 @@ class _HomeLibraryState extends State<HomeLibrary> {
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
     String username = snap['username'];
     FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
-        {'status':'rejected'
+        {'status':'rejected',
+          'reason':reason.text,
         });
-    FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).set(
-        {'reason':reason.text,
-        });
+    // FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).set(
+    //     {'reason':reason.text,
+    //     });
     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
       FirebaseFirestore.instance.collection('users')
           .doc(list.docs[0].id)
@@ -47,18 +51,19 @@ class _HomeLibraryState extends State<HomeLibrary> {
           .doc('$username')
           .update({
         'status':'rejected',
-      });
-    });
-
-    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
-      FirebaseFirestore.instance.collection('users')
-          .doc(list.docs[0].id)
-          .collection('No Dues')
-          .doc('$username')
-          .set({
         'reason':reason.text,
       });
     });
+
+    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
+    //   FirebaseFirestore.instance.collection('users')
+    //       .doc(list.docs[0].id)
+    //       .collection('No Dues')
+    //       .doc('$username')
+    //       .set({
+    //     'reason':reason.text,
+    //   });
+    // });
     Navigator.of(context).pushReplacement(
         new MaterialPageRoute(builder: (context) => new HomeLibrary()));
   }
@@ -67,7 +72,9 @@ class _HomeLibraryState extends State<HomeLibrary> {
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
     String username = snap['username'];
     FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
-        {'status':'pending'});
+        {'status':'pending',
+        'reason':''
+        });
     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
       FirebaseFirestore.instance.collection('users')
           .doc(list.docs[0].id)
@@ -75,6 +82,7 @@ class _HomeLibraryState extends State<HomeLibrary> {
           .doc('$username')
           .update({
         'status':'pending',
+        'reason':''
       });
     });
     Navigator.of(context).pushReplacement(

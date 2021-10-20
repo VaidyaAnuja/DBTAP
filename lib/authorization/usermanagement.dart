@@ -1,4 +1,9 @@
+import 'package:beproject/accounts/HomeAccounts.dart';
 import 'package:beproject/admin/Homeforadmin.dart';
+import 'package:beproject/examcell/HomeExamCell.dart';
+import 'package:beproject/library/HomeLibrary.dart';
+import 'package:beproject/tpo/HomeTPO.dart';
+import 'package:beproject/workshop/HomeWorkshop.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:beproject/students/Homeforstudents.dart';
@@ -38,6 +43,34 @@ class _ManageUserState extends State<ManageUser> {
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => new HomeAdmin()));
     }
+
+    else if(snap['role'] == 'accounts'){
+
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new HomeAccounts()));
+    }
+    else if(snap['role'] == 'examcell'){
+
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new HomeExam()));
+    }
+    else if(snap['role'] == 'tpo'){
+
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new HomeTPO()));
+    }
+    else if(snap['role'] == 'library'){
+
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new HomeLibrary()));
+    }
+    else {
+
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new HomeWorkshop()));
+    }
+
+
   }
 
   @override

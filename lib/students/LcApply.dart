@@ -1,5 +1,6 @@
 import 'package:beproject/students/Homeforstudents.dart';
 import 'package:beproject/students/accounts_students.dart';
+import 'package:beproject/students/notificationforstudents.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -747,7 +748,10 @@ class _LC_APPLYState extends State<LC_APPLY>{
                 Navigator.of(context).push(
                     new MaterialPageRoute(builder: (context) => new AccountSettings()));
               }
-              else{}
+              else{
+                Navigator.of(context).push(
+                    new MaterialPageRoute(builder: (context) => new notifications_Students()));
+              }
               },
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,

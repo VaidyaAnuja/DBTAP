@@ -1,5 +1,6 @@
 import 'package:beproject/students/Homeforstudents.dart';
 import 'package:beproject/authorization/authorization.dart';
+import 'package:beproject/students/notificationforstudents.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -122,7 +123,10 @@ class _AccountSettingsState extends State<AccountSettings>{
                 Navigator.of(context).pushReplacement(
                     new MaterialPageRoute(builder: (context) => new AccountSettings()));
               }
-              else{}
+              else{
+                Navigator.of(context).push(
+                    new MaterialPageRoute(builder: (context) => new notifications_Students()));
+              }
               },
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,

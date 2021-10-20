@@ -1,9 +1,12 @@
+import 'dart:io' ;
 import 'package:beproject/students/accounts_students.dart';
 import 'package:beproject/students/commonapplications.dart';
 import 'package:beproject/students/deletefromothers.dart';
 import 'package:beproject/students/lcprogress.dart';
+import 'package:beproject/students/notificationforstudents.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -51,7 +54,82 @@ class _HomeStudentsState extends State<HomeStudents>{
   }
 
 
+  // final FirebaseFirestore _db = FirebaseFirestore.instance;
+  // final FirebaseMessaging _fcm = FirebaseMessaging();
+
+
   @override
+  // void initState() {
+  //   super.initState();
+  //   if (Platform.isIOS) {
+  //     var iosSubscription = _fcm.onIosSettingsRegistered.listen((data) {
+  //       // save the token  OR subscribe to a topic here
+  //     });
+  //     _fcm.requestNotificationPermissions(IosNotificationSettings());
+  //   }
+  //   else{
+  //     _saveDeviceToken();
+  //   }
+  //
+  //   _fcm.configure(
+  //     onMessage: (Map<String, dynamic> message) async {
+  //       print("onMessage: $message");
+  //       showDialog(
+  //         context: context,
+  //         builder: (context) => AlertDialog(
+  //           content: ListTile(
+  //             title: Text(message['notification']['title']),
+  //             subtitle: Text(message['notification']['body']),
+  //           ),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //               child: Text('Ok'),
+  //               onPressed: () => Navigator.of(context).pop(),
+  //             ),
+  //           ],
+  //         ),
+  //       );
+  //     },
+  //     onLaunch: (Map<String, dynamic> message) async {
+  //       print("onLaunch: $message");
+  //       // TODO optional
+  //     },
+  //     onResume: (Map<String, dynamic> message) async {
+  //       print("onResume: $message");
+  //       // TODO optional
+  //     },
+  //   );
+  // }
+  //
+  // _saveDeviceToken() async {
+  //   // Get the current user
+  //   User user = FirebaseAuth.instance.currentUser!;
+  //
+  //   final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+  //   String uid = snap['uid'];
+  //   // FirebaseUser user = await _auth.currentUser();
+  //
+  //   // Get the token for this device
+  //   String fcmToken = await _fcm.getToken();
+  //
+  //   // Save it to Firestore
+  //   if (fcmToken != null) {
+  //     var tokens = _db
+  //         .collection('users')
+  //         .doc(uid)
+  //         .collection('tokens')
+  //         .doc(fcmToken);
+  //
+  //     await tokens.set({
+  //       'token': fcmToken,
+  //
+  //       'createdAt': FieldValue.serverTimestamp(), // optional
+  //       'platform': Platform.operatingSystem // optional
+  //     });
+  //   }
+  // }
+
+
   Widget build(BuildContext context){
     return Scaffold(
       appBar: AppBar(
@@ -277,7 +355,11 @@ class _HomeStudentsState extends State<HomeStudents>{
                 Navigator.of(context).pushReplacement(
                     new MaterialPageRoute(builder: (context) => new AccountSettings()));
               }
-              else{}
+              else{
+                Navigator.of(context).pushReplacement(
+                    new MaterialPageRoute(builder: (context) => new notifications_Students()));
+
+              }
               },
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,
