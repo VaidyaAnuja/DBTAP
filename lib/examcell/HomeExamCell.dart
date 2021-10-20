@@ -1,4 +1,5 @@
 import 'package:beproject/examcell/account_ExamCell.dart';
+import 'package:beproject/examcell/listofstudentsapproved.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -381,6 +382,33 @@ class _HomeExamState extends State<HomeExam> {
 
                       }),
 
+                  Container(
+                    //alignment: Alignment.bottomRight,
+                    width: 250,
+                    height: 60,
+                    margin: const EdgeInsets.only(top: 15.0),
+                    child: ElevatedButton(
+
+                      style: ElevatedButton.styleFrom(
+                        primary: HexColor("#0E34A0"),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0)),
+                      ),
+                      onPressed: (){
+                        Navigator.of(context).push(new MaterialPageRoute(
+                            builder: (context) => new Approved_List()));
+
+                      },
+
+                      child: Text('See list of approved applications',
+                          style:TextStyle(fontSize: 15,
+                            color: Colors.white,)
+
+                      ),
+                    ),
+
+                  ),
+
                 ],
               ),
             ),
@@ -405,7 +433,7 @@ class _HomeExamState extends State<HomeExam> {
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,
               unselectedItemColor: Colors.white,
-              iconSize: 35,
+              iconSize: 30,
               items: [
                 BottomNavigationBarItem(
                     icon: new Icon(

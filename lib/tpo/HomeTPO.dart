@@ -406,7 +406,7 @@ class _HomeTPOState extends State<HomeTPO> {
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,
               unselectedItemColor: Colors.white,
-              iconSize: 35,
+              iconSize: 30,
               items: [
                 BottomNavigationBarItem(
                     icon: new Icon(

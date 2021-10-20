@@ -119,8 +119,7 @@ class _AccountSettingsExamCellState extends State<AccountSettingsExamCell> {
                   currentIndex = index;
                 });
                 if (currentIndex == 0) {
-                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                      builder: (context) => new HomeExam()));
+                  Navigator.of(context).pushNamedAndRemoveUntil('/firstexam', (Route<dynamic> route) => false);
                 } else{
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
                       builder: (context) => new AccountSettingsExamCell()));
@@ -129,7 +128,7 @@ class _AccountSettingsExamCellState extends State<AccountSettingsExamCell> {
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,
               unselectedItemColor: Colors.white,
-              iconSize: 35,
+              iconSize: 30,
               items: [
                 BottomNavigationBarItem(
                   icon: new Icon(
