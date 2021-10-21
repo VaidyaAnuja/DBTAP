@@ -48,11 +48,13 @@ class _HomeStudentsState extends State<HomeStudents>{
   // }
 
   Future<DocumentSnapshot>_getuserdetails() async{
+
     User user = FirebaseAuth.instance.currentUser!;
+
     return FirebaseFirestore.instance.collection('users').doc(user.uid).get();
   }
 
-
+String mssg = '';
   // final FirebaseFirestore _db = FirebaseFirestore.instance;
   // final FirebaseMessaging _fcm = FirebaseMessaging();
 

@@ -43,12 +43,14 @@ class _Approved_ListState extends State<Approved_List> {
 
   Future<void> undodisable(id, TextEditingController message) async {
 
-      var snap = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get().then((list){
-        FirebaseFirestore.instance.collection('users')
-            .doc(list.docs[0].id)
-            .get();});
+      // var snap = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get().then((list){
+      //   FirebaseFirestore.instance.collection('users')
+      //       .doc(list.docs[0].id)
+      //       .get();});
+      // print(snap.docs[0].data()['canundo']);
 
-    if(snap.docs[0].data()['canundo']){
+    // if(snap.docs[0].data()['canundo']){
+
     FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
         {
           'message':message.text,
@@ -60,7 +62,7 @@ class _Approved_ListState extends State<Approved_List> {
           'canundo':false,
         });});
 
-  }
+  //}
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => new Approved_List()));
 
