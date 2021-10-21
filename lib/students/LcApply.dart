@@ -38,6 +38,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
     FirebaseFirestore.instance.collection('users').doc(user.uid).update({
       'is_enabled_LC' : false,
+      'canundo':true,
     });
 
     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('workshop').set(
@@ -115,6 +116,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
         'status':'pending',
         'reason':'',
         'time':Timestamp.now(),
+        'message':'',
       });
     });
 

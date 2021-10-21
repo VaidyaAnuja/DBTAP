@@ -31,20 +31,20 @@ class _AccountSettingsAccountState extends State<AccountSettingsAccount> {
         toolbarHeight: 35,
         centerTitle: true,
         backgroundColor: HexColor("#0E34A0"),
-        actions: <Widget>[
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_rounded,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                // do something
-              },
-            ),
-          ),
-        ],
+        // actions: <Widget>[
+        //   Container(
+        //     alignment: Alignment.topRight,
+        //     child: IconButton(
+        //       icon: Icon(
+        //         Icons.arrow_back_rounded,
+        //         color: Colors.white,
+        //       ),
+        //       onPressed: () {
+        //         // do something
+        //       },
+        //     ),
+        //   ),
+        // ],
       ),
       //drawer: NavigationDrawerWidget(),
       body: Stack(

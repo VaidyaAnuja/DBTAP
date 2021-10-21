@@ -69,6 +69,12 @@ class _HomeTPOState extends State<HomeTPO> {
   }
 
   Future<void> undo(id) async {
+    var snapss = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .get();});
+
+    if(snapss.docs[0].data()['canundo']){
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
     String username = snap['username'];
     FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
@@ -87,7 +93,7 @@ class _HomeTPOState extends State<HomeTPO> {
     });
     Navigator.of(context).pushReplacement(
         new MaterialPageRoute(builder: (context) => new HomeTPO()));
-  }
+  }}
 
   int currentIndex = 0;
   final TextEditingController reason = TextEditingController();
@@ -102,17 +108,17 @@ class _HomeTPOState extends State<HomeTPO> {
         toolbarHeight: 35,
         centerTitle: true,
         backgroundColor: HexColor("#0E34A0"),
-        actions: [
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.arrow_back_rounded,
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   Container(
+        //     alignment: Alignment.topRight,
+        //     child: IconButton(
+        //       onPressed: () {},
+        //       icon: Icon(
+        //         Icons.arrow_back_rounded,
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
       body: Stack(
         children: [

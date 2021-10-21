@@ -1,3 +1,4 @@
+import 'package:beproject/examcell/HomeExamCell.dart';
 import 'package:beproject/examcell/account_ExamCell.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -9,28 +10,64 @@ class Approved_List extends StatefulWidget {
   @override
   _Approved_ListState createState() => _Approved_ListState();
 }
+List checkiftrue1 = [false,false];
+
 
 class _Approved_ListState extends State<Approved_List> {
 
-  Future<Text> getifapproved(id) async {
-    final snap = await FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get();
+  Future<bool> getifapproved(count) async {
+    var j;
+    bool checkiftrue = false;
+    for(j =0 ; j<count; j++){
+    final snap = await FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname[j]).get();
     var uid = snap.docs[0].data()['uid'];
-    final snapshot = FirebaseFirestore.instance.collection('users').doc(uid).collection('No Dues').snapshots();
+    final data = await FirebaseFirestore.instance.collection('users').doc(uid).collection('No Dues').get();
 
     int i;
-    print('something');
-    // for (i=0; i<snap.size; i++){
-    //   if(snap.docs[i].data()['status'] == 'approved'){
-    //      checkiftrue = true;
-    //   }
-    //   else{
-    //     checkiftrue = false;
-    //   }
-    // }
-    return Text('');
+    for (i=0; i<data.size; i++){
+      if(data.docs[i].data()['status'] == 'approved'){
+         checkiftrue = true;
+      }
+      else{
+
+        checkiftrue = false;
+        break;
+      }
+    }
+    checkiftrue1.insert(j,checkiftrue);
+
+    }
+
+    return true;
   }
 
-  bool checkiftrue = false;
+  Future<void> undodisable(id, TextEditingController message) async {
+
+      var snap = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .get();});
+
+    if(snap.docs[0].data()['canundo']){
+    FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
+        {
+          'message':message.text,
+        });
+    FirebaseFirestore.instance.collection('users').where('username', isEqualTo: id).get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id).update(
+        {
+          'canundo':false,
+        });});
+
+  }
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new Approved_List()));
+
+  }
+
+
+  List studentname = [];
   int currentIndex = 0;
   final TextEditingController message = TextEditingController();
   @override
@@ -44,17 +81,17 @@ class _Approved_ListState extends State<Approved_List> {
         toolbarHeight: 35,
         centerTitle: true,
         backgroundColor: HexColor("#0E34A0"),
-        actions: [
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.arrow_back_rounded,
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   Container(
+        //     alignment: Alignment.topRight,
+        //     child: IconButton(
+        //       onPressed: () {},
+        //       icon: Icon(
+        //         Icons.arrow_back_rounded,
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
       body: Stack(
         children: [
@@ -93,10 +130,11 @@ class _Approved_ListState extends State<Approved_List> {
                               itemCount: snapshot.data!.docs.length,
                               itemBuilder: (context, index) {
                                 DocumentSnapshot nodues = snapshot.data!.docs[index];
-                                getifapproved(nodues.id);
-                                print(checkiftrue);
-                                if(checkiftrue == 'true'){
-                                  return ListTile(
+                                studentname.insert(index,nodues.id);
+                                var count = snapshot.data!.docs.length;
+                                getifapproved(count);
+                                if(checkiftrue1[index]){
+                                  return new ListTile(
 
                                     title: Container(
                                       margin: const EdgeInsets.only(left: 30.0, top: 30),
@@ -108,6 +146,7 @@ class _Approved_ListState extends State<Approved_List> {
                                             style: TextStyle(
                                                 fontSize: 20, color: HexColor("#0E34A0")),
                                           ),
+                                          SizedBox(width:30),
                                           ElevatedButton(
                                             onPressed: () => showDialog<String>(
                                               context: context,
@@ -126,7 +165,7 @@ class _Approved_ListState extends State<Approved_List> {
                                                   ),
                                                   TextButton(
                                                     onPressed: () {
-
+                                                      undodisable(nodues.id,message);
                                                       },
                                                     child: const Text('SEND'),
                                                   ),

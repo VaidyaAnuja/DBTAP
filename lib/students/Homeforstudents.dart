@@ -1,4 +1,4 @@
-import 'dart:io' ;
+
 import 'package:beproject/students/accounts_students.dart';
 import 'package:beproject/students/commonapplications.dart';
 import 'package:beproject/students/deletefromothers.dart';
@@ -6,7 +6,6 @@ import 'package:beproject/students/lcprogress.dart';
 import 'package:beproject/students/notificationforstudents.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -176,40 +175,40 @@ class _HomeStudentsState extends State<HomeStudents>{
                     future: _getuserdetails(),
                     builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (snapshot.hasData){
-                      if (snapshot.data!['is_enabled_LC']) {
-                        return Text("");
-                      }
+                        if (snapshot.data!['is_enabled_LC']) {
+                          return Text("");
+                        }
 
-                      else  {
-                        return Column(
-                            children: <Widget>[
-                            SizedBox(height: 20),
-                            Container(
-                            padding: EdgeInsets.only(left:75),
-                            child:Row(
-                                children: <Widget>[
-                                  TextButton(
-                                      onPressed: (){
-                                        Navigator.of(context).push(
-                                            new MaterialPageRoute(builder: (context) => new LC_PROGRESS()));
-                                      },
-                                      child: Text('No Dues',
-                                        style: TextStyle(fontSize: 30, color:Colors.black),
-                                      )),
-                                  SizedBox(width: 125),
-                                  IconButton(onPressed: (){
-                                    Navigator.of(context).pushReplacement(
-                                        new MaterialPageRoute(builder: (context) => new delete_Others()));
-                                  },
-                                    iconSize: 30,
-                                    icon: Icon(Icons.delete),
-                                  )
+                        else  {
+                          return Column(
+                              children: <Widget>[
+                                SizedBox(height: 20),
+                                Container(
+                                    padding: EdgeInsets.only(left:75),
+                                    child:Row(
+                                        children: <Widget>[
+                                          TextButton(
+                                              onPressed: (){
+                                                Navigator.of(context).push(
+                                                    new MaterialPageRoute(builder: (context) => new LC_PROGRESS()));
+                                              },
+                                              child: Text('No Dues',
+                                                style: TextStyle(fontSize: 30, color:Colors.black),
+                                              )),
+                                          SizedBox(width: 125),
+                                          IconButton(onPressed: (){
+                                            Navigator.of(context).pushReplacement(
+                                                new MaterialPageRoute(builder: (context) => new delete_Others()));
+                                          },
+                                            iconSize: 30,
+                                            icon: Icon(Icons.delete),
+                                          )
 
 
-                                ]))]);
-                      }}
+                                        ]))]);
+                        }}
                       else{
-                          return CircularProgressIndicator();
+                        return CircularProgressIndicator();
                       }
 
                       // return CircularProgressIndicator();
@@ -372,8 +371,8 @@ class _HomeStudentsState extends State<HomeStudents>{
 
                   ),
                   label:'Home',
-                    //style: TextStyle(color:Colors.white),
-                  ),
+                  //style: TextStyle(color:Colors.white),
+                ),
 
 
                 BottomNavigationBarItem(
@@ -382,8 +381,8 @@ class _HomeStudentsState extends State<HomeStudents>{
 
                   ),
                   label:'Notifications',
-                    //  style: TextStyle(color:Colors.white),
-                  ),
+                  //  style: TextStyle(color:Colors.white),
+                ),
 
                 BottomNavigationBarItem(
                   icon: new Icon(Icons.manage_accounts,
@@ -391,8 +390,8 @@ class _HomeStudentsState extends State<HomeStudents>{
 
                   ),
                   label:'Account',
-                    //  style: TextStyle(color:Colors.white),
-                  ),
+                  //  style: TextStyle(color:Colors.white),
+                ),
 
               ],
             ),

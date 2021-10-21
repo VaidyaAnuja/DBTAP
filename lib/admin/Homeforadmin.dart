@@ -81,10 +81,18 @@ class _HomeAdminState extends State<HomeAdmin> {
   }
 
   Future<void> undo(id) async {
+    var snapss = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .get();});
+
+    if(snapss.docs[0].data()['canundo']){
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
     String username = snap['username'];
     FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
-        {'status':'pending'});
+        {'status':'pending',
+          'reason':'',
+        });
     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
       FirebaseFirestore.instance.collection('users')
           .doc(list.docs[0].id)
@@ -97,7 +105,7 @@ class _HomeAdminState extends State<HomeAdmin> {
     });
     Navigator.of(context).pushReplacement(
         new MaterialPageRoute(builder: (context) => new HomeAdmin()));
-  }
+  }}
 
   int currentIndex = 0;
   final TextEditingController reason = TextEditingController();

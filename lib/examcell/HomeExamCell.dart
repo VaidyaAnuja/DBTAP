@@ -10,6 +10,7 @@ class HomeExam extends StatefulWidget {
   @override
   _HomeExamState createState() => _HomeExamState();
 }
+List checkiftrue1 = [false,false];
 
 class _HomeExamState extends State<HomeExam> {
 
@@ -69,6 +70,12 @@ class _HomeExamState extends State<HomeExam> {
   }
 
   Future<void> undo(id) async {
+    var snapss = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .get();});
+
+    if(snapss.docs[0].data()['canundo']){
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
     String username = snap['username'];
     FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
@@ -86,7 +93,7 @@ class _HomeExamState extends State<HomeExam> {
       });
     });
     Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new HomeExam()));
+        new MaterialPageRoute(builder: (context) => new HomeExam()));}
   }
 
   int currentIndex = 0;
@@ -102,17 +109,17 @@ class _HomeExamState extends State<HomeExam> {
         toolbarHeight: 35,
         centerTitle: true,
         backgroundColor: HexColor("#0E34A0"),
-        actions: [
-          Container(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.arrow_back_rounded,
-              ),
-            ),
-          )
-        ],
+        // actions: [
+        //   Container(
+        //     alignment: Alignment.topRight,
+        //     child: IconButton(
+        //       onPressed: () {},
+        //       icon: Icon(
+        //         Icons.arrow_back_rounded,
+        //       ),
+        //     ),
+        //   )
+        // ],
       ),
       body: Stack(
         children: [

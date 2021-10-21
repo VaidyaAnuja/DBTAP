@@ -16,7 +16,9 @@ class _delete_OthersState extends State<delete_Others>{
 
   Future<void> deleteapplication(int numofdocs, List nameofteachers) async {
     User user = FirebaseAuth.instance.currentUser!;
+    var snapss = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
 
+    if(snapss.data()!['canundo']){
     FirebaseFirestore.instance.collection('users').doc(user.uid).update({
       'is_enabled_LC' : true,
     });
@@ -41,7 +43,7 @@ class _delete_OthersState extends State<delete_Others>{
             .doc('$username')
             .delete();
       });
-    }
+    }}
     nameofteachers.clear();
 
 
