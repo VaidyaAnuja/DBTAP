@@ -69,10 +69,12 @@ class _HomeTPOState extends State<HomeTPO> {
   }
 
   Future<void> undo(id) async {
-    var snapss = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get().then((list){
-      FirebaseFirestore.instance.collection('users')
-          .doc(list.docs[0].id)
-          .get();});
+    var snapss = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get();
+    //   .then((list){
+    // FirebaseFirestore.instance.collection('users')
+    //     .doc(list.docs[0].id)
+    //     .get();});
+    print(snapss.docs[0].data()['canundo']);
 
     if(snapss.docs[0].data()['canundo']){
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();

@@ -10,7 +10,7 @@ class Approved_List extends StatefulWidget {
   @override
   _Approved_ListState createState() => _Approved_ListState();
 }
-List checkiftrue1 = [false,false];
+List<bool> checkiftrue1 = List.filled(300, false, growable: true);
 
 
 class _Approved_ListState extends State<Approved_List> {
@@ -50,11 +50,21 @@ class _Approved_ListState extends State<Approved_List> {
       // print(snap.docs[0].data()['canundo']);
 
     // if(snap.docs[0].data()['canundo']){
-
-    FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
-        {
-          'message':message.text,
-        });
+    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+    String username = snap['username'];
+    // FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
+    //     {
+    //       'message':message.text,
+    //     });
+    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .collection('No Dues')
+          .doc('$username')
+          .update({
+        'message':message.text,
+      });
+    });
     FirebaseFirestore.instance.collection('users').where('username', isEqualTo: id).get().then((list){
       FirebaseFirestore.instance.collection('users')
           .doc(list.docs[0].id).update(

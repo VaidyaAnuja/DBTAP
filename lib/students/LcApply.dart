@@ -65,6 +65,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
         {
           'status':'pending',
           'reason':'',
+          'message':'',
         });
     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
         {

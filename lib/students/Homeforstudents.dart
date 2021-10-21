@@ -47,13 +47,23 @@ class _HomeStudentsState extends State<HomeStudents>{
   //   // });
   // }
 
+  Future<bool> displayifallapproved() async{
+    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+    canundo = snap['canundo'];
+    String username = snap['username'];
+    final snapss = await await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').doc('ExamCell').get();
+    mssg = snapss['message'];
+    return true;
+
+  }
+
   Future<DocumentSnapshot>_getuserdetails() async{
 
     User user = FirebaseAuth.instance.currentUser!;
 
     return FirebaseFirestore.instance.collection('users').doc(user.uid).get();
   }
-
+bool canundo = true;
 String mssg = '';
   // final FirebaseFirestore _db = FirebaseFirestore.instance;
   // final FirebaseMessaging _fcm = FirebaseMessaging();
@@ -177,11 +187,12 @@ String mssg = '';
                     future: _getuserdetails(),
                     builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (snapshot.hasData){
-                        if (snapshot.data!['is_enabled_LC']) {
+                        displayifallapproved();
+                        if (snapshot.data!['is_enabled_LC'] && (canundo == true || canundo==false)) {
                           return Text("");
                         }
 
-                        else  {
+                        else  if (snapshot.data!['is_enabled_LC']== false && canundo == true){
                           return Column(
                               children: <Widget>[
                                 SizedBox(height: 20),
@@ -208,7 +219,39 @@ String mssg = '';
 
 
                                         ]))]);
-                        }}
+                        }
+                          else{
+                            return Column(
+                              children: <Widget>[
+                                SizedBox(height: 20,),
+                                Row(
+
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: <Widget>[
+                                      SizedBox(width: 45,),
+                                      Text('No Dues',
+                                        style: TextStyle(fontSize: 30, color:Colors.black),
+                                      ),
+                                      SizedBox(width: 90),
+                                      Text('All Approved', style: TextStyle(fontSize: 25, color:Colors.blue),),
+                                    ]
+                                ),
+                                Row(
+                                    children: <Widget>[
+                                      SizedBox(width: 45,),
+                                      TextButton(onPressed: ()=> showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) => AlertDialog(
+                                            title: Text(mssg),)),
+                                        child: Text('See Message', style: TextStyle(fontSize: 20, color:Colors.green),),),
+                                    ]
+                                ),
+                                SizedBox(height: 10,),
+                              ],
+                            );
+                        }
+
+                      }
                       else{
                         return CircularProgressIndicator();
                       }
