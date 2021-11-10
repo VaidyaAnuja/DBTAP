@@ -63,8 +63,8 @@ class _HomeStudentsState extends State<HomeStudents>{
 
     return FirebaseFirestore.instance.collection('users').doc(user.uid).get();
   }
-bool canundo = true;
-String mssg = '';
+var canundo;
+static String mssg = '';
   // final FirebaseFirestore _db = FirebaseFirestore.instance;
   // final FirebaseMessaging _fcm = FirebaseMessaging();
 
