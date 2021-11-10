@@ -48,9 +48,10 @@ class _HomeStudentsState extends State<HomeStudents>{
   // }
 
   Future<bool> displayifallapproved() async{
-    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
-    canundo = snap['canundo'];
+     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+
     String username = snap['username'];
+
     final snapss = await await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').doc('ExamCell').get();
     mssg = snapss['message'];
     return true;
@@ -63,7 +64,6 @@ class _HomeStudentsState extends State<HomeStudents>{
 
     return FirebaseFirestore.instance.collection('users').doc(user.uid).get();
   }
-var canundo;
 static String mssg = '';
   // final FirebaseFirestore _db = FirebaseFirestore.instance;
   // final FirebaseMessaging _fcm = FirebaseMessaging();
@@ -187,12 +187,12 @@ static String mssg = '';
                     future: _getuserdetails(),
                     builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                       if (snapshot.hasData){
-                        displayifallapproved();
-                        if (snapshot.data!['is_enabled_LC'] && (canundo == true || canundo==false)) {
+                        // displayifallapproved();
+                        if (snapshot.data!['is_enabled_LC'] ) {
                           return Text("");
                         }
 
-                        else  if (snapshot.data!['is_enabled_LC']== false && canundo == true){
+                        else  if (snapshot.data!['is_enabled_LC']== false && snapshot.data!['canundo'] == true){
                           return Column(
                               children: <Widget>[
                                 SizedBox(height: 20),
@@ -221,6 +221,7 @@ static String mssg = '';
                                         ]))]);
                         }
                           else{
+                          displayifallapproved();
                             return Column(
                               children: <Widget>[
                                 SizedBox(height: 20,),
