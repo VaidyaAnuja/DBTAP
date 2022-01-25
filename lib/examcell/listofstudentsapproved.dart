@@ -235,7 +235,9 @@ class _Approved_ListState extends State<Approved_List> {
                   currentIndex = index;
                 });
                 if (currentIndex == 0) {
-                  Navigator.of(context).pushNamedAndRemoveUntil('/firstexam', (Route<dynamic> route) => false);
+                  // Navigator.of(context).pushNamedAndRemoveUntil('/firstexam', (Route<dynamic> route) => false);
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                      builder: (context) => new Approved_List()));
                 } else  {
                   Navigator.of(context).push(new MaterialPageRoute(
                       builder: (context) => new AccountSettingsExamCell()));

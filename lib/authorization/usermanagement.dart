@@ -1,6 +1,7 @@
 import 'package:beproject/accounts/HomeAccounts.dart';
 import 'package:beproject/admin/Homeforadmin.dart';
 import 'package:beproject/examcell/HomeExamCell.dart';
+import 'package:beproject/examcell/listofstudentsapproved.dart';
 import 'package:beproject/library/HomeLibrary.dart';
 import 'package:beproject/tpo/HomeTPO.dart';
 import 'package:beproject/workshop/HomeWorkshop.dart';
@@ -52,7 +53,7 @@ class _ManageUserState extends State<ManageUser> {
     else if(snap['role'] == 'examcell'){
 
       Navigator.of(context).pushReplacement(
-          new MaterialPageRoute(builder: (context) => new HomeExam()));
+          new MaterialPageRoute(builder: (context) => new Approved_List()));
     }
     else if(snap['role'] == 'tpo'){
 

@@ -56,7 +56,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
       ),
       //drawer: NavigationDrawerWidget(),
       body: Stack(
-
+        fit: StackFit.expand,
         children: <Widget>[
           Container(
             child: SingleChildScrollView(
@@ -84,6 +84,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                           physics: NeverScrollableScrollPhysics(),
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
+
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
                             DocumentSnapshot nodues = snapshot.data!.docs[index];
@@ -159,7 +160,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                                 child: Text('See Reason', style: TextStyle(fontSize: 20, color:Colors.green),),),
                                           ]
                                       ),
-                                      SizedBox(height: 10,),
+                                      SizedBox(height: 20,),
                                     ],
                                   ),
                                 );

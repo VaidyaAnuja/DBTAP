@@ -52,7 +52,7 @@ class _HomeStudentsState extends State<HomeStudents>{
 
     String username = snap['username'];
 
-    final snapss = await await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').doc('ExamCell').get();
+    final snapss =  await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').doc('ExamCell').get();
     mssg = snapss['message'];
     return true;
 

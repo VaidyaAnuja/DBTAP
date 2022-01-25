@@ -18,6 +18,8 @@ class LC_APPLY extends StatefulWidget{
 
 List select = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
 List TeacherName = [];
+List s = [false,false,false,false,false];
+List ExamName = ['GRE', 'GATE', 'CAT', 'IELTS', 'TOFEL'];
 
 class _LC_APPLYState extends State<LC_APPLY>{
   // bool isSana = false;
@@ -27,7 +29,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
   int count =0;
 
 
-  Future<void> changestate() async{
+  Future<void> changestate(TextEditingController seatnumber, TextEditingController Marks) async{
 
 
     User user = FirebaseAuth.instance.currentUser!;
@@ -35,500 +37,312 @@ class _LC_APPLYState extends State<LC_APPLY>{
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
     String username = snap['username'];
 
-
-    FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-      'is_enabled_LC' : false,
-      'canundo':true,
-    });
-
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('workshop').set(
-        {
-          'status':'pending',
-          'reason':'',
-        });
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('library').set(
-        {
-          'status':'pending',
-          'reason':'',
-        });
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('accounts').set(
-        {
-          'status':'pending',
-          'reason':'',
-        });
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('admin').set(
-        {
-          'status':'pending',
-          'reason':'',
-        });
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
-        {
-          'status':'pending',
-          'reason':'',
-          'message':'',
-        });
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
-        {
-          'status':'pending',
-          'reason':'',
-        });
-    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'admin').get().then((list){
-      FirebaseFirestore.instance.collection('users')
-          .doc(list.docs[0].id)
-          .collection('NoDues')
-          .doc('$username')
-          .set({
-        'status':'pending',
-        'reason':'',
-        'time':Timestamp.now(),
-      });
-    });
-
-    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'workshop').get().then((list){
-      FirebaseFirestore.instance.collection('users')
-          .doc(list.docs[0].id)
-          .collection('NoDues')
-          .doc('$username')
-          .set({
-        'status':'pending',
-        'reason':'',
-        'time':Timestamp.now(),
-      });
-    });
-
-    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'library').get().then((list){
-      FirebaseFirestore.instance.collection('users')
-          .doc(list.docs[0].id)
-          .collection('NoDues')
-          .doc('$username')
-          .set({
-        'status':'pending',
-        'reason':'',
-        'time':Timestamp.now(),
-      });
-    });
-
-    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'ExamCell').get().then((list){
-      FirebaseFirestore.instance.collection('users')
-          .doc(list.docs[0].id)
-          .collection('NoDues')
-          .doc('$username')
-          .set({
-        'status':'pending',
-        'reason':'',
-        'time':Timestamp.now(),
-        'message':'',
-      });
-    });
-
-    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'TPO').get().then((list){
-      FirebaseFirestore.instance.collection('users')
-          .doc(list.docs[0].id)
-          .collection('NoDues')
-          .doc('$username')
-          .set({
-        'status':'pending',
-        'reason':'',
-        'time':Timestamp.now(),
-      });
-    });
-    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'accounts').get().then((list){
-      FirebaseFirestore.instance.collection('users')
-          .doc(list.docs[0].id)
-          .collection('NoDues')
-          .doc('$username')
-          .set({
-        'status':'pending',
-        'reason':'',
-        'time':Timestamp.now(),
-      });
-    });
-    var i;
-    for(i=0; i<count; i++){
-      if(select[i]){
-        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc(TeacherName[i]).set(
-            {
-              'status':'pending',
-              'reason':'',
-            });
-        FirebaseFirestore.instance.collection('users').where("username", isEqualTo: TeacherName[i]).get().then((list){
-          FirebaseFirestore.instance.collection('users')
-              .doc(list.docs[0].id)
-              .collection('NoDues')
-              .doc('$username')
-              .set({
-            'status':'pending',
-            'reason':'',
-            'time':Timestamp.now(),
-          });
-        });
-      }
+    if(seatnumber.text == ""){
+      print('Text Field is empty, Please Fill All Data');
     }
 
-    // Navigator.of(context).pushReplacement(
-    //     new MaterialPageRoute(builder: (context) => new HomeStudents()));
-    Navigator.of(context).pushNamedAndRemoveUntil('/firststudents', (Route<dynamic> route) => false);
+    else{
+      FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'is_enabled_LC' : false,
+        'canundo':true,
+        'seatnumber': int.parse(seatnumber.text.trim()),
+      });
+
+      for(int i =0; i<5; i++){
+        if(s[i]){
+          FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc(ExamName[i]).set({
+            'some':'yes',
+          });
+        }
+      }
+
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc('maxmarks').set({
+        'marks':Marks.text.trim(),
+      });
+
+
+
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('workshop').set(
+          {
+            'status':'pending',
+            'reason':'',
+          });
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('library').set(
+          {
+            'status':'pending',
+            'reason':'',
+          });
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('accounts').set(
+          {
+            'status':'pending',
+            'reason':'',
+          });
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('admin').set(
+          {
+            'status':'pending',
+            'reason':'',
+          });
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
+          {
+            'status':'pending',
+            'reason':'',
+            'message':'',
+          });
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
+          {
+            'status':'pending',
+            'reason':'',
+          });
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'admin').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+          'time':Timestamp.now(),
+        });
+      });
+
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'workshop').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+          'time':Timestamp.now(),
+        });
+      });
+
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'library').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+          'time':Timestamp.now(),
+        });
+      });
+
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'ExamCell').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+          'time':Timestamp.now(),
+          'message':'',
+        });
+      });
+
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'TPO').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+          'time':Timestamp.now(),
+        });
+      });
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'accounts').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('NoDues')
+            .doc('$username')
+            .set({
+          'status':'pending',
+          'reason':'',
+          'time':Timestamp.now(),
+        });
+      });
+      var i;
+      for(i=0; i<count; i++){
+        if(select[i]){
+          FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc(TeacherName[i]).set(
+              {
+                'status':'pending',
+                'reason':'',
+              });
+          FirebaseFirestore.instance.collection('users').where("username", isEqualTo: TeacherName[i]).get().then((list){
+            FirebaseFirestore.instance.collection('users')
+                .doc(list.docs[0].id)
+                .collection('NoDues')
+                .doc('$username')
+                .set({
+              'status':'pending',
+              'reason':'',
+              'time':Timestamp.now(),
+            });
+          });
+        }
+      }
+
+      // Navigator.of(context).pushReplacement(
+      //     new MaterialPageRoute(builder: (context) => new HomeStudents()));
+      Navigator.of(context).pushNamedAndRemoveUntil('/firststudents', (Route<dynamic> route) => false);
+    }
+    // FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+    //   'is_enabled_LC' : false,
+    //   'canundo':true,
+    //   'seatnumber': int.parse(seatnumber.text.trim()),
+    // });
+    //
+    // for(int i =0; i<5; i++){
+    //   if(s[i]){
+    //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc(ExamName[i]).set({
+    //       'some':'yes',
+    //     });
+    //   }
+    // }
+    //
+    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc('maxmarks').set({
+    //   'marks':Marks.text.trim(),
+    // });
+    //
+    //
+    //
+    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('workshop').set(
+    //     {
+    //       'status':'pending',
+    //       'reason':'',
+    //     });
+    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('library').set(
+    //     {
+    //       'status':'pending',
+    //       'reason':'',
+    //     });
+    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('accounts').set(
+    //     {
+    //       'status':'pending',
+    //       'reason':'',
+    //     });
+    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('admin').set(
+    //     {
+    //       'status':'pending',
+    //       'reason':'',
+    //     });
+    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
+    //     {
+    //       'status':'pending',
+    //       'reason':'',
+    //       'message':'',
+    //     });
+    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
+    //     {
+    //       'status':'pending',
+    //       'reason':'',
+    //     });
+    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'admin').get().then((list){
+    //   FirebaseFirestore.instance.collection('users')
+    //       .doc(list.docs[0].id)
+    //       .collection('NoDues')
+    //       .doc('$username')
+    //       .set({
+    //     'status':'pending',
+    //     'reason':'',
+    //     'time':Timestamp.now(),
+    //   });
+    // });
+    //
+    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'workshop').get().then((list){
+    //   FirebaseFirestore.instance.collection('users')
+    //       .doc(list.docs[0].id)
+    //       .collection('NoDues')
+    //       .doc('$username')
+    //       .set({
+    //     'status':'pending',
+    //     'reason':'',
+    //     'time':Timestamp.now(),
+    //   });
+    // });
+    //
+    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'library').get().then((list){
+    //   FirebaseFirestore.instance.collection('users')
+    //       .doc(list.docs[0].id)
+    //       .collection('NoDues')
+    //       .doc('$username')
+    //       .set({
+    //     'status':'pending',
+    //     'reason':'',
+    //     'time':Timestamp.now(),
+    //   });
+    // });
+    //
+    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'ExamCell').get().then((list){
+    //   FirebaseFirestore.instance.collection('users')
+    //       .doc(list.docs[0].id)
+    //       .collection('NoDues')
+    //       .doc('$username')
+    //       .set({
+    //     'status':'pending',
+    //     'reason':'',
+    //     'time':Timestamp.now(),
+    //     'message':'',
+    //   });
+    // });
+    //
+    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'TPO').get().then((list){
+    //   FirebaseFirestore.instance.collection('users')
+    //       .doc(list.docs[0].id)
+    //       .collection('NoDues')
+    //       .doc('$username')
+    //       .set({
+    //     'status':'pending',
+    //     'reason':'',
+    //     'time':Timestamp.now(),
+    //   });
+    // });
+    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'accounts').get().then((list){
+    //   FirebaseFirestore.instance.collection('users')
+    //       .doc(list.docs[0].id)
+    //       .collection('NoDues')
+    //       .doc('$username')
+    //       .set({
+    //     'status':'pending',
+    //     'reason':'',
+    //     'time':Timestamp.now(),
+    //   });
+    // });
+    // var i;
+    // for(i=0; i<count; i++){
+    //   if(select[i]){
+    //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc(TeacherName[i]).set(
+    //         {
+    //           'status':'pending',
+    //           'reason':'',
+    //         });
+    //     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: TeacherName[i]).get().then((list){
+    //       FirebaseFirestore.instance.collection('users')
+    //           .doc(list.docs[0].id)
+    //           .collection('NoDues')
+    //           .doc('$username')
+    //           .set({
+    //         'status':'pending',
+    //         'reason':'',
+    //         'time':Timestamp.now(),
+    //       });
+    //     });
+    //   }
+    // }
+    //
+    // // Navigator.of(context).pushReplacement(
+    // //     new MaterialPageRoute(builder: (context) => new HomeStudents()));
+    // Navigator.of(context).pushNamedAndRemoveUntil('/firststudents', (Route<dynamic> route) => false);
 
   }
 
+  final TextEditingController seatnumber = TextEditingController();
+  final TextEditingController Marks = TextEditingController();
 
-  // Future<void> apply(isSana, isDeepali) async
-  // {
-  //
-  //   User user = FirebaseAuth.instance.currentUser!;
-  //
-  //   final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-  //   String username = snap['username'];
-  //
-  //
-  //   FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-  //     'is_enabled_LC' : false,
-  //   });
-  //
-  //   FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('workshop').set(
-  //       {
-  //         'status':'pending',
-  //         'reason':'',
-  //       });
-  //   FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('library').set(
-  //       {
-  //         'status':'pending',
-  //         'reason':'',
-  //       });
-  //   FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('accounts').set(
-  //       {
-  //         'status':'pending',
-  //         'reason':'',
-  //       });
-  //   FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('admin').set(
-  //       {
-  //         'status':'pending',
-  //         'reason':'',
-  //       });
-  //   FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
-  //       {
-  //         'status':'pending',
-  //         'reason':'',
-  //       });
-  //   FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
-  //       {
-  //         'status':'pending',
-  //         'reason':'',
-  //       });
-  //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'admin').get().then((list){
-  //     FirebaseFirestore.instance.collection('users')
-  //         .doc(list.docs[0].id)
-  //         .collection('NoDues')
-  //         .doc('$username')
-  //         .set({
-  //       'status':'pending',
-  //       'reason':'',
-  //       'time':Timestamp.now(),
-  //     });
-  //   });
-  //
-  //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'workshop').get().then((list){
-  //     FirebaseFirestore.instance.collection('users')
-  //         .doc(list.docs[0].id)
-  //         .collection('NoDues')
-  //         .doc('$username')
-  //         .set({
-  //       'status':'pending',
-  //       'reason':'',
-  //       'time':Timestamp.now(),
-  //     });
-  //   });
-  //
-  //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'library').get().then((list){
-  //     FirebaseFirestore.instance.collection('users')
-  //         .doc(list.docs[0].id)
-  //         .collection('NoDues')
-  //         .doc('$username')
-  //         .set({
-  //       'status':'pending',
-  //       'reason':'',
-  //       'time':Timestamp.now(),
-  //     });
-  //   });
-  //
-  //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'ExamCell').get().then((list){
-  //     FirebaseFirestore.instance.collection('users')
-  //         .doc(list.docs[0].id)
-  //         .collection('NoDues')
-  //         .doc('$username')
-  //         .set({
-  //       'status':'pending',
-  //       'reason':'',
-  //       'time':Timestamp.now(),
-  //     });
-  //   });
-  //
-  //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'TPO').get().then((list){
-  //     FirebaseFirestore.instance.collection('users')
-  //         .doc(list.docs[0].id)
-  //         .collection('NoDues')
-  //         .doc('$username')
-  //         .set({
-  //       'status':'pending',
-  //       'reason':'',
-  //       'time':Timestamp.now(),
-  //     });
-  //   });
-  //   FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'accounts').get().then((list){
-  //     FirebaseFirestore.instance.collection('users')
-  //         .doc(list.docs[0].id)
-  //         .collection('NoDues')
-  //         .doc('$username')
-  //         .set({
-  //       'status':'pending',
-  //       'reason':'',
-  //       'time':Timestamp.now(),
-  //     });
-  //   });
-  //
-  //
-  //
-  //   if(isSana == true && isDeepali != true && isSejal != true){
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
-  //         {
-  //
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'sana').get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //   }
-  //   else if(isDeepali == true && isSana != true && isSejal != true){
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
-  //         {
-  //
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'deepali').get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //   }
-  //
-  //   else if(isSejal == true && isSana != true && isDeepali != true){
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
-  //         {
-  //
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'sejal').get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //   }
-  //
-  //   else if(isDeepali == true && isSana == true && isSejal != true){
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
-  //         {
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
-  //         {
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //
-  //     FirebaseFirestore.instance.collection('users')
-  //         .where("username", isEqualTo: 'sana')
-  //         .get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //     FirebaseFirestore.instance.collection('users')
-  //         .where("username", isEqualTo: 'deepali')
-  //         .get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //   }
-  //
-  //   else if(isDeepali == true && isSana != true && isSejal == true){
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
-  //         {
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
-  //         {
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //
-  //     FirebaseFirestore.instance.collection('users')
-  //         .where("username", isEqualTo: 'sejal')
-  //         .get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //     FirebaseFirestore.instance.collection('users')
-  //         .where("username", isEqualTo: 'deepali')
-  //         .get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //   }
-  //
-  //   else if(isDeepali != true && isSana == true && isSejal == true){
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
-  //         {
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
-  //         {
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //
-  //     FirebaseFirestore.instance.collection('users')
-  //         .where("username", isEqualTo: 'sana')
-  //         .get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //     FirebaseFirestore.instance.collection('users')
-  //         .where("username", isEqualTo: 'sejal')
-  //         .get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //   }
-  //
-  //   else {
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sana').set(
-  //         {
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('sejal').set(
-  //         {
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //
-  //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('deepali').set(
-  //         {
-  //           'status':'pending',
-  //           'reason':'',
-  //         });
-  //
-  //     FirebaseFirestore.instance.collection('users')
-  //         .where("username", isEqualTo: 'sana')
-  //         .get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //     FirebaseFirestore.instance.collection('users')
-  //         .where("username", isEqualTo: 'sejal')
-  //         .get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //
-  //     FirebaseFirestore.instance.collection('users')
-  //         .where("username", isEqualTo: 'deepali')
-  //         .get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('NoDues')
-  //           .doc('$username')
-  //           .set({
-  //         'status':'pending',
-  //         'reason':'',
-  //         'time':Timestamp.now(),
-  //       });
-  //     });
-  //   }
-  //   Navigator.of(context).pushReplacement(
-  //       new MaterialPageRoute(builder: (context) => new HomeStudents()));
-  // }
 
   @override
   Widget build(BuildContext context){
@@ -543,6 +357,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
       }
       return Colors.green;
     }
+
+
     return Scaffold(
       appBar: AppBar(
         title: Text('DBTap', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
@@ -647,91 +463,213 @@ class _LC_APPLYState extends State<LC_APPLY>{
                       }
                   ),
 
-
-                  // Container(
-                  //   margin: const EdgeInsets.only(left: 20.0),
-                  //   child:Row(
-                  //
-                  //     children: <Widget>[
-                  //       Text('Prof. Sana Sheikh',
-                  //         style: TextStyle(fontSize: 30),
-                  //       ),
-                  //       SizedBox(width: 86),
-                  //       Transform.scale(
-                  //         scale: 2,
-                  //         child: Checkbox(
-                  //
-                  //           checkColor: Colors.white,
-                  //           fillColor: MaterialStateProperty.resolveWith(getColor),
-                  //           value: isSana,
-                  //           onChanged: (bool? value) {
-                  //             setState(() {
-                  //               isSana = value!;
-                  //             });
-                  //           },
-                  //         ),),
-                  //     ],
-                  //   ),),
-                  //
                   // SizedBox(height: 20),
-                  //
                   // Container(
-                  //   margin: const EdgeInsets.only(left: 20.0),
-                  //   child:Row(
                   //
-                  //     children: <Widget>[
-                  //       Text('Prof. Sejal Chopra',
-                  //         style: TextStyle(fontSize: 30),
-                  //       ),
-                  //       SizedBox(width: 86),
-                  //       Transform.scale(
-                  //         scale: 2,
-                  //         child: Checkbox(
-                  //
-                  //           checkColor: Colors.white,
-                  //           fillColor: MaterialStateProperty.resolveWith(getColor),
-                  //           value: isSejal,
-                  //           onChanged: (bool? value) {
-                  //             setState(() {
-                  //               isSejal = value!;
-                  //             });
-                  //           },
-                  //         ),),
-                  //     ],
-                  //   ),),
-                  //
-                  // SizedBox(height: 20),
-                  //
-                  // Container(
-                  //   margin: const EdgeInsets.only(left: 20.0),
-                  //   child:Row(
-                  //
-                  //     children: <Widget>[
-                  //       Text('Prof. Deepali Kayande',
-                  //         style: TextStyle(fontSize: 30),
-                  //       ),
-                  //       SizedBox(width: 30),
-                  //       Transform.scale(
-                  //         scale: 2,
-                  //         child: Checkbox(
-                  //
-                  //           checkColor: Colors.white,
-                  //           fillColor: MaterialStateProperty.resolveWith(getColor),
-                  //           value: isDeepali,
-                  //           onChanged: (bool? value) {
-                  //             setState(() {
-                  //               isDeepali = value!;
-                  //             });
-                  //           },
-                  //         ),),
-                  //     ],
-                  //   ),),
+                  //   margin: const EdgeInsets.only(left: 30.0),
+                  //   alignment: Alignment.topLeft,
+                  //   child: Text('Enter your exam seat number',
+                  //     style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
+                  //   ),
+                  // ),
                   SizedBox(height: 20),
+
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: seatnumber,
+                      decoration: InputDecoration(
+                          labelText: "Exam Seat Number",
+
+                          labelStyle: TextStyle(fontSize: 30)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: Text('Select the exams you have appeared for(if any).',
+                      style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+
+                        Text(("GRE"),
+                          style: TextStyle(fontSize: 30, color:Colors.black),
+                        ),
+
+                        Transform.scale(
+                          scale: 2,
+                          child: Checkbox(
+
+                            checkColor: Colors.white,
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
+                            value: s[0],
+                            onChanged: (bool? value) {
+                              setState(() {
+                                s[0] = value;
+
+
+                              });
+
+                            },
+                          ),),
+                      ]
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+
+                        Text(("GATE"),
+                          style: TextStyle(fontSize: 30, color:Colors.black),
+                        ),
+
+                        Transform.scale(
+                          scale: 2,
+                          child: Checkbox(
+
+                            checkColor: Colors.white,
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
+                            value: s[1],
+                            onChanged: (bool? value) {
+                              setState(() {
+                                s[1] = value;
+
+
+                              });
+
+                            },
+                          ),),
+                      ]
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+
+                        Text(("CAT"),
+                          style: TextStyle(fontSize: 30, color:Colors.black),
+                        ),
+
+                        Transform.scale(
+                          scale: 2,
+                          child: Checkbox(
+
+                            checkColor: Colors.white,
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
+                            value: s[2],
+                            onChanged: (bool? value) {
+                              setState(() {
+                                s[2] = value;
+
+
+                              });
+
+                            },
+                          ),),
+                      ]
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+
+                        Text(("IELTS"),
+                          style: TextStyle(fontSize: 30, color:Colors.black),
+                        ),
+
+                        Transform.scale(
+                          scale: 2,
+                          child: Checkbox(
+
+                            checkColor: Colors.white,
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
+                            value: s[3],
+                            onChanged: (bool? value) {
+                              setState(() {
+                                s[3] = value;
+
+
+                              });
+
+                            },
+                          ),),
+                      ]
+                  ),
+
+                  SizedBox(height: 10),
+
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+
+                        Text(("TOFEL"),
+                          style: TextStyle(fontSize: 30, color:Colors.black),
+                        ),
+
+                        Transform.scale(
+                          scale: 2,
+                          child: Checkbox(
+
+                            checkColor: Colors.white,
+                            fillColor: MaterialStateProperty.resolveWith(getColor),
+                            value: s[4],
+                            onChanged: (bool? value) {
+                              setState(() {
+                                s[4] = value;
+
+
+                              });
+
+                            },
+                          ),),
+                      ]
+                  ),
+
+                  SizedBox(height: 20),
+
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: Marks,
+                      decoration: InputDecoration(
+                          labelText: "Highest Marks you received",
+
+                          labelStyle: TextStyle(fontSize: 30)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+
+                  SizedBox(height: 20),
+
                   TextButton(
                       onPressed: (){
-                        changestate();
+                        changestate(seatnumber,Marks);
                       },
                       child: Text('Apply for No Dues', style:TextStyle(fontSize: 30, color:HexColor("#0E34A0")))),
+                  SizedBox(height: 80),
 
                 ],
 

@@ -61,6 +61,7 @@ class _LoginScrState extends State<LoginScr>{
           backgroundColor: HexColor("#0E34A0"),
         ),
         body: Stack(
+          fit: StackFit.expand,
         children: <Widget>[
           Container(
 

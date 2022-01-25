@@ -1,6 +1,7 @@
 
 import 'package:beproject/authorization/authorization.dart';
 import 'package:beproject/examcell/HomeExamCell.dart';
+import 'package:beproject/examcell/listofstudentsapproved.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -119,7 +120,9 @@ class _AccountSettingsExamCellState extends State<AccountSettingsExamCell> {
                   currentIndex = index;
                 });
                 if (currentIndex == 0) {
-                  Navigator.of(context).pushNamedAndRemoveUntil('/firstexam', (Route<dynamic> route) => false);
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                      builder: (context) => new Approved_List()));
+                 // Navigator.of(context).pushNamedAndRemoveUntil('/firstexam', (Route<dynamic> route) => false);
                 } else{
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
                       builder: (context) => new AccountSettingsExamCell()));
