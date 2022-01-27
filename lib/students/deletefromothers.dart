@@ -23,6 +23,10 @@ class _delete_OthersState extends State<delete_Others>{
       'is_enabled_LC' : true,
     });
 
+    FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+      'seatnumber' : 1000000,
+    });
+
     final collectionRef = FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues');
     final futureQuery = collectionRef.get();
     await futureQuery.then((value) => value.docs.forEach((element) {
@@ -34,6 +38,9 @@ class _delete_OthersState extends State<delete_Others>{
     await future.then((value) => value.docs.forEach((element) {
       element.reference.delete();
     }));
+
+
+
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
     String username = snap['username'];
 

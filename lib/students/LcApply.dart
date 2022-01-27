@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:email_validator/email_validator.dart';
 
 class LC_APPLY extends StatefulWidget{
 
@@ -27,9 +27,29 @@ class _LC_APPLYState extends State<LC_APPLY>{
   // bool isSejal = false;
   int currentIndex=0;
   int count =0;
+  bool atleastone = false;
 
+  Future<void> emailerror() async{
+    final text = 'Please input correct email type.';
+    final snackBar = SnackBar(
 
-  Future<void> changestate(TextEditingController seatnumber, TextEditingController Marks) async{
+      duration: Duration(seconds: 30),
+      content: Text(text,
+        style: TextStyle(fontSize: 16, color: Colors.white),),
+      action: SnackBarAction(
+
+        label: 'Dismiss',
+
+        textColor: Colors.yellow,
+        onPressed: (){
+        },
+      ),
+      backgroundColor: HexColor("#0E34A0"),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  Future<void> changestate(TextEditingController seatnumber, TextEditingController Marks, TextEditingController Name, TextEditingController yearofadd, TextEditingController rn, TextEditingController address, TextEditingController emailid, TextEditingController contactnum, TextEditingController altcontactnum, TextEditingController statusstring,) async{
 
 
     User user = FirebaseAuth.instance.currentUser!;
@@ -37,8 +57,33 @@ class _LC_APPLYState extends State<LC_APPLY>{
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
     String username = snap['username'];
 
-    if(seatnumber.text == ""){
-      print('Text Field is empty, Please Fill All Data');
+    for(int j=0; j<count; j++){
+      if(select[j]){
+        atleastone = true;
+        break;
+      }
+    }
+    if(seatnumber.text == "" || atleastone == false || Name.text == "" || yearofadd.text == "" || rn.text=="" || address.text == "" || contactnum.text=="" || altcontactnum.text=="" || statusstring.text == ""){
+      //print('Text Field is empty, Please Fill All Data');
+
+      final text = 'Please fill in all the required fields.';
+      final snackBar = SnackBar(
+
+        duration: Duration(seconds: 30),
+        content: Text(text,
+          style: TextStyle(fontSize: 16, color: Colors.white),),
+        action: SnackBarAction(
+
+          label: 'Dismiss',
+
+          textColor: Colors.yellow,
+          onPressed: (){
+          },
+        ),
+        backgroundColor: HexColor("#0E34A0"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
     }
 
     else{
@@ -55,11 +100,28 @@ class _LC_APPLYState extends State<LC_APPLY>{
           });
         }
       }
+      if(Marks.text == ""){
+        }
+        else{
+        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc('maxmarks').set({
+        'marks':int.parse(Marks.text.trim()),
+      });}
 
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc('maxmarks').set({
-        'marks':Marks.text.trim(),
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('General').doc('Details').set({
+      'Name':Name.text.trim(),
+        "Admission Year": yearofadd.text.trim(),
+        "Registration Number": rn.text.trim(),
+        "Address": address.text.trim(),
+        "EmailID": emailid.text.trim(),
+        "Contact":contactnum.text.trim(),
+        "Alternate Contact": altcontactnum.text.trim()
+
       });
 
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('General').doc('Further').set({
+        "Status": selectstatus,
+        "Brief": statusstring.text.trim()
+      });
 
 
       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('workshop').set(
@@ -190,159 +252,23 @@ class _LC_APPLYState extends State<LC_APPLY>{
       //     new MaterialPageRoute(builder: (context) => new HomeStudents()));
       Navigator.of(context).pushNamedAndRemoveUntil('/firststudents', (Route<dynamic> route) => false);
     }
-    // FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-    //   'is_enabled_LC' : false,
-    //   'canundo':true,
-    //   'seatnumber': int.parse(seatnumber.text.trim()),
-    // });
-    //
-    // for(int i =0; i<5; i++){
-    //   if(s[i]){
-    //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc(ExamName[i]).set({
-    //       'some':'yes',
-    //     });
-    //   }
-    // }
-    //
-    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc('maxmarks').set({
-    //   'marks':Marks.text.trim(),
-    // });
-    //
-    //
-    //
-    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('workshop').set(
-    //     {
-    //       'status':'pending',
-    //       'reason':'',
-    //     });
-    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('library').set(
-    //     {
-    //       'status':'pending',
-    //       'reason':'',
-    //     });
-    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('accounts').set(
-    //     {
-    //       'status':'pending',
-    //       'reason':'',
-    //     });
-    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('admin').set(
-    //     {
-    //       'status':'pending',
-    //       'reason':'',
-    //     });
-    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
-    //     {
-    //       'status':'pending',
-    //       'reason':'',
-    //       'message':'',
-    //     });
-    // FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
-    //     {
-    //       'status':'pending',
-    //       'reason':'',
-    //     });
-    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'admin').get().then((list){
-    //   FirebaseFirestore.instance.collection('users')
-    //       .doc(list.docs[0].id)
-    //       .collection('NoDues')
-    //       .doc('$username')
-    //       .set({
-    //     'status':'pending',
-    //     'reason':'',
-    //     'time':Timestamp.now(),
-    //   });
-    // });
-    //
-    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'workshop').get().then((list){
-    //   FirebaseFirestore.instance.collection('users')
-    //       .doc(list.docs[0].id)
-    //       .collection('NoDues')
-    //       .doc('$username')
-    //       .set({
-    //     'status':'pending',
-    //     'reason':'',
-    //     'time':Timestamp.now(),
-    //   });
-    // });
-    //
-    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'library').get().then((list){
-    //   FirebaseFirestore.instance.collection('users')
-    //       .doc(list.docs[0].id)
-    //       .collection('NoDues')
-    //       .doc('$username')
-    //       .set({
-    //     'status':'pending',
-    //     'reason':'',
-    //     'time':Timestamp.now(),
-    //   });
-    // });
-    //
-    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'ExamCell').get().then((list){
-    //   FirebaseFirestore.instance.collection('users')
-    //       .doc(list.docs[0].id)
-    //       .collection('NoDues')
-    //       .doc('$username')
-    //       .set({
-    //     'status':'pending',
-    //     'reason':'',
-    //     'time':Timestamp.now(),
-    //     'message':'',
-    //   });
-    // });
-    //
-    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'TPO').get().then((list){
-    //   FirebaseFirestore.instance.collection('users')
-    //       .doc(list.docs[0].id)
-    //       .collection('NoDues')
-    //       .doc('$username')
-    //       .set({
-    //     'status':'pending',
-    //     'reason':'',
-    //     'time':Timestamp.now(),
-    //   });
-    // });
-    // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'accounts').get().then((list){
-    //   FirebaseFirestore.instance.collection('users')
-    //       .doc(list.docs[0].id)
-    //       .collection('NoDues')
-    //       .doc('$username')
-    //       .set({
-    //     'status':'pending',
-    //     'reason':'',
-    //     'time':Timestamp.now(),
-    //   });
-    // });
-    // var i;
-    // for(i=0; i<count; i++){
-    //   if(select[i]){
-    //     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc(TeacherName[i]).set(
-    //         {
-    //           'status':'pending',
-    //           'reason':'',
-    //         });
-    //     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: TeacherName[i]).get().then((list){
-    //       FirebaseFirestore.instance.collection('users')
-    //           .doc(list.docs[0].id)
-    //           .collection('NoDues')
-    //           .doc('$username')
-    //           .set({
-    //         'status':'pending',
-    //         'reason':'',
-    //         'time':Timestamp.now(),
-    //       });
-    //     });
-    //   }
-    // }
-    //
-    // // Navigator.of(context).pushReplacement(
-    // //     new MaterialPageRoute(builder: (context) => new HomeStudents()));
-    // Navigator.of(context).pushNamedAndRemoveUntil('/firststudents', (Route<dynamic> route) => false);
 
   }
 
   final TextEditingController seatnumber = TextEditingController();
   final TextEditingController Marks = TextEditingController();
+  final TextEditingController Name = TextEditingController();
+  final TextEditingController yearofadd = TextEditingController();
+  final TextEditingController rn = TextEditingController();
+  final TextEditingController address = TextEditingController();
+  final TextEditingController emailid = TextEditingController();
+  final TextEditingController contactnum = TextEditingController();
+  final TextEditingController altcontactnum = TextEditingController();
+  final TextEditingController statusstring = TextEditingController();
 
+  int _v=1;
+  String EmploymentStat = "Enter Employer and LPA";
+  String selectstatus="Campus Employment";
 
   @override
   Widget build(BuildContext context){
@@ -392,9 +318,9 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
                   Container(
 
-                    margin: const EdgeInsets.only(left: 30.0,top:75),
+                    margin: const EdgeInsets.only(left: 30.0,top:50),
                     alignment: Alignment.topLeft,
-                    child: Text('No Dues - Select your project guide.',
+                    child: Text('No Dues - Select your project guide.(Required)',
                       style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
                     ),
                   ),
@@ -463,17 +389,24 @@ class _LC_APPLYState extends State<LC_APPLY>{
                       }
                   ),
 
-                  // SizedBox(height: 20),
-                  // Container(
-                  //
-                  //   margin: const EdgeInsets.only(left: 30.0),
-                  //   alignment: Alignment.topLeft,
-                  //   child: Text('Enter your exam seat number',
-                  //     style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
-                  //   ),
-                  // ),
+
                   SizedBox(height: 20),
 
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: Name,
+                      decoration: InputDecoration(
+                          labelText: "Name as in hallticket (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
 
                   Container(
 
@@ -482,13 +415,193 @@ class _LC_APPLYState extends State<LC_APPLY>{
                     child: TextField(
                       controller: seatnumber,
                       decoration: InputDecoration(
-                          labelText: "Exam Seat Number",
+                          labelText: "Exam Seat Number (Required)",
 
-                          labelStyle: TextStyle(fontSize: 30)
+                          labelStyle: TextStyle(fontSize: 25)
                       ),
                       style: TextStyle(fontSize: 25,),
                     ),
                   ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: yearofadd,
+                      decoration: InputDecoration(
+                          labelText: "Year of Addmission (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: rn,
+                      decoration: InputDecoration(
+                          labelText: "Registration Number (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: address,
+                      decoration: InputDecoration(
+                          labelText: "Address for communication (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: emailid,
+
+                      decoration: InputDecoration(
+                          labelText: "Email ID (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: contactnum,
+                      decoration: InputDecoration(
+                          labelText: "Contact Number (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: altcontactnum,
+                      decoration: InputDecoration(
+                          labelText: "Alternate Contact Number (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: Text('Select status from following (Required).',
+                      style: TextStyle(fontSize: 25,color: HexColor("#0E34A0")),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Radio(
+                        value:1,
+                        groupValue:_v,
+                          onChanged: (value) {
+                            setState(() {
+                              _v = value as int;
+                              EmploymentStat = "Enter Employer and LPA";
+                              selectstatus = "Campus Employment";
+                            });}
+                      ),
+                      SizedBox(width: 10),
+                      Text("Campus Employment",
+                        style: TextStyle(fontSize: 30, color:Colors.black),
+                      )
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      Radio(
+                        value:2,
+                        groupValue:_v,
+                          onChanged: (value) {
+                            setState(() {
+                              _v = value as int;
+                              EmploymentStat = "Enter Institute and Course";
+                              selectstatus = "Higher Studies";
+                            });}
+                      ),
+                      SizedBox(width: 10),
+                      Text("Higher Studies",
+                        style: TextStyle(fontSize: 30, color:Colors.black),
+                      )
+                    ],
+                  ),
+
+                  Row(
+                    children: [
+                      Radio(
+                        value:3,
+                        groupValue:_v,
+                        onChanged: (value) {
+                        setState(() {
+                        _v = value as int;
+                        EmploymentStat = "Enter Details in short";
+                        selectstatus = "Self Employed";
+                        });}
+                      ),
+                      SizedBox(width: 10),
+                      Text("Self Employed",
+                        style: TextStyle(fontSize: 30, color:Colors.black),
+                      )
+                    ],
+                  ),
+
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: statusstring,
+                      decoration: InputDecoration(
+                          labelText: EmploymentStat,
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+
                   SizedBox(height: 20),
 
                   Container(
@@ -654,7 +767,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
                     child: TextField(
                       controller: Marks,
                       decoration: InputDecoration(
-                          labelText: "Highest Marks you received",
+                          labelText: "Any otheer exam name with score",
 
                           labelStyle: TextStyle(fontSize: 30)
                       ),
@@ -666,8 +779,14 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
                   TextButton(
                       onPressed: (){
-                        changestate(seatnumber,Marks);
-                      },
+                        bool isValid = EmailValidator.validate(emailid.text);
+                        if(isValid){
+                        changestate(seatnumber,Marks,Name,yearofadd,rn,address,emailid,contactnum,altcontactnum,statusstring);
+                      }
+                        else{
+                          emailerror();
+                        }
+                        },
                       child: Text('Apply for No Dues', style:TextStyle(fontSize: 30, color:HexColor("#0E34A0")))),
                   SizedBox(height: 80),
 
