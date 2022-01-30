@@ -132,7 +132,8 @@ class _Approved_ListState extends State<Approved_List> {
                   ),
 
                   StreamBuilder(
-                      stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').snapshots(),
+                      stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').orderBy(
+                          'time', descending: true).snapshots(),
                       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (snapshot.hasData) {
                           return ListView.builder(

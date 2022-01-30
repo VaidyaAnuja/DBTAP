@@ -56,6 +56,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
     String username = snap['username'];
+    String Department = snap['branch'];
+
 
     for(int j=0; j<count; j++){
       if(select[j]){
@@ -164,6 +166,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
           'status':'pending',
           'reason':'',
           'time':Timestamp.now(),
+          'seatnumber': int.parse(seatnumber.text.trim()),
+          'branch': Department,
         });
       });
 
@@ -176,6 +180,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
           'status':'pending',
           'reason':'',
           'time':Timestamp.now(),
+          'seatnumber': int.parse(seatnumber.text.trim()),
+          'branch': Department,
         });
       });
 
@@ -188,6 +194,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
           'status':'pending',
           'reason':'',
           'time':Timestamp.now(),
+          'seatnumber': int.parse(seatnumber.text.trim()),
+          'branch': Department,
         });
       });
 
@@ -201,6 +209,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
           'reason':'',
           'time':Timestamp.now(),
           'message':'',
+          'seatnumber': int.parse(seatnumber.text.trim()),
+          'branch': Department,
         });
       });
 
@@ -213,6 +223,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
           'status':'pending',
           'reason':'',
           'time':Timestamp.now(),
+          'seatnumber': int.parse(seatnumber.text.trim()),
+          'branch': Department,
         });
       });
       FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'accounts').get().then((list){
@@ -224,6 +236,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
           'status':'pending',
           'reason':'',
           'time':Timestamp.now(),
+          'seatnumber': int.parse(seatnumber.text.trim()),
+          'branch': Department,
         });
       });
       var i;
@@ -243,6 +257,8 @@ class _LC_APPLYState extends State<LC_APPLY>{
               'status':'pending',
               'reason':'',
               'time':Timestamp.now(),
+              'seatnumber': int.parse(seatnumber.text.trim()),
+              'branch': Department,
             });
           });
         }
