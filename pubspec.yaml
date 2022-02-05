@@ -32,6 +32,14 @@ dependencies:
   cloud_firestore: ^2.5.3
   responsive_widgets: ^2.0.1
   email_validator: ^2.0.1
+  flutter_staggered_grid_view: ^0.6.1
+  screenshot: ^1.2.3
+  path_provider: ^2.0.4
+  pdf: ^3.6.4
+  syncfusion_flutter_pdf: ^19.4.48-beta
+  open_file: ^3.2.1
+#  flutter_full_pdf_viewer: ^1.0.6
+#  path_provider_ex: ^1.0.1
 
 
   # The following adds the Cupertino Icons font to your application.

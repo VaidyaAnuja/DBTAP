@@ -18,8 +18,8 @@ class LC_APPLY extends StatefulWidget{
 
 List select = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
 List TeacherName = [];
-List s = [false,false,false,false,false];
-List ExamName = ['GRE', 'GATE', 'CAT', 'IELTS', 'TOFEL'];
+List s = [false,false,false,false];
+List ExamName = ['GRE', 'GATE', 'CAT', 'GMAT'];
 
 class _LC_APPLYState extends State<LC_APPLY>{
   // bool isSana = false;
@@ -95,14 +95,22 @@ class _LC_APPLYState extends State<LC_APPLY>{
         'seatnumber': int.parse(seatnumber.text.trim()),
       });
 
-      for(int i =0; i<5; i++){
+      for(int i =0; i<4; i++){
         if(s[i]){
           FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc(ExamName[i]).set({
             'some':'yes',
           });
         }
+        else{
+          FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc(ExamName[i]).set({
+            'some':'NA',
+          });
+        }
       }
       if(Marks.text == ""){
+        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc('maxmarks').set({
+          'marks':'NA',
+        });
         }
         else{
         FirebaseFirestore.instance.collection('users').doc(user.uid).collection('EntranceExams').doc('maxmarks').set({
@@ -721,7 +729,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: <Widget>[
 
-                        Text(("IELTS"),
+                        Text(("GMAT"),
                           style: TextStyle(fontSize: 30, color:Colors.black),
                         ),
 
@@ -744,34 +752,6 @@ class _LC_APPLYState extends State<LC_APPLY>{
                       ]
                   ),
 
-                  SizedBox(height: 10),
-
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-
-                        Text(("TOFEL"),
-                          style: TextStyle(fontSize: 30, color:Colors.black),
-                        ),
-
-                        Transform.scale(
-                          scale: 2,
-                          child: Checkbox(
-
-                            checkColor: Colors.white,
-                            fillColor: MaterialStateProperty.resolveWith(getColor),
-                            value: s[4],
-                            onChanged: (bool? value) {
-                              setState(() {
-                                s[4] = value;
-
-
-                              });
-
-                            },
-                          ),),
-                      ]
-                  ),
 
                   SizedBox(height: 20),
 
