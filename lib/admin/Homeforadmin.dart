@@ -120,6 +120,10 @@ class _HomeAdminState extends State<HomeAdmin> with SingleTickerProviderStateMix
   final TextEditingController reason = TextEditingController();
   final TextEditingController reqdept = TextEditingController();
   String whatisdept ="";
+  bool isSelectedcomp = false;
+  bool isSelectedit = false;
+  bool isSelectedextc = false;
+  bool isSelectedmech = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -868,36 +872,130 @@ class _HomeAdminState extends State<HomeAdmin> with SingleTickerProviderStateMix
                             indent: 30,
                             endIndent: 30,
                           ),
-                          Row(children:[
-                            Container(
-                                width: 200,
-                                margin: const EdgeInsets.only(left: 50.0),
-                                child: TextField(
-                                  controller: reqdept,
-                                  decoration: InputDecoration(
-                                      labelText: "Enter department",
+                          // Row(children:[
+                          //   Container(
+                          //       width: 200,
+                          //       margin: const EdgeInsets.only(left: 50.0),
+                          //       child: TextField(
+                          //         controller: reqdept,
+                          //         decoration: InputDecoration(
+                          //             labelText: "Enter department",
+                          //
+                          //             labelStyle: TextStyle(fontSize: 25)
+                          //         ),
+                          //         style: TextStyle(fontSize: 25,),
+                          //       )),
+                          //   SizedBox(width:20),
+                          //   TextButton(
+                          //       onPressed: (){
+                          //         setState(() {
+                          //           whatisdept = reqdept.text.trim();
+                          //         });
+                          //         // whatisdept = reqdept.text.trim();
+                          //       },
+                          //       child: Icon(
+                          //         Icons.person_search ,
+                          //         color: HexColor("#0E34A0"),
+                          //         size: 40,
+                          //       )
+                          //
+                          //   ),
+                          //
+                          // ]),
 
-                                      labelStyle: TextStyle(fontSize: 25)
-                                  ),
-                                  style: TextStyle(fontSize: 25,),
-                                )),
-                            SizedBox(width:20),
-                            TextButton(
-                                onPressed: (){
-                                  setState(() {
-                                    whatisdept = reqdept.text.trim();
-                                  });
-                                  // whatisdept = reqdept.text.trim();
-                                },
-                                child: Icon(
-                                  Icons.person_search ,
-                                  color: HexColor("#0E34A0"),
-                                  size: 40,
-                                )
+                          SizedBox(width: 600, height: 80,
+                              child: ListView(
+                                  scrollDirection: Axis.horizontal,
+                                  children: <Widget> [
+                                    Container(
+                                        width: 80,
+                                        height: 50,
+                                        child:
+                                        TextButton(onPressed: (){
+                                          setState(() {
+                                            whatisdept = 'Computer';
+                                            isSelectedcomp = true;
+                                            isSelectedit = false;
+                                            isSelectedextc = false;
+                                            isSelectedmech = false;
+                                          });
+                                        },
+                                            child:Ink(
+                                                color: isSelectedcomp ? Colors.blue : Colors.white,
+                                                child: Text(
+                                                  'Computer',
+                                                  style: TextStyle(color: Colors.black),
+                                                )))),
+                                    Container(
+                                      width: 20,
+                                      height: 50,
+                                    ),
+                                    Container(
+                                        width: 80,
+                                        height: 50,
+                                        child:
+                                        TextButton(onPressed: (){
+                                          setState(() {
+                                            whatisdept = 'IT';
+                                            isSelectedcomp = false;
+                                            isSelectedit = true;
+                                            isSelectedextc = false;
+                                            isSelectedmech = false;
+                                          });
+                                        },child:Ink(
+                                            color: isSelectedit ? Colors.blue : Colors.white,
+                                            child: Text(
+                                              'IT',
+                                              style: TextStyle(color: Colors.black),
+                                            )))),
+                                    Container(
+                                      width: 20,
+                                      height: 50,
+                                    ),
+                                    Container(
+                                        width: 80,
+                                        height: 50,
+                                        child:
+                                        TextButton(onPressed: (){
+                                          setState(() {
+                                            whatisdept = 'EXTC';
+                                            isSelectedcomp = false;
+                                            isSelectedit = false;
+                                            isSelectedextc = true;
+                                            isSelectedmech = false;
+                                          });
+                                        },child:Ink(
+                                            color: isSelectedextc ? Colors.blue : Colors.white,
+                                            child: Text(
+                                              'EXTC',
+                                              style: TextStyle(color: Colors.black),
+                                            )))),
+                                    Container(
+                                      width: 20,
+                                      height: 50,
+                                    ),
+                                    Container(
+                                        width: 90,
+                                        height: 50,
+                                        child:
+                                        TextButton(onPressed: (){
+                                          setState(() {
+                                            whatisdept = 'Mechanical';
+                                            isSelectedcomp = false;
+                                            isSelectedit = false;
+                                            isSelectedextc = false;
+                                            isSelectedmech = true;
+                                          });
+                                        },child:Ink(
+                                            color: isSelectedmech ? Colors.blue : Colors.white,
+                                            child: Text(
+                                              'Mechanical',
+                                              style: TextStyle(color: Colors.black),
+                                            )))),
 
-                            ),
+                                  ]
+                              )),
 
-                          ]),
                           SizedBox(
                             height: 20,
                           ),
