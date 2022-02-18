@@ -3,6 +3,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import 'package:flutter_document_picker/flutter_document_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:path_provider/path_provider.dart';
+import 'package:syncfusion_flutter_pdf/pdf.dart';
+
+import 'dart:io';
+
 class delete_Others extends StatefulWidget{
 
   @override
@@ -17,8 +24,12 @@ class _delete_OthersState extends State<delete_Others>{
   Future<void> deleteapplication(int numofdocs, List nameofteachers) async {
     User user = FirebaseAuth.instance.currentUser!;
     var snapss = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    var username = snapss.data()!['username'];
+    String fileName = '$username.pdf';
 
     if(snapss.data()!['canundo']){
+      firebase_storage.FirebaseStorage.instance.ref().child(fileName).delete();
+
     FirebaseFirestore.instance.collection('users').doc(user.uid).update({
       'is_enabled_LC' : true,
     });

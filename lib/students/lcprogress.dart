@@ -486,6 +486,10 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
 
                             ),
                           ),
+                          // SizedBox(
+                          //   width: 130,
+                          //   child: Text('If appeared respective departments have a copy')
+                          // ),
                           // Text('Academic Year of Admission'),
                         ],
                       ),
@@ -528,7 +532,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                               else{
                                   return SizedBox(
                                     width: 170,
-                                    child: Text('GATE'
+                                    child: Text('Yes'
 
                                     ),
                                   );
@@ -555,7 +559,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                 else{
                                   return SizedBox(
                                     width: 170,
-                                    child: Text('GRE'
+                                    child: Text('Yes'
 
                                     ),
                                   );
@@ -581,7 +585,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                 else{
                                   return SizedBox(
                                     width: 170,
-                                    child: Text('GMAT'
+                                    child: Text('Yes'
 
                                     ),
                                   );
@@ -607,7 +611,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                 else{
                                   return SizedBox(
                                     width: 170,
-                                    child: Text('CAT'
+                                    child: Text('Yes'
 
                                     ),
                                   );
@@ -617,6 +621,7 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                                 return Text('');
                               } },
                           ),
+
 
                           FutureBuilder(
                             future:FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('EntranceExams').doc('maxmarks').get(),
@@ -638,6 +643,14 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                         ],
                       ),
                     ],
+                  ),
+                  // SizedBox(height:10),
+
+                  SizedBox(
+                       width: 300,
+                      child: Text('If appeared respective departments have a copy',
+                      style:TextStyle(color:Colors.blue)
+                      )
                   ),
                   SizedBox(height:10),
                   Text('Dues Clearance Certified form'),

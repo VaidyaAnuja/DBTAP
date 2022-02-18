@@ -38,6 +38,9 @@ dependencies:
   pdf: ^3.6.4
   syncfusion_flutter_pdf: ^19.4.48-beta
   open_file: ^3.2.1
+  firebase_storage: ^8.0.0
+  file_picker: ^4.4.0
+  flutter_document_picker: ^4.0.0
 #  flutter_full_pdf_viewer: ^1.0.6
 #  path_provider_ex: ^1.0.1
 
