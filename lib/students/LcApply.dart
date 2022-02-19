@@ -79,7 +79,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
         atleastoneexam = true;
         break;
       }}
-    if(Marks.text != ""){
+    if(Marks.text.trim() != ""){
       atleastoneexam = true;
     }
     else{
@@ -710,12 +710,15 @@ class _LC_APPLYState extends State<LC_APPLY>{
     final TextEditingController contactnum = TextEditingController();
     final TextEditingController altcontactnum = TextEditingController();
     final TextEditingController statusstring = TextEditingController();
+    String filename = "None";
   File file = File('');
     int _v = 1;
     String EmploymentStat = "Enter Employer and LPA";
     String selectstatus = "Campus Employment";
     //bool uploaded = false;
-
+  void initState() {
+    uploaded = false;
+  }
     @override
     Widget build(BuildContext context) {
       Color getColor(Set<MaterialState> states) {
@@ -1198,6 +1201,12 @@ class _LC_APPLYState extends State<LC_APPLY>{
                     ),
 
                     SizedBox(height: 20),
+                    Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.center,
+                    child: Text(filename),),
+                    SizedBox(height: 20),
                     FloatingActionButton(
                       // backgroundColor: Colors.purple,
                       child: Text("Upload",
@@ -1206,6 +1215,9 @@ class _LC_APPLYState extends State<LC_APPLY>{
                         final path = await FlutterDocumentPicker.openDocument();
                          file = File(path);
                          uploaded = true;
+                         setState(() {
+                           filename = file.path.split('/').last;
+                         });
                         //firebase_storage.UploadTask? task = await uploadFile(file);
                       },
                     ),
