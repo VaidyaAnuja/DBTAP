@@ -2,7 +2,7 @@ import 'package:beproject/students/Homeforstudents.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
+import 'package:beproject/students/LcApply.dart' as lc;
 import 'package:flutter_document_picker/flutter_document_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:path_provider/path_provider.dart';
@@ -25,10 +25,20 @@ class _delete_OthersState extends State<delete_Others>{
     User user = FirebaseAuth.instance.currentUser!;
     var snapss = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
     var username = snapss.data()!['username'];
+    var department = snapss.data()!['branch'];
     String fileName = '$username.pdf';
 
     if(snapss.data()!['canundo']){
-      firebase_storage.FirebaseStorage.instance.ref().child(fileName).delete();
+      if(department == "Computer"){
+      firebase_storage.FirebaseStorage.instance.ref().child('Computer').child(fileName).delete();}
+      else if(department == "IT"){
+        firebase_storage.FirebaseStorage.instance.ref().child('IT').child(fileName).delete();}
+      else{
+        firebase_storage.FirebaseStorage.instance.ref().child('EXTC').child(fileName).delete();
+
+    }
+      lc.atleastoneexam = false;
+      lc.uploaded = false;
 
     FirebaseFirestore.instance.collection('users').doc(user.uid).update({
       'is_enabled_LC' : true,

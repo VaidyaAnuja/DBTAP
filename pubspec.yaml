@@ -41,6 +41,7 @@ dependencies:
   firebase_storage: ^8.0.0
   file_picker: ^4.4.0
   flutter_document_picker: ^4.0.0
+  dio: ^4.0.4
 #  flutter_full_pdf_viewer: ^1.0.6
 #  path_provider_ex: ^1.0.1
 

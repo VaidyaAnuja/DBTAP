@@ -28,6 +28,8 @@ List TeacherName = [];
 List s = [false,false,false,false];
 List ExamName = ['GRE', 'GATE', 'CAT', 'GMAT'];
 
+bool atleastoneexam = false;
+bool uploaded = false;
 class _LC_APPLYState extends State<LC_APPLY>{
   // bool isSana = false;
   // bool isDeepali = false;
@@ -35,7 +37,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
   int currentIndex=0;
   int count =0;
   bool atleastone = false;
-  bool atleastoneexam = false;
+ // bool atleastoneexam = false;
   Future<void> emailerror() async{
     final text = 'Please input correct email type.';
     final snackBar = SnackBar(
@@ -62,7 +64,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
     User user = FirebaseAuth.instance.currentUser!;
 
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
-    String username = snap['username'];
+  String username = snap['username'];
     String Department = snap['branch'];
 
 
@@ -80,8 +82,11 @@ class _LC_APPLYState extends State<LC_APPLY>{
     if(Marks.text != ""){
       atleastoneexam = true;
     }
+    else{
+      atleastoneexam = false;
+    }
  if(atleastoneexam == true && uploaded == false){
-
+      print('first');
 
       final text = 'Please fill in all the required fields.';
       final snackBar = SnackBar(
@@ -106,7 +111,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
  else if (atleastoneexam == true && uploaded == true){
    if( seatnumber.text == "" || atleastone == false || Name.text == "" || yearofadd.text == "" || rn.text=="" || address.text == "" || contactnum.text=="" || altcontactnum.text=="" || statusstring.text == ""){
      //print('Text Field is empty, Please Fill All Data');
-
+     print('Second');
      final text = 'Please fill in all the required fields.';
      final snackBar = SnackBar(
 
@@ -127,13 +132,35 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
    }
    else{
-     String fileName = '$username.pdf';
+
+     if(Department == 'Computer'){
+       String fileName = '$username.pdf';
      firebase_storage.Reference reference = firebase_storage.FirebaseStorage
-         .instance.ref().child(fileName);
+         .instance.ref().child('Computer').child(fileName);
      firebase_storage.UploadTask uploadTask = reference.putData(
          await file.readAsBytes());
      String url = await (await uploadTask.whenComplete(() => null)).ref
          .getDownloadURL();
+     }
+     else if(Department == 'IT'){
+       String fileName = '$username.pdf';
+       firebase_storage.Reference reference = firebase_storage.FirebaseStorage
+           .instance.ref().child('IT').child(fileName);
+       firebase_storage.UploadTask uploadTask = reference.putData(
+           await file.readAsBytes());
+       String url = await (await uploadTask.whenComplete(() => null)).ref
+           .getDownloadURL();
+     }
+     else{
+       String fileName = '$username.pdf';
+       firebase_storage.Reference reference = firebase_storage.FirebaseStorage
+           .instance.ref().child('EXTC').child(fileName);
+       firebase_storage.UploadTask uploadTask = reference.putData(
+           await file.readAsBytes());
+       String url = await (await uploadTask.whenComplete(() => null)).ref
+           .getDownloadURL();
+     }
+
      FirebaseFirestore.instance.collection('users').doc(user.uid).update({
        'is_enabled_LC' : false,
        'canundo':true,
@@ -194,23 +221,13 @@ class _LC_APPLYState extends State<LC_APPLY>{
            'status':'pending',
            'reason':'',
          });
-     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('admin').set(
+     if(Department == "Computer"){
+     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('HODCOMP').set(
          {
            'status':'pending',
            'reason':'',
          });
-     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
-         {
-           'status':'pending',
-           'reason':'',
-           'message':'',
-         });
-     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
-         {
-           'status':'pending',
-           'reason':'',
-         });
-     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'admin').get().then((list){
+     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'HODCOMP').get().then((list){
        FirebaseFirestore.instance.collection('users')
            .doc(list.docs[0].id)
            .collection('NoDues')
@@ -223,6 +240,81 @@ class _LC_APPLYState extends State<LC_APPLY>{
          'branch': Department,
        });
      });
+
+
+     }
+
+
+     else if(Department == "IT"){
+       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('HODIT').set(
+           {
+             'status':'pending',
+             'reason':'',
+           });
+       FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'HODIT').get().then((list){
+         FirebaseFirestore.instance.collection('users')
+             .doc(list.docs[0].id)
+             .collection('NoDues')
+             .doc('$username')
+             .set({
+           'status':'pending',
+           'reason':'',
+           'time':Timestamp.now(),
+           'seatnumber': int.parse(seatnumber.text.trim()),
+           'branch': Department,
+         });
+       });
+
+
+     }
+
+     else{
+       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('HODEXTC').set(
+           {
+             'status':'pending',
+             'reason':'',
+           });
+       FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'HODEXTC').get().then((list){
+         FirebaseFirestore.instance.collection('users')
+             .doc(list.docs[0].id)
+             .collection('NoDues')
+             .doc('$username')
+             .set({
+           'status':'pending',
+           'reason':'',
+           'time':Timestamp.now(),
+           'seatnumber': int.parse(seatnumber.text.trim()),
+           'branch': Department,
+         });
+       });
+
+
+     }
+
+     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
+         {
+           'status':'pending',
+           'reason':'',
+           'message':'',
+         });
+     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
+         {
+           'status':'pending',
+           'reason':'',
+         });
+     // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'admin').get().then((list){
+     //   FirebaseFirestore.instance.collection('users')
+     //       .doc(list.docs[0].id)
+     //       .collection('NoDues')
+     //       .doc('$username')
+     //       .set({
+     //     'status':'pending',
+     //     'reason':'',
+     //     'time':Timestamp.now(),
+     //     'seatnumber': int.parse(seatnumber.text.trim()),
+     //     'branch': Department,
+     //   });
+     // });
 
      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'workshop').get().then((list){
        FirebaseFirestore.instance.collection('users')
@@ -328,7 +420,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
     else{
    if( seatnumber.text == "" || atleastone == false || Name.text == "" || yearofadd.text == "" || rn.text=="" || address.text == "" || contactnum.text=="" || altcontactnum.text=="" || statusstring.text == ""){
      //print('Text Field is empty, Please Fill All Data');
-
+     print('third');
      final text = 'Please fill in all the required fields.';
      final snackBar = SnackBar(
 
@@ -409,11 +501,75 @@ class _LC_APPLYState extends State<LC_APPLY>{
             'status':'pending',
             'reason':'',
           });
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('admin').set(
-          {
+      if(Department == "Computer"){
+        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('HODCOMP').set(
+            {
+              'status':'pending',
+              'reason':'',
+            });
+        FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'HODCOMP').get().then((list){
+          FirebaseFirestore.instance.collection('users')
+              .doc(list.docs[0].id)
+              .collection('NoDues')
+              .doc('$username')
+              .set({
             'status':'pending',
             'reason':'',
+            'time':Timestamp.now(),
+            'seatnumber': int.parse(seatnumber.text.trim()),
+            'branch': Department,
           });
+        });
+
+
+      }
+
+
+      else if(Department == "IT"){
+        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('HODIT').set(
+            {
+              'status':'pending',
+              'reason':'',
+            });
+        FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'HODIT').get().then((list){
+          FirebaseFirestore.instance.collection('users')
+              .doc(list.docs[0].id)
+              .collection('NoDues')
+              .doc('$username')
+              .set({
+            'status':'pending',
+            'reason':'',
+            'time':Timestamp.now(),
+            'seatnumber': int.parse(seatnumber.text.trim()),
+            'branch': Department,
+          });
+        });
+
+
+      }
+
+      else{
+        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('HODEXTC').set(
+            {
+              'status':'pending',
+              'reason':'',
+            });
+        FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'HODEXTC').get().then((list){
+          FirebaseFirestore.instance.collection('users')
+              .doc(list.docs[0].id)
+              .collection('NoDues')
+              .doc('$username')
+              .set({
+            'status':'pending',
+            'reason':'',
+            'time':Timestamp.now(),
+            'seatnumber': int.parse(seatnumber.text.trim()),
+            'branch': Department,
+          });
+        });
+
+
+      }
       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
           {
             'status':'pending',
@@ -425,19 +581,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
             'status':'pending',
             'reason':'',
           });
-      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'admin').get().then((list){
-        FirebaseFirestore.instance.collection('users')
-            .doc(list.docs[0].id)
-            .collection('NoDues')
-            .doc('$username')
-            .set({
-          'status':'pending',
-          'reason':'',
-          'time':Timestamp.now(),
-          'seatnumber': int.parse(seatnumber.text.trim()),
-          'branch': Department,
-        });
-      });
+
 
       FirebaseFirestore.instance.collection('users').where("username", isEqualTo: 'workshop').get().then((list){
         FirebaseFirestore.instance.collection('users')
@@ -570,7 +714,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
     int _v = 1;
     String EmploymentStat = "Enter Employer and LPA";
     String selectstatus = "Campus Employment";
-    bool uploaded = false;
+    //bool uploaded = false;
 
     @override
     Widget build(BuildContext context) {
@@ -943,6 +1087,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
                               onChanged: (bool? value) {
                                 setState(() {
                                   s[0] = value;
+                                  atleastoneexam = false;
                                 });
                               },
                             ),),
@@ -970,6 +1115,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
                               onChanged: (bool? value) {
                                 setState(() {
                                   s[1] = value;
+                                  atleastoneexam = false;
                                 });
                               },
                             ),),
@@ -997,6 +1143,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
                               onChanged: (bool? value) {
                                 setState(() {
                                   s[2] = value;
+                                  atleastoneexam = false;
                                 });
                               },
                             ),),
@@ -1024,6 +1171,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
                               onChanged: (bool? value) {
                                 setState(() {
                                   s[3] = value;
+                                  atleastoneexam = false;
                                 });
                               },
                             ),),

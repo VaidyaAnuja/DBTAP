@@ -102,7 +102,7 @@ class _Approved_ListState extends State<Approved_List> with SingleTickerProvider
       appBar: AppBar(
         bottom: new TabBar(controller: _controller, tabs: <Tab>[
 
-          new Tab(text: "All"),
+          new Tab(text: "Time"),
           new Tab(text: "SeatNumber"),
           new Tab(text: "Branch"),
         ],
@@ -175,6 +175,11 @@ class _Approved_ListState extends State<Approved_List> with SingleTickerProvider
                                   return new ListTile(
 
                                     title: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.blue,
+                                              width: 0.5,
+                                            )),
                                       margin: const EdgeInsets.only(left: 30.0, top: 30),
                                       alignment: Alignment.topLeft,
                                       child: Column(children:[Row(
@@ -314,6 +319,11 @@ class _Approved_ListState extends State<Approved_List> with SingleTickerProvider
                                           return new ListTile(
 
                                             title: Container(
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: Colors.blue,
+                                                      width: 0.5,
+                                                    )),
                                                 margin: const EdgeInsets.only(left: 30.0, top: 30),
                                                 alignment: Alignment.topLeft,
                                                 child: Column(children:[Row(
@@ -581,6 +591,11 @@ class _Approved_ListState extends State<Approved_List> with SingleTickerProvider
                                           return new ListTile(
 
                                             title: Container(
+                                                decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color: Colors.blue,
+                                                      width: 0.5,
+                                                    )),
                                                 margin: const EdgeInsets.only(left: 30.0, top: 30),
                                                 alignment: Alignment.topLeft,
                                                 child: Column(children:[Row(

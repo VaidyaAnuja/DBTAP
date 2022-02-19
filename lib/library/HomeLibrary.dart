@@ -118,7 +118,7 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
       appBar: AppBar(
         bottom: new TabBar(controller: _controller, tabs: <Tab>[
 
-          new Tab(text: "All"),
+          new Tab(text: "Time"),
           new Tab(text: "SeatNumber"),
           new Tab(text: "Branch"),
         ],
@@ -188,6 +188,11 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
                                   return ListTile(
 
                                     title: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.blue,
+                                              width: 0.5,
+                                            )),
                                       margin: const EdgeInsets.only(left: 30.0, top: 30),
                                       alignment: Alignment.topLeft,
                                       child: Column(children:[Row(
@@ -306,6 +311,11 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
                                   return ListTile(
 
                                     title: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.blue,
+                                              width: 0.5,
+                                            )),
                                       margin: const EdgeInsets.only(left: 30.0, top: 30),
                                       alignment: Alignment.topLeft,
                                       child: Column(
@@ -378,6 +388,11 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
                                   return ListTile(
 
                                       title: Container(
+                                        decoration: BoxDecoration(
+                                            border: Border.all(
+                                              color: Colors.blue,
+                                              width: 0.5,
+                                            )),
                                         margin: const EdgeInsets.only(left: 30.0, top: 30),
                                         alignment: Alignment.topLeft,
                                         child: Column(
@@ -510,6 +525,11 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
                                         return ListTile(
 
                                           title: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 0.5,
+                                                  )),
                                               margin: const EdgeInsets.only(left: 30.0, top: 30),
                                               alignment: Alignment.topLeft,
                                               child: Column(children:[Row(
@@ -628,6 +648,11 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
                                         return ListTile(
 
                                           title: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 0.5,
+                                                  )),
                                               margin: const EdgeInsets.only(left: 30.0, top: 30),
                                               alignment: Alignment.topLeft,
                                               child: Column(
@@ -700,6 +725,11 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
                                         return ListTile(
 
                                             title: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 0.5,
+                                                  )),
                                               margin: const EdgeInsets.only(left: 30.0, top: 30),
                                               alignment: Alignment.topLeft,
                                               child: Column(
@@ -961,6 +991,11 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
                                         return ListTile(
 
                                           title: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 0.5,
+                                                  )),
                                               margin: const EdgeInsets.only(left: 30.0, top: 30),
                                               alignment: Alignment.topLeft,
                                               child: Column(children:[Row(
@@ -1079,6 +1114,11 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
                                         return ListTile(
 
                                           title: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 0.5,
+                                                  )),
                                               margin: const EdgeInsets.only(left: 30.0, top: 30),
                                               alignment: Alignment.topLeft,
                                               child: Column(
@@ -1151,6 +1191,11 @@ class _HomeLibraryState extends State<HomeLibrary> with SingleTickerProviderStat
                                         return ListTile(
 
                                             title: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 0.5,
+                                                  )),
                                               margin: const EdgeInsets.only(left: 30.0, top: 30),
                                               alignment: Alignment.topLeft,
                                               child: Column(
