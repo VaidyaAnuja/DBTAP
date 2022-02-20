@@ -109,7 +109,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
     }
 
  else if (atleastoneexam == true && uploaded == true){
-   if( seatnumber.text == "" || atleastone == false || Name.text == "" || yearofadd.text == "" || rn.text=="" || address.text == "" || contactnum.text=="" || altcontactnum.text=="" || statusstring.text == ""){
+   if( seatnumber.text == "" || atleastone == false || Name.text == "" || yearofadd.text == "" || rn.text=="" || address.text == "" || contactnum.text.length != 10 || altcontactnum.text.length != 10 || altcontactnum.text == contactnum.text || double.tryParse(altcontactnum.text)== null || double.tryParse(contactnum.text)== null || statusstring.text == ""){
      //print('Text Field is empty, Please Fill All Data');
      print('Second');
      final text = 'Please fill in all the required fields.';
@@ -418,7 +418,7 @@ class _LC_APPLYState extends State<LC_APPLY>{
  }
 
     else{
-   if( seatnumber.text == "" || atleastone == false || Name.text == "" || yearofadd.text == "" || rn.text=="" || address.text == "" || contactnum.text=="" || altcontactnum.text=="" || statusstring.text == ""){
+   if( seatnumber.text == "" || atleastone == false || Name.text == "" || yearofadd.text == "" || rn.text=="" || address.text == "" || contactnum.text.length != 10 || altcontactnum.text.length != 10 || altcontactnum.text == contactnum.text || double.tryParse(altcontactnum.text)== null || double.tryParse(contactnum.text)== null || statusstring.text == ""){
      //print('Text Field is empty, Please Fill All Data');
      print('third');
      final text = 'Please fill in all the required fields.';
