@@ -799,6 +799,63 @@ class _LC_PROGRESSState extends State<LC_PROGRESS>{
                           }
                       ),
 
+                  // SizedBox(height:10),
+                  //
+                  //   FutureBuilder(
+                  //     future:FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('ExamCell').doc('ExamCell').get(),
+                  //     builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                  //       if (snapshot.hasData) {
+                  //         return ListTile(
+                  //           // Access the fields as defined in FireStore
+                  //           title: Column(
+                  //             children: <Widget>[
+                  //               //SizedBox(height: 10,),
+                  //               Row(
+                  //
+                  //                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  //                   children: <Widget>[
+                  //                     SizedBox(
+                  //                       width: 10,),
+                  //                     SizedBox(
+                  //                       width: 170,
+                  //                       child: Text('ExamCell'
+                  //
+                  //                       ),
+                  //                     ),
+                  //                     Text(':'),
+                  //                     SizedBox(
+                  //                       width: 20,),
+                  //                     Row(
+                  //                         children: <Widget>[
+                  //                           TextButton(onPressed: ()=> showDialog<String>(
+                  //                               context: context,
+                  //                               builder: (BuildContext context) => AlertDialog(
+                  //                                 title: Text(snapshot.data['message']),)),
+                  //                             child: Row(children:[
+                  //                               SizedBox(
+                  //                                 width: 5,),
+                  //                               SizedBox(
+                  //                                 width: 170,
+                  //                                 child: Text('See Message', style: TextStyle( color:Colors.green),
+                  //
+                  //                                 ),
+                  //                               ),]),
+                  //
+                  //                           )]),
+                  //
+                  //                   ]
+                  //               ),
+                  //               // SizedBox(height: 20,),
+                  //             ],
+                  //           ),
+                  //         );
+                  //
+                  //       }
+                  //       else{
+                  //         return Text('');
+                  //       } },
+                  //   ),
+
                   SizedBox(height:10),
                   Text('Declaration : I do not have any other Dues from any other section.'),
                   SizedBox(height:40),

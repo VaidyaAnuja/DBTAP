@@ -52,7 +52,7 @@ class _HomeStudentsState extends State<HomeStudents>{
 
     String username = snap['username'];
 
-    final snapss =  await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('No Dues').doc('ExamCell').get();
+    final snapss =  await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('ExamCell').doc('ExamCell').get();
     mssg = snapss['message'];
     return true;
 
@@ -230,9 +230,14 @@ static String mssg = '';
                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                     children: <Widget>[
                                       SizedBox(width: 45,),
-                                      Text('No Dues',
-                                        style: TextStyle(fontSize: 30, color:Colors.black),
-                                      ),
+                                      TextButton(
+                                          onPressed: (){
+                                            Navigator.of(context).push(
+                                                new MaterialPageRoute(builder: (context) => new LC_PROGRESS()));
+                                          },
+                                          child: Text('No Dues',
+                                            style: TextStyle(fontSize: 30, color:Colors.black),
+                                          )),
                                       SizedBox(width: 90),
                                       Text('All Approved', style: TextStyle(fontSize: 25, color:Colors.blue),),
                                     ]
@@ -264,6 +269,51 @@ static String mssg = '';
 
 
 
+                  SizedBox(height: 20),
+
+                  FutureBuilder(
+                    future: _getuserdetails(),
+                    builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                      if (snapshot.hasData){
+                        // displayifallapproved();
+                        if (snapshot.data!['LOR_applied'] ) {
+                          return Column(
+                              children: <Widget>[
+                                SizedBox(height: 20),
+                                Container(
+                                    padding: EdgeInsets.only(left:75),
+                                    child:Row(
+                                        children: <Widget>[
+                                          TextButton(
+                                              onPressed: (){
+                                                // Navigator.of(context).push(
+                                                //     new MaterialPageRoute(builder: (context) => new LC_PROGRESS()));
+                                              },
+                                              child: Text('LOR',
+                                                style: TextStyle(fontSize: 30, color:Colors.black),
+                                              )),
+                                          SizedBox(width: 125),
+                                          IconButton(onPressed: (){
+                                          },
+                                            iconSize: 30,
+                                            icon: Icon(Icons.delete),
+                                          )
+
+
+                                        ]))]);
+
+
+
+    }   else{
+                          return Text('');
+                    }}
+                      else{
+                        return CircularProgressIndicator();
+                      }
+
+                      // return CircularProgressIndicator();
+                    },
+                  ),
                   SizedBox(height: 20),
                   Container(
                     margin: const EdgeInsets.only(left: 290.0),

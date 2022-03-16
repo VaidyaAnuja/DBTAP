@@ -82,9 +82,9 @@ class _LC_APPLYState extends State<LC_APPLY>{
     if(Marks.text.trim() != ""){
       atleastoneexam = true;
     }
-    else{
-      atleastoneexam = false;
-    }
+    // else{
+    //   atleastoneexam = false;
+    // }
  if(atleastoneexam == true && uploaded == false){
       print('first');
 
@@ -291,11 +291,9 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
      }
 
-     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
+     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('ExamCell').doc('ExamCell').set(
          {
-           'status':'pending',
-           'reason':'',
-           'message':'',
+                      'message':'',
          });
      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(
          {
@@ -570,10 +568,9 @@ class _LC_APPLYState extends State<LC_APPLY>{
 
 
       }
-      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('ExamCell').set(
+      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('ExamCell').doc('ExamCell').set(
           {
-            'status':'pending',
-            'reason':'',
+
             'message':'',
           });
       FirebaseFirestore.instance.collection('users').doc(user.uid).collection('No Dues').doc('TPO').set(

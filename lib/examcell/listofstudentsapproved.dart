@@ -59,8 +59,8 @@ class _Approved_ListState extends State<Approved_List> with SingleTickerProvider
     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
       FirebaseFirestore.instance.collection('users')
           .doc(list.docs[0].id)
-          .collection('No Dues')
-          .doc('$username')
+          .collection('ExamCell')
+          .doc('ExamCell')
           .update({
         'message':message.text,
       });

@@ -1,5 +1,7 @@
 
 import 'package:beproject/students/accounts_students.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hexcolor/hexcolor.dart';
@@ -41,6 +43,60 @@ class _notifications_StudentsState extends State<notifications_Students> {
     body: Stack(
 
     children: <Widget>[
+    FutureBuilder(
+        future:FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('ExamCell').doc('ExamCell').get(),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.hasData) {
+            return ListTile(
+              // Access the fields as defined in FireStore
+              title: Column(
+                children: <Widget>[
+                  //SizedBox(height: 10,),
+                  Row(
+
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: <Widget>[
+                        SizedBox(
+                          width: 10,),
+                        SizedBox(
+                          width: 170,
+                          child: Text('ExamCell'
+
+                          ),
+                        ),
+                        Text(':'),
+                        SizedBox(
+                          width: 20,),
+                        Row(
+                            children: <Widget>[
+                              TextButton(onPressed: ()=> showDialog<String>(
+                                  context: context,
+                                  builder: (BuildContext context) => AlertDialog(
+                                    title: Text(snapshot.data['message']),)),
+                                child: Row(children:[
+                                  SizedBox(
+                                    width: 5,),
+                                  SizedBox(
+                                    width: 170,
+                                    child: Text('See Message', style: TextStyle( color:Colors.green),
+
+                                    ),
+                                  ),]),
+
+                              )]),
+
+                      ]
+                  ),
+                  // SizedBox(height: 20,),
+                ],
+              ),
+            );
+
+          }
+          else{
+            return Text('');
+          } },
+      ),
     Container(
     margin: const EdgeInsets.only(top: 564.0),
       child: BottomNavigationBar(

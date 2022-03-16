@@ -1,4 +1,5 @@
 import 'package:beproject/students/Homeforstudents.dart';
+import 'package:beproject/students/LORforStudents.dart';
 import 'package:beproject/students/LcApply.dart';
 import 'package:beproject/students/accounts_students.dart';
 import 'package:beproject/students/notificationforstudents.dart';
@@ -130,9 +131,10 @@ class _Common_AppState extends State<Common_App>{
 
                   ),
                   SizedBox(height: 50),
-                 TextButton(onPressed: (){
-
-                 }, child: Container(
+                 TextButton(onPressed: () {
+                   Navigator.of(context).push(
+                       new MaterialPageRoute(builder: (context) => new LOR_APPLY()));
+                  }, child: Container(
 
                    width:350,
                    height: 100,
