@@ -53,8 +53,8 @@ class _LOR_APPLYState extends State<LOR_APPLY>{
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
-  Future<void> changestate() async{
+  bool atleastone = false;
+  Future<void> changestate(TextEditingController name, TextEditingController yearofpassing, TextEditingController topicofbeproject, TextEditingController currentstat, TextEditingController reasonforlor, TextEditingController email, TextEditingController contact) async{
 
 
     User user = FirebaseAuth.instance.currentUser!;
@@ -62,56 +62,77 @@ class _LOR_APPLYState extends State<LOR_APPLY>{
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
     String username = snap['username'];
     String Department = snap['branch'];
-    //print(username);
-    for(int i=0; i<count; i++){
-      if(select[i]){
-        FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LOR').doc(TeacherName[i]).set(
-            {
-              'status':'pending',
-              'message':'',
-            });
-        FirebaseFirestore.instance.collection('users').where("username", isEqualTo: TeacherName[i]).get().then((list){
-          FirebaseFirestore.instance.collection('users')
-              .doc(list.docs[0].id)
-              .collection('LOR')
-              .doc('$username')
-              .set({
-            'status':'pending',
-            'message':'',
-            'time':Timestamp.now(),
-            'branch': Department,
-          });
-        });
+    for(int j=0; j<count; j++){
+      if(select[j]){
+        atleastone = true;
+        break;
       }
     }
+    //print(username);
+    if(name.text=="" || atleastone == false || contact.text.length != 10 || double.tryParse(contact.text)== null || double.tryParse(yearofpassing.text)== null || topicofbeproject.text=="" || currentstat.text=="" || reasonforlor.text=="" || email.text==""){
 
-    FirebaseFirestore.instance.collection('users').doc(user.uid).update({
-      'LOR_applied':true
-    });
+      final text = 'Please fill in all the required fields.';
+      final snackBar = SnackBar(
 
-    Navigator.of(context).pushNamedAndRemoveUntil('/firststudents', (Route<dynamic> route) => false);
+        duration: Duration(seconds: 30),
+        content: Text(text,
+          style: TextStyle(fontSize: 16, color: Colors.white),),
+        action: SnackBarAction(
 
+          label: 'Dismiss',
+
+          textColor: Colors.yellow,
+          onPressed: (){
+          },
+        ),
+        backgroundColor: HexColor("#0E34A0"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    else {
+      for (int i = 0; i < count; i++) {
+        if (select[i]) {
+          FirebaseFirestore.instance.collection('users').doc(user.uid)
+              .collection('LOR').doc(TeacherName[i])
+              .set(
+              {
+                'status': 'pending',
+              });
+          FirebaseFirestore.instance.collection('users').where(
+              "username", isEqualTo: TeacherName[i]).get().then((list) {
+            FirebaseFirestore.instance.collection('users')
+                .doc(list.docs[0].id)
+                .collection('LOR')
+                .doc('$username')
+                .set({
+              'status': 'pending',
+              'time': Timestamp.now(),
+              'branch': Department,
+            });
+          });
+        }
+      }
+
+      FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'LOR_applied': true
+      });
+
+      Navigator.of(context).pushNamedAndRemoveUntil(
+          '/firststudents', (Route<dynamic> route) => false);
+    }
 
   }
 
 
 
-  final TextEditingController seatnumber = TextEditingController();
-  final TextEditingController Marks = TextEditingController();
+  final TextEditingController yearofpassing = TextEditingController();
+  final TextEditingController topicofbeproject = TextEditingController();
   final TextEditingController Name = TextEditingController();
-  final TextEditingController yearofadd = TextEditingController();
-  final TextEditingController rn = TextEditingController();
-  final TextEditingController address = TextEditingController();
+  final TextEditingController currentstat = TextEditingController();
+  final TextEditingController reasonforlor = TextEditingController();
   final TextEditingController emailid = TextEditingController();
   final TextEditingController contactnum = TextEditingController();
-  final TextEditingController altcontactnum = TextEditingController();
-  final TextEditingController statusstring = TextEditingController();
-  String filename = "None";
-  File file = File('');
-  int _v = 1;
-  String EmploymentStat = "Enter Employer and LPA";
-  String selectstatus = "Campus Employment";
-  //bool uploaded = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -237,14 +258,128 @@ class _LOR_APPLYState extends State<LOR_APPLY>{
 
                   SizedBox(height: 20),
 
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: Name,
+                      decoration: InputDecoration(
+                          labelText: "Enter your name (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: yearofpassing,
+                      decoration: InputDecoration(
+                          labelText: "Enter year of passing (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: currentstat,
+                      decoration: InputDecoration(
+                          labelText: "Enter your current status of work (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: topicofbeproject,
+                      decoration: InputDecoration(
+                          labelText: "Enter your BE major project topic (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: reasonforlor,
+                      decoration: InputDecoration(
+                          labelText: "Explain in brief need for LOR (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: emailid,
+                      decoration: InputDecoration(
+                          labelText: "Enter email id (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+
+                  Container(
+
+                    margin: const EdgeInsets.only(left: 30.0),
+                    alignment: Alignment.topLeft,
+                    child: TextField(
+                      controller: contactnum,
+                      decoration: InputDecoration(
+                          labelText: "Enter contact number (Required)",
+
+                          labelStyle: TextStyle(fontSize: 25)
+                      ),
+                      style: TextStyle(fontSize: 25,),
+                    ),
+                  ),
+
+
                   SizedBox(height: 20),
                   TextButton(
                       onPressed: () {
+                        bool isValid = EmailValidator.validate(emailid.text);
+                      if (isValid) {
+                          changestate(Name, yearofpassing, topicofbeproject, currentstat, reasonforlor, emailid, contactnum);}
+                      else{
+                        emailerror();
+                      }
 
-
-                          changestate(
-
-                          );
                         },
                       child: Text('Apply for LOR',
                           style: TextStyle(fontSize: 30, color: HexColor(

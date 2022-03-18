@@ -27,6 +27,29 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
 
   int currentIndex=0;
 
+  Future<void> reapply(String nameofteacher) async {
+    User user = FirebaseAuth.instance.currentUser!;
+
+    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    String username = snap['username'];
+    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LOR').doc(nameofteacher).update(
+        {
+          'status':'pending',
+          'reason':'',
+        });
+    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: nameofteacher).get().then((list){
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .collection('LOR')
+          .doc('$username')
+          .update({
+        'status':'pending',
+        'reason':'',
+        'time':Timestamp.now(),
+      });
+    });
+  }
+
 
   Future<void> deleteapplication(int numofdocs, String nameofteachers) async {
     User user = FirebaseAuth.instance.currentUser!;
@@ -269,8 +292,18 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
                                                         ),
                                                       ),]),
 
-                                                  )]),
-                                            // SizedBox(height: 20,),
+                                                  ),
+                                                  // SizedBox(
+                                                  //   width: 10,),
+                                                  TextButton(
+                                                      onPressed: () {
+                                                        reapply(nodues.id);
+                                                      },
+                                                      child: Text('Reapply',
+                                                          style: TextStyle( color: HexColor(
+                                                              "#0E34A0")))),
+                                                ]),
+
                                           ],
                                         ),
                                       );
