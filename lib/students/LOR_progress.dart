@@ -26,35 +26,40 @@ class LOR_PROGRESS extends StatefulWidget{
 class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
 
   int currentIndex=0;
-  // Uint8List? screenShot;
 
-  //Create an instance of ScreenshotController
-  //ScreenshotController screenshotController = ScreenshotController();
 
-  //Uint8List screenShot;
-//   Future<void> getPdf(Uint8List screenShot) async {
-//
-// //Create a new PDF document.
-//     final PdfDocument document = PdfDocument();
-// //Read image data.
-//     // final Uint8List imageData = File('input.png').readAsBytesSync();
-// //Load the image using PdfBitmap.
-//     final PdfBitmap image = PdfBitmap(screenShot);
-// //Draw the image to the PDF page.
-//     document.pages
-//         .add()
-//         .graphics
-//         .drawImage(image, const Rect.fromLTWH(0, 0, 500, 780));
-// // Save the document.
-//     final path = (await getExternalStorageDirectory())!.path;
-//     final file = File('$path/NoDues.pdf');
-//     await file.writeAsBytes(document.save());
-//     OpenFile.open('$path/NoDues.pdf');
-//     //File('NoDues.pdf').writeAsBytes(document.save());
-// // Dispose the document.
-//     document.dispose();
-//
-//   }
+  Future<void> deleteapplication(int numofdocs, String nameofteachers) async {
+    User user = FirebaseAuth.instance.currentUser!;
+    var snapss = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    var username = snapss.data()!['username'];
+
+
+    //String name = nameofteachers[i];
+
+    FirebaseFirestore.instance.collection('users').where("username", isEqualTo: nameofteachers).get().then((list){
+
+      FirebaseFirestore.instance.collection('users')
+          .doc(list.docs[0].id)
+          .collection('LOR')
+          .doc('$username')
+          .delete();
+    });
+
+    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('LOR').doc(nameofteachers).delete();
+    if(numofdocs==1){
+      FirebaseFirestore.instance.collection('users').doc(user.uid).update({
+        'LOR_applied' : false,
+      });
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new HomeStudents()));
+    }
+
+ else{
+    Navigator.of(context).pushReplacement(
+        new MaterialPageRoute(builder: (context) => new LOR_PROGRESS()));}
+
+  }
+
 
   @override
   Widget build(BuildContext context){
@@ -123,12 +128,14 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
                             FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LOR').snapshots(),
                             builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (snapshot.hasData) {
+                               int numofdocs = snapshot.data!.docs.length;
                                 return ListView.builder(
                                   physics: NeverScrollableScrollPhysics(),
                                   scrollDirection: Axis.vertical,
                                   shrinkWrap: true,
 
                                   itemCount: snapshot.data!.docs.length,
+
                                   itemBuilder: (context, index) {
                                     DocumentSnapshot nodues = snapshot.data!.docs[index];
                                     if(nodues.get('status') == 'pending'){
@@ -145,7 +152,7 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
                                                   SizedBox(
                                                     width: 10,),
                                                   SizedBox(
-                                                    width: 170,
+                                                    width: 140,
                                                     child: Text(nodues.id
 
                                                     ),
@@ -154,11 +161,19 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
                                                   SizedBox(
                                                     width: 20,),
                                                   SizedBox(
-                                                    width: 170,
+                                                    width: 140,
                                                     child: Text('Pending', style: TextStyle( color:Colors.blue),
 
                                                     ),
                                                   ),
+                                                  SizedBox(
+                                                    width: 10,),
+                                                  IconButton(onPressed: (){
+                                                    deleteapplication(numofdocs, nodues.id);
+                                                  },
+                                                    iconSize: 30,
+                                                    icon: Icon(Icons.delete),
+                                                  )
                                                 ]
                                             ),
                                             //SizedBox(height: 10,),
@@ -178,7 +193,7 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
                                                   SizedBox(
                                                     width: 10,),
                                                   SizedBox(
-                                                    width: 170,
+                                                    width: 140,
                                                     child: Text(nodues.id
 
                                                     ),
@@ -213,7 +228,7 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
                                                   SizedBox(
                                                     width: 10,),
                                                   SizedBox(
-                                                    width: 170,
+                                                    width: 140,
                                                     child: Text(nodues.id
 
                                                     ),
@@ -222,11 +237,19 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
                                                   SizedBox(
                                                     width: 20,),
                                                   SizedBox(
-                                                    width: 170,
+                                                    width: 140,
                                                     child: Text('Rejected', style: TextStyle( color:Colors.red),
 
                                                     ),
                                                   ),
+                                                  SizedBox(
+                                                    width: 10,),
+                                                  IconButton(onPressed: (){
+                                                    deleteapplication(numofdocs, nodues.id);
+                                                  },
+                                                    iconSize: 30,
+                                                    icon: Icon(Icons.delete),
+                                                  )
 
                                                 ]
                                             ),

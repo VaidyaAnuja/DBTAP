@@ -1,4 +1,5 @@
 
+import 'package:beproject/teachers/Homeforteachers.dart';
 import 'package:beproject/teachers/accounts_teachers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,31 @@ class LORteachers extends StatefulWidget {
 }
 
 class _LORteachersState extends State<LORteachers> with SingleTickerProviderStateMixin {
+
+  Future<void> undo(id) async {
+    //var snapss = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get();
+    //   .then((list){
+    // FirebaseFirestore.instance.collection('users')
+    //     .doc(list.docs[0].id)
+    //     .get();});
+
+      final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+      String username = snap['username'];
+      FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LOR').doc(id).update(
+          {'status':'pending',
+          });
+      FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
+        FirebaseFirestore.instance.collection('users')
+            .doc(list.docs[0].id)
+            .collection('LOR')
+            .doc('$username')
+            .update({
+          'status':'pending',
+        });
+      });
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new LORteachers()));
+    }
 
   Future<void> approve(id) async {
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
@@ -332,21 +358,7 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                             fontSize: 20, color: HexColor("#0E34A0")),
                                                       ),
                                                       TextButton(
-                                                        onPressed: () => showDialog<String>(
-                                                          context: context,
-                                                          builder: (BuildContext context) => AlertDialog(
-                                                            title: const Text(
-                                                                'Are you sure you want undo the action??'),
-                                                            actions: <Widget>[
-
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(context, 'Cancel'),
-                                                                child: const Text('Cancel'),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
+                                                        onPressed: () {},
                                                         child: Container(
                                                           width: 80,
                                                           height: 20,
@@ -378,7 +390,75 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                     }
 
                                     else{
-                                      return Text('');
+                                      return ListTile(
+
+                                          title: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.blue,
+                                                  width: 0.5,
+                                                )),
+                                            margin: const EdgeInsets.only(left: 30.0, top: 30),
+                                            alignment: Alignment.topLeft,
+                                            child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+
+                                                      SizedBox(width: 20,),
+                                                      Text(
+                                                        nodues.id,
+                                                        style: TextStyle(
+                                                            fontSize: 20, color: HexColor("#0E34A0")),
+                                                      ),
+                                                      TextButton(
+                                                        onPressed: () => showDialog<String>(
+                                                          context: context,
+                                                          builder: (BuildContext context) => AlertDialog(
+                                                            title: const Text(
+                                                                'Are you sure you want undo the action??'),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                onPressed:() {
+                                                                  undo(nodues.id);
+                                                                },
+                                                                child: const Text('YES'),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(context, 'Cancel'),
+                                                                child: const Text('Cancel'),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        child: Container(
+                                                          width: 80,
+                                                          height: 20,
+
+                                                          margin: const EdgeInsets.only(left: 15.0),
+                                                          alignment: Alignment.center,
+                                                          child: Text(
+                                                            'Rejected',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                              color: Colors.red,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                      children:[
+                                                        Text(
+                                                          nodues.get('branch'),
+                                                          style: TextStyle(
+                                                              fontSize: 20, color: HexColor("#0E34A0")),
+                                                        ),
+
+                                                      ])]),));
 
                                     }
 
@@ -722,21 +802,7 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                               fontSize: 20, color: HexColor("#0E34A0")),
                                                         ),
                                                         TextButton(
-                                                          onPressed: () => showDialog<String>(
-                                                            context: context,
-                                                            builder: (BuildContext context) => AlertDialog(
-                                                              title: const Text(
-                                                                  'Are you sure you want undo the action??'),
-                                                              actions: <Widget>[
-
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(context, 'Cancel'),
-                                                                  child: const Text('Cancel'),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
+                                                          onPressed: () {},
                                                           child: Container(
                                                             width: 80,
                                                             height: 20,
@@ -768,7 +834,75 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                       }
 
                                       else{
-                                        return Text('');
+                                        return ListTile(
+
+                                            title: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 0.5,
+                                                  )),
+                                              margin: const EdgeInsets.only(left: 30.0, top: 30),
+                                              alignment: Alignment.topLeft,
+                                              child: Column(
+                                                  children: [
+                                                    Row(
+                                                      children: [
+
+                                                        SizedBox(width: 20,),
+                                                        Text(
+                                                          nodues.id,
+                                                          style: TextStyle(
+                                                              fontSize: 20, color: HexColor("#0E34A0")),
+                                                        ),
+                                                        TextButton(
+                                                          onPressed: () => showDialog<String>(
+                                                            context: context,
+                                                            builder: (BuildContext context) => AlertDialog(
+                                                              title: const Text(
+                                                                  'Are you sure you want undo the action??'),
+                                                              actions: <Widget>[
+                                                                TextButton(
+                                                                  onPressed:() {
+                                                                    undo(nodues.id);
+                                                                  },
+                                                                  child: const Text('YES'),
+                                                                ),
+                                                                TextButton(
+                                                                  onPressed: () =>
+                                                                      Navigator.pop(context, 'Cancel'),
+                                                                  child: const Text('Cancel'),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          child: Container(
+                                                            width: 80,
+                                                            height: 20,
+
+                                                            margin: const EdgeInsets.only(left: 15.0),
+                                                            alignment: Alignment.center,
+                                                            child: Text(
+                                                              'Rejected',
+                                                              style: TextStyle(
+                                                                fontSize: 15,
+                                                                color: Colors.red,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                        children:[
+                                                          Text(
+                                                            nodues.get('branch'),
+                                                            style: TextStyle(
+                                                                fontSize: 20, color: HexColor("#0E34A0")),
+                                                          ),
+
+                                                        ])]),));
 
                                       }
 
@@ -803,11 +937,14 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
           });
           if (currentIndex == 0) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
-                builder: (context) => new LORteachers()));
+                builder: (context) => new HomeTeachers()));
           } else if (currentIndex == 2) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
                 builder: (context) => new AccountSettingsTeachers()));
-          } else {}
+          } else {
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (context) => new LORteachers()));
+          }
         },
         backgroundColor: HexColor("#0E34A0"),
         selectedItemColor: Colors.green,

@@ -1,4 +1,5 @@
 import 'package:beproject/authorization/authorization.dart';
+import 'package:beproject/teachers/LORforTeachers.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:provider/provider.dart';
@@ -123,7 +124,10 @@ class _AccountSettingsTeachersState extends State<AccountSettingsTeachers> {
                 } else if (currentIndex == 2) {
                   Navigator.of(context).pushReplacement(new MaterialPageRoute(
                       builder: (context) => new AccountSettingsTeachers()));
-                } else {}
+                } else {
+                  Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                      builder: (context) => new LORteachers()));
+                }
               },
               backgroundColor: HexColor("#0E34A0"),
               selectedItemColor: Colors.green,
