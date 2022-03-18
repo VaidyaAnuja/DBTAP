@@ -1,4 +1,5 @@
 
+import 'package:beproject/teachers/LORforTeachers.dart';
 import 'package:beproject/teachers/accounts_teachers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -1327,7 +1328,11 @@ class _HomeTeachersState extends State<HomeTeachers> with SingleTickerProviderSt
           } else if (currentIndex == 2) {
             Navigator.of(context).pushReplacement(new MaterialPageRoute(
                 builder: (context) => new AccountSettingsTeachers()));
-          } else {}
+          } else {
+            Navigator.of(context).pushReplacement(new MaterialPageRoute(
+                builder: (context) => new LORteachers()));
+
+          }
         },
         backgroundColor: HexColor("#0E34A0"),
         selectedItemColor: Colors.green,

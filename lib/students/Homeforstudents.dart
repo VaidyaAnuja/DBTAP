@@ -1,4 +1,5 @@
 
+import 'package:beproject/students/LOR_progress.dart';
 import 'package:beproject/students/accounts_students.dart';
 import 'package:beproject/students/commonapplications.dart';
 import 'package:beproject/students/deletefromothers.dart';
@@ -286,18 +287,13 @@ static String mssg = '';
                                         children: <Widget>[
                                           TextButton(
                                               onPressed: (){
-                                                // Navigator.of(context).push(
-                                                //     new MaterialPageRoute(builder: (context) => new LC_PROGRESS()));
+                                                Navigator.of(context).push(
+                                                    new MaterialPageRoute(builder: (context) => new LOR_PROGRESS()));
                                               },
                                               child: Text('LOR',
                                                 style: TextStyle(fontSize: 30, color:Colors.black),
                                               )),
-                                          SizedBox(width: 125),
-                                          IconButton(onPressed: (){
-                                          },
-                                            iconSize: 30,
-                                            icon: Icon(Icons.delete),
-                                          )
+
 
 
                                         ]))]);
