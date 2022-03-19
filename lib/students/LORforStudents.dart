@@ -108,14 +108,36 @@ class _LOR_APPLYState extends State<LOR_APPLY>{
               'status': 'pending',
               'time': Timestamp.now(),
               'branch': Department,
+              'fullname':name.text.trim(),
+              'contactnum':contact.text.trim(),
+              'yearofpassing':yearofpassing.text.trim(),
+              'beproject':topicofbeproject.text.trim(),
+              'reasonforlor':reasonforlor.text.trim(),
+              'currentstat':currentstat.text.trim(),
+              'emailid':emailid.text.trim()
             });
           });
         }
       }
 
+      FirebaseFirestore.instance.collection('users').doc(user.uid)
+          .collection('LOR_General').doc('General')
+          .set(
+          {
+            'fullname':name.text.trim(),
+            'contactnum':contact.text.trim(),
+            'yearofpassing':yearofpassing.text.trim(),
+            'beproject':topicofbeproject.text.trim(),
+            'reasonforlor':reasonforlor.text.trim(),
+            'currentstat':currentstat.text.trim(),
+            'emailid':emailid.text.trim()
+          });
       FirebaseFirestore.instance.collection('users').doc(user.uid).update({
         'LOR_applied': true
       });
+
+
+
 
       Navigator.of(context).pushNamedAndRemoveUntil(
           '/firststudents', (Route<dynamic> route) => false);

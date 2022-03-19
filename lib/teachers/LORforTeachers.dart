@@ -1,5 +1,6 @@
 
 import 'package:beproject/teachers/Homeforteachers.dart';
+import 'package:beproject/teachers/StudentDetailsforLOR.dart';
 import 'package:beproject/teachers/accounts_teachers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,6 +12,8 @@ class LORteachers extends StatefulWidget {
   @override
   _LORteachersState createState() => _LORteachersState();
 }
+
+String studentname = "";
 
 class _LORteachersState extends State<LORteachers> with SingleTickerProviderStateMixin {
 
@@ -91,36 +94,7 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
         new MaterialPageRoute(builder: (context) => new LORteachers()));
   }
 
-  // Future<void> undo(id) async {
-  //   var snapss = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get();
-  //   //   .then((list){
-  //   // FirebaseFirestore.instance.collection('users')
-  //   //     .doc(list.docs[0].id)
-  //   //     .get();});
-  //   print(snapss.docs[0].data()['canundo']);
-  //
-  //   if(snapss.docs[0].data()['canundo']){
-  //     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
-  //     String username = snap['username'];
-  //     FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('NoDues').doc(id).update(
-  //         {'status':'pending',
-  //           'reason':'',
-  //         });
-  //     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
-  //       FirebaseFirestore.instance.collection('users')
-  //           .doc(list.docs[0].id)
-  //           .collection('No Dues')
-  //           .doc('$username')
-  //           .update({
-  //         'status':'pending',
-  //         'reason':''
-  //       });
-  //     });
-  //     Navigator.of(context).pushReplacement(
-  //         new MaterialPageRoute(builder: (context) => new LORteachers()));
-  //   }}
 
-  //int currentIndex = 0;
   late int currentIndex;
   late TabController _controller ;
 
@@ -232,11 +206,19 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                     //       fontSize: 20, color: HexColor("#0E34A0")),
                                                     // ),
                                                     SizedBox(width: 20,),
-                                                    Text(
-                                                      nodues.id,
-                                                      style: TextStyle(
-                                                          fontSize: 20, color: HexColor("#0E34A0")),
-                                                    ),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                         studentname = nodues.id;
+                                                         Navigator.of(context).push(
+                                                             new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
+                                                        },
+                                                        child: Text(nodues.id,
+                                                          style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
+                                                    // Text(
+                                                    //   nodues.id,
+                                                    //   style: TextStyle(
+                                                    //       fontSize: 20, color: HexColor("#0E34A0")),
+                                                    // ),
                                                     TextButton(
                                                       onPressed: () => showDialog<String>(
                                                         context: context,
@@ -352,11 +334,12 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                     Row(children:[
 
                                                       SizedBox(width: 20,),
-                                                      Text(
-                                                        nodues.id,
-                                                        style: TextStyle(
-                                                            fontSize: 20, color: HexColor("#0E34A0")),
-                                                      ),
+                                                      TextButton(
+                                                          onPressed: () {
+
+                                                          },
+                                                          child: Text(nodues.id,
+                                                            style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
                                                       TextButton(
                                                         onPressed: () {},
                                                         child: Container(
@@ -406,11 +389,12 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                     children: [
 
                                                       SizedBox(width: 20,),
-                                                      Text(
-                                                        nodues.id,
-                                                        style: TextStyle(
-                                                            fontSize: 20, color: HexColor("#0E34A0")),
-                                                      ),
+                                                      TextButton(
+                                                          onPressed: () {
+
+                                                          },
+                                                          child: Text(nodues.id,
+                                                            style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
                                                       TextButton(
                                                         onPressed: () => showDialog<String>(
                                                           context: context,
@@ -676,11 +660,12 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                       //       fontSize: 20, color: HexColor("#0E34A0")),
                                                       // ),
                                                       SizedBox(width: 20,),
-                                                      Text(
-                                                        nodues.id,
-                                                        style: TextStyle(
-                                                            fontSize: 20, color: HexColor("#0E34A0")),
-                                                      ),
+                                                      TextButton(
+                                                          onPressed: () {
+
+                                                          },
+                                                          child: Text(nodues.id,
+                                                            style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
                                                       TextButton(
                                                         onPressed: () => showDialog<String>(
                                                           context: context,
@@ -796,11 +781,12 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                       Row(children:[
 
                                                         SizedBox(width: 20,),
-                                                        Text(
-                                                          nodues.id,
-                                                          style: TextStyle(
-                                                              fontSize: 20, color: HexColor("#0E34A0")),
-                                                        ),
+                                                        TextButton(
+                                                            onPressed: () {
+
+                                                            },
+                                                            child: Text(nodues.id,
+                                                              style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
                                                         TextButton(
                                                           onPressed: () {},
                                                           child: Container(
@@ -850,11 +836,12 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                       children: [
 
                                                         SizedBox(width: 20,),
-                                                        Text(
-                                                          nodues.id,
-                                                          style: TextStyle(
-                                                              fontSize: 20, color: HexColor("#0E34A0")),
-                                                        ),
+                                                        TextButton(
+                                                            onPressed: () {
+
+                                                            },
+                                                            child: Text(nodues.id,
+                                                              style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
                                                         TextButton(
                                                           onPressed: () => showDialog<String>(
                                                             context: context,
