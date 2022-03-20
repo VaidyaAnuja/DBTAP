@@ -3,6 +3,7 @@ import 'package:beproject/teachers/Homeforteachers.dart';
 import 'package:beproject/teachers/StudentDetailsforLOR.dart';
 import 'package:beproject/teachers/accounts_teachers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -16,6 +17,8 @@ class LORteachers extends StatefulWidget {
 String studentname = "";
 
 class _LORteachersState extends State<LORteachers> with SingleTickerProviderStateMixin {
+  int _v = 1;
+  bool iwillwrite = false;
 
   Future<void> undo(id) async {
     //var snapss = await FirebaseFirestore.instance.collection('users').where('username',isEqualTo: id).get();
@@ -41,12 +44,55 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => new LORteachers()));
     }
+  Future<void> emailerror() async{
+    final text = 'Please input correct email type.';
+    final snackBar = SnackBar(
 
-  Future<void> approve(id) async {
+      duration: Duration(seconds: 30),
+      content: Text(text,
+        style: TextStyle(fontSize: 16, color: Colors.white),),
+      action: SnackBarAction(
+
+        label: 'Dismiss',
+
+        textColor: Colors.yellow,
+        onPressed: (){
+        },
+      ),
+      backgroundColor: HexColor("#0E34A0"),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+  Future<void> approve(id, TextEditingController reason, TextEditingController availability, TextEditingController emailteacher, TextEditingController contactteacher) async {
     final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
     String username = snap['username'];
+    if(reason.text == "" || availability.text == "" || double.tryParse(contactteacher.text)==null || contactteacher.text.length != 10){
+      final text = 'Please fill in all the required fields.';
+      final snackBar = SnackBar(
+
+        duration: Duration(seconds: 30),
+        content: Text(text,
+          style: TextStyle(fontSize: 16, color: Colors.white),),
+        action: SnackBarAction(
+
+          label: 'Dismiss',
+
+          textColor: Colors.yellow,
+          onPressed: (){
+          },
+        ),
+        backgroundColor: HexColor("#0E34A0"),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    }
+    else{
     FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LOR').doc(id).set(
-        {'status':'approved',}, SetOptions(merge: true));
+        {'status':'approved',
+          'message': reason.text.trim(),
+          'availability': availability.text.trim(),
+          'emailteacher':emailteacher.text.trim(),
+          'contactteacher':contactteacher.text.trim()
+        }, SetOptions(merge: true));
     FirebaseFirestore.instance.collection('users').where("username", isEqualTo: '$id').get().then((list){
       FirebaseFirestore.instance.collection('users')
           .doc(list.docs[0].id)
@@ -54,10 +100,14 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
           .doc('$username')
           .set({
         'status':'approved',
+        'message': reason.text.trim(),
+        'availability': availability.text.trim(),
+        'emailteacher':emailteacher.text.trim(),
+        'contactteacher':contactteacher.text.trim()
       }, SetOptions(merge: true));
     });
     Navigator.of(context).pushReplacement(
-        new MaterialPageRoute(builder: (context) => new LORteachers()));
+        new MaterialPageRoute(builder: (context) => new LORteachers()));}
   }
 
   Future<void> reject(id, TextEditingController reason) async {
@@ -106,6 +156,9 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
   }
 
   final TextEditingController reason = TextEditingController();
+  final TextEditingController availability = TextEditingController();
+  final TextEditingController emailteacher = TextEditingController();
+  final TextEditingController contactteacher = TextEditingController();
   final TextEditingController reqdept = TextEditingController();
   bool isSelectedcomp = false;
   bool isSelectedit = false;
@@ -225,18 +278,103 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                         builder: (BuildContext context) => AlertDialog(
                                                           title: const Text(
                                                               'Are you sure you want to approve??'),
-                                                          actions: <Widget>[
+                                                          //actions: <Widget>[
+                                                            // Row(
+                                                            //   children: [
+                                                            //     Radio(
+                                                            //         value: 1,
+                                                            //         groupValue: _v,
+                                                            //         onChanged: (value) {
+                                                            //           setState(() {
+                                                            //             _v = value as int;
+                                                            //             iwillwrite = false;
+                                                            //             print('1st');
+                                                            //           });
+                                                            //         }
+                                                            //     ),
+                                                            //     SizedBox(width: 10),
+                                                            //     Text("Write it for yourself",
+                                                            //       style: TextStyle(fontSize: 30, color: Colors.black),
+                                                            //     )
+                                                            //   ],
+                                                            // ),
+                                                            //
+                                                            // Row(
+                                                            //   children: [
+                                                            //     Radio(
+                                                            //         value: 2,
+                                                            //         groupValue: _v,
+                                                            //         onChanged: (value) {
+                                                            //           setState(() {
+                                                            //             _v = value as int;
+                                                            //             iwillwrite = true;
+                                                            //             print('2nd');
+                                                            //           });
+                                                            //         }
+                                                            //     ),
+                                                            //     SizedBox(width: 10),
+                                                            //     Text("I will write LOR",
+                                                            //       style: TextStyle(fontSize: 30, color: Colors.black),
+                                                            //     )
+                                                            //   ],
+                                                            // ),
+                                                            content:SingleChildScrollView(child:
+                                                            Column(
+                                                            children:[
+                                                            TextField(
+                                                              controller: reason,
+                                                              decoration: InputDecoration(
+                                                                  labelText: "Are you writing LOR?",
+                                                                  //hintText: 'Hint Value',
+                                                                  labelStyle: TextStyle(fontSize: 15)
+                                                              ),
+                                                              style: TextStyle(fontSize: 15,),
+                                                            ),//),
+                                                            TextField(
+                                                              controller: availability,
+                                                              decoration: InputDecoration(
+                                                                  labelText: "Enter date and time of your availability.",
+
+                                                                  labelStyle: TextStyle(fontSize: 15)
+                                                              ),
+                                                              style: TextStyle(fontSize: 15,),
+                                                            ),
+                                                            TextField(
+                                                              controller: emailteacher,
+                                                              decoration: InputDecoration(
+                                                                  labelText: "Enter your Email ID.",
+
+                                                                  labelStyle: TextStyle(fontSize: 15)
+                                                              ),
+                                                              style: TextStyle(fontSize: 15,),
+                                                            ),
+                                                            TextField(
+                                                              controller: contactteacher,
+                                                              decoration: InputDecoration(
+                                                                  labelText: "Enter your contact number.",
+
+                                                                  labelStyle: TextStyle(fontSize: 15)
+                                                              ),
+                                                              style: TextStyle(fontSize: 15,),
+                                                            ),
                                                             TextButton(
                                                               onPressed: () {
-                                                                approve(nodues.id);},
+                                                        bool isValid = EmailValidator.validate(emailteacher.text);
+                                                        if (isValid) {
+                                                                approve(nodues.id ,reason, availability, emailteacher, contactteacher);}
+                                                        else{
+                                                          emailerror();
+                                                        }
+                                                        },
                                                               child: const Text('YES'),
                                                             ),
                                                             TextButton(
                                                               onPressed: () =>
                                                                   Navigator.pop(context, 'Cancel'),
                                                               child: const Text('Cancel'),
-                                                            ),
-                                                          ],
+                                                            ),])
+                                                        )
+                                                      //],
                                                         ),
                                                       ),
                                                       child: Container(
@@ -264,6 +402,7 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                           title: const Text(
                                                               'Are you sure you want to reject??'),
                                                           actions: <Widget>[
+
                                                             TextField(
                                                               controller: reason,
                                                               decoration: InputDecoration(
@@ -336,7 +475,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                       SizedBox(width: 20,),
                                                       TextButton(
                                                           onPressed: () {
-
+                                                            Navigator.of(context).push(
+                                                                new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                           },
                                                           child: Text(nodues.id,
                                                             style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
@@ -391,7 +531,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                       SizedBox(width: 20,),
                                                       TextButton(
                                                           onPressed: () {
-
+                                                            Navigator.of(context).push(
+                                                                new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                           },
                                                           child: Text(nodues.id,
                                                             style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
@@ -662,7 +803,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                       SizedBox(width: 20,),
                                                       TextButton(
                                                           onPressed: () {
-
+                                                            Navigator.of(context).push(
+                                                                new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                           },
                                                           child: Text(nodues.id,
                                                             style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
@@ -672,18 +814,103 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                           builder: (BuildContext context) => AlertDialog(
                                                             title: const Text(
                                                                 'Are you sure you want to approve??'),
-                                                            actions: <Widget>[
-                                                              TextButton(
-                                                                onPressed: () {
-                                                                  approve(nodues.id);},
-                                                                child: const Text('YES'),
-                                                              ),
-                                                              TextButton(
-                                                                onPressed: () =>
-                                                                    Navigator.pop(context, 'Cancel'),
-                                                                child: const Text('Cancel'),
-                                                              ),
-                                                            ],
+                                                              //actions: <Widget>[
+                                                              // Row(
+                                                              //   children: [
+                                                              //     Radio(
+                                                              //         value: 1,
+                                                              //         groupValue: _v,
+                                                              //         onChanged: (value) {
+                                                              //           setState(() {
+                                                              //             _v = value as int;
+                                                              //             iwillwrite = false;
+                                                              //             print('1st');
+                                                              //           });
+                                                              //         }
+                                                              //     ),
+                                                              //     SizedBox(width: 10),
+                                                              //     Text("Write it for yourself",
+                                                              //       style: TextStyle(fontSize: 30, color: Colors.black),
+                                                              //     )
+                                                              //   ],
+                                                              // ),
+                                                              //
+                                                              // Row(
+                                                              //   children: [
+                                                              //     Radio(
+                                                              //         value: 2,
+                                                              //         groupValue: _v,
+                                                              //         onChanged: (value) {
+                                                              //           setState(() {
+                                                              //             _v = value as int;
+                                                              //             iwillwrite = true;
+                                                              //             print('2nd');
+                                                              //           });
+                                                              //         }
+                                                              //     ),
+                                                              //     SizedBox(width: 10),
+                                                              //     Text("I will write LOR",
+                                                              //       style: TextStyle(fontSize: 30, color: Colors.black),
+                                                              //     )
+                                                              //   ],
+                                                              // ),
+                                                              content:SingleChildScrollView(child:
+                                                              Column(
+                                                                  children:[
+                                                                    TextField(
+                                                                      controller: reason,
+                                                                      decoration: InputDecoration(
+                                                                          labelText: "Are you writing LOR?",
+                                                                          //hintText: 'Hint Value',
+                                                                          labelStyle: TextStyle(fontSize: 15)
+                                                                      ),
+                                                                      style: TextStyle(fontSize: 15,),
+                                                                    ),//),
+                                                                    TextField(
+                                                                      controller: availability,
+                                                                      decoration: InputDecoration(
+                                                                          labelText: "Enter date and time of your availability.",
+
+                                                                          labelStyle: TextStyle(fontSize: 15)
+                                                                      ),
+                                                                      style: TextStyle(fontSize: 15,),
+                                                                    ),
+                                                                    TextField(
+                                                                      controller: emailteacher,
+                                                                      decoration: InputDecoration(
+                                                                          labelText: "Enter your Email ID.",
+
+                                                                          labelStyle: TextStyle(fontSize: 15)
+                                                                      ),
+                                                                      style: TextStyle(fontSize: 15,),
+                                                                    ),
+                                                                    TextField(
+                                                                      controller: contactteacher,
+                                                                      decoration: InputDecoration(
+                                                                          labelText: "Enter your contact number.",
+
+                                                                          labelStyle: TextStyle(fontSize: 15)
+                                                                      ),
+                                                                      style: TextStyle(fontSize: 15,),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed: () {
+                                                                        bool isValid = EmailValidator.validate(emailteacher.text);
+                                                                        if (isValid) {
+                                                                          approve(nodues.id ,reason, availability, emailteacher, contactteacher);}
+                                                                        else{
+                                                                          emailerror();
+                                                                        }
+                                                                      },
+                                                                      child: const Text('YES'),
+                                                                    ),
+                                                                    TextButton(
+                                                                      onPressed: () =>
+                                                                          Navigator.pop(context, 'Cancel'),
+                                                                      child: const Text('Cancel'),
+                                                                    ),])
+                                                              )
+                                                            //],
                                                           ),
                                                         ),
                                                         child: Container(
@@ -783,7 +1010,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                         SizedBox(width: 20,),
                                                         TextButton(
                                                             onPressed: () {
-
+                                                              Navigator.of(context).push(
+                                                                  new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                             },
                                                             child: Text(nodues.id,
                                                               style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
@@ -838,7 +1066,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                         SizedBox(width: 20,),
                                                         TextButton(
                                                             onPressed: () {
-
+                                                              Navigator.of(context).push(
+                                                                  new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                             },
                                                             child: Text(nodues.id,
                                                               style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
