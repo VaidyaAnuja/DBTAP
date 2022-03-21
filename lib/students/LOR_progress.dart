@@ -22,7 +22,7 @@ class LOR_PROGRESS extends StatefulWidget{
   _LOR_PROGRESSState createState() => _LOR_PROGRESSState();
 
 }
-
+List TeacherName = [];
 bool checkiftrue = false;
 class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
 
@@ -82,6 +82,7 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
     else {
+
 
 
       FirebaseFirestore.instance.collection('users').doc(user.uid)

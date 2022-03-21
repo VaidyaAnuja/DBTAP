@@ -151,7 +151,7 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    _controller = new TabController(length: 2, vsync: this);
+    _controller = new TabController(length: 3, vsync: this);
     currentIndex = 0;
   }
 
@@ -175,6 +175,7 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
 
           new Tab(text: "Time"),
           new Tab(text: "Branch"),
+          new Tab(text: "LOR Documents"),
         ],
         ),
         title: Text('DBTap',
@@ -262,6 +263,7 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                     TextButton(
                                                         onPressed: () {
                                                          studentname = nodues.id;
+                                                         print(studentname);
                                                          Navigator.of(context).push(
                                                              new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                         },
@@ -475,6 +477,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                       SizedBox(width: 20,),
                                                       TextButton(
                                                           onPressed: () {
+                                                            studentname = nodues.id;
+                                                            print(studentname);
                                                             Navigator.of(context).push(
                                                                 new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                           },
@@ -531,6 +535,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                       SizedBox(width: 20,),
                                                       TextButton(
                                                           onPressed: () {
+                                                            studentname = nodues.id;
+                                                            print(studentname);
                                                             Navigator.of(context).push(
                                                                 new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                           },
@@ -803,6 +809,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                       SizedBox(width: 20,),
                                                       TextButton(
                                                           onPressed: () {
+                                                            studentname = nodues.id;
+                                                            print(studentname);
                                                             Navigator.of(context).push(
                                                                 new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                           },
@@ -1010,6 +1018,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                         SizedBox(width: 20,),
                                                         TextButton(
                                                             onPressed: () {
+                                                              studentname = nodues.id;
+                                                              print(studentname);
                                                               Navigator.of(context).push(
                                                                   new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                             },
@@ -1066,6 +1076,8 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                                         SizedBox(width: 20,),
                                                         TextButton(
                                                             onPressed: () {
+                                                              studentname = nodues.id;
+                                                              print(studentname);
                                                               Navigator.of(context).push(
                                                                   new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
                                                             },
@@ -1127,6 +1139,418 @@ class _LORteachersState extends State<LORteachers> with SingleTickerProviderStat
                                       return Text("");
 
                                     }});}
+                            else {
+                              // Still loading
+                              return CircularProgressIndicator();
+                            }
+
+                          }),
+
+                    ],
+                  ),
+                ),
+              ),
+
+            ],
+          ),
+
+
+
+
+          Stack(
+            children: [
+              Container(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+
+                      Container(
+                        margin: const EdgeInsets.only(left: 30.0, top: 30),
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Applications',
+                          style:
+                          TextStyle(fontSize: 30, color: HexColor("#0E34A0")),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Divider(
+                        color: HexColor("#0E34A0"),
+                        height: 20,
+                        thickness: 2,
+                        indent: 30,
+                        endIndent: 30,
+                      ),
+
+                      StreamBuilder(
+                          stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LOR').orderBy(
+                              'time', descending: true).snapshots(),
+                          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                  physics: NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    DocumentSnapshot nodues = snapshot.data!.docs[index];
+                                    if(nodues.get('status') == 'pending'){
+                                      return ListTile(
+
+                                        title: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.blue,
+                                                  width: 0.5,
+                                                )),
+                                            margin: const EdgeInsets.only(left: 30.0, top: 30),
+                                            alignment: Alignment.topLeft,
+                                            child: Column(
+                                                children: [
+                                                  Row(children:[
+                                                    // Text(
+                                                    //   nodues.get('seatnumber').toString(),
+                                                    //   style: TextStyle(
+                                                    //       fontSize: 20, color: HexColor("#0E34A0")),
+                                                    // ),
+                                                    SizedBox(width: 20,),
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          studentname = nodues.id;
+                                                          print(studentname);
+                                                          Navigator.of(context).push(
+                                                              new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
+                                                        },
+                                                        child: Text(nodues.id,
+                                                          style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
+                                                    // Text(
+                                                    //   nodues.id,
+                                                    //   style: TextStyle(
+                                                    //       fontSize: 20, color: HexColor("#0E34A0")),
+                                                    // ),
+                                                    TextButton(
+                                                      onPressed: () => showDialog<String>(
+                                                        context: context,
+                                                        builder: (BuildContext context) => AlertDialog(
+                                                            title: const Text(
+                                                                'Are you sure you want to approve??'),
+                                                            //actions: <Widget>[
+                                                            // Row(
+                                                            //   children: [
+                                                            //     Radio(
+                                                            //         value: 1,
+                                                            //         groupValue: _v,
+                                                            //         onChanged: (value) {
+                                                            //           setState(() {
+                                                            //             _v = value as int;
+                                                            //             iwillwrite = false;
+                                                            //             print('1st');
+                                                            //           });
+                                                            //         }
+                                                            //     ),
+                                                            //     SizedBox(width: 10),
+                                                            //     Text("Write it for yourself",
+                                                            //       style: TextStyle(fontSize: 30, color: Colors.black),
+                                                            //     )
+                                                            //   ],
+                                                            // ),
+                                                            //
+                                                            // Row(
+                                                            //   children: [
+                                                            //     Radio(
+                                                            //         value: 2,
+                                                            //         groupValue: _v,
+                                                            //         onChanged: (value) {
+                                                            //           setState(() {
+                                                            //             _v = value as int;
+                                                            //             iwillwrite = true;
+                                                            //             print('2nd');
+                                                            //           });
+                                                            //         }
+                                                            //     ),
+                                                            //     SizedBox(width: 10),
+                                                            //     Text("I will write LOR",
+                                                            //       style: TextStyle(fontSize: 30, color: Colors.black),
+                                                            //     )
+                                                            //   ],
+                                                            // ),
+                                                            content:SingleChildScrollView(child:
+                                                            Column(
+                                                                children:[
+                                                                  TextField(
+                                                                    controller: reason,
+                                                                    decoration: InputDecoration(
+                                                                        labelText: "Are you writing LOR?",
+                                                                        //hintText: 'Hint Value',
+                                                                        labelStyle: TextStyle(fontSize: 15)
+                                                                    ),
+                                                                    style: TextStyle(fontSize: 15,),
+                                                                  ),//),
+                                                                  TextField(
+                                                                    controller: availability,
+                                                                    decoration: InputDecoration(
+                                                                        labelText: "Enter date and time of your availability.",
+
+                                                                        labelStyle: TextStyle(fontSize: 15)
+                                                                    ),
+                                                                    style: TextStyle(fontSize: 15,),
+                                                                  ),
+                                                                  TextField(
+                                                                    controller: emailteacher,
+                                                                    decoration: InputDecoration(
+                                                                        labelText: "Enter your Email ID.",
+
+                                                                        labelStyle: TextStyle(fontSize: 15)
+                                                                    ),
+                                                                    style: TextStyle(fontSize: 15,),
+                                                                  ),
+                                                                  TextField(
+                                                                    controller: contactteacher,
+                                                                    decoration: InputDecoration(
+                                                                        labelText: "Enter your contact number.",
+
+                                                                        labelStyle: TextStyle(fontSize: 15)
+                                                                    ),
+                                                                    style: TextStyle(fontSize: 15,),
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed: () {
+                                                                      bool isValid = EmailValidator.validate(emailteacher.text);
+                                                                      if (isValid) {
+                                                                        approve(nodues.id ,reason, availability, emailteacher, contactteacher);}
+                                                                      else{
+                                                                        emailerror();
+                                                                      }
+                                                                    },
+                                                                    child: const Text('YES'),
+                                                                  ),
+                                                                  TextButton(
+                                                                    onPressed: () =>
+                                                                        Navigator.pop(context, 'Cancel'),
+                                                                    child: const Text('Cancel'),
+                                                                  ),])
+                                                            )
+                                                          //],
+                                                        ),
+                                                      ),
+                                                      child: Container(
+                                                        width: 80,
+                                                        height: 20,
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.rectangle,
+                                                          color: HexColor("#0E34A0"),
+                                                        ),
+                                                        margin: const EdgeInsets.only(left: 15.0),
+                                                        alignment: Alignment.center,
+                                                        child: Text(
+                                                          'Approve',
+                                                          style: TextStyle(
+                                                            fontSize: 15,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () => showDialog<String>(
+                                                        context: context,
+                                                        builder: (BuildContext context) => AlertDialog(
+                                                          title: const Text(
+                                                              'Are you sure you want to reject??'),
+                                                          actions: <Widget>[
+
+                                                            TextField(
+                                                              controller: reason,
+                                                              decoration: InputDecoration(
+                                                                  labelText: "Please write reason to reject.",
+
+                                                                  labelStyle: TextStyle(fontSize: 20)
+                                                              ),
+                                                              style: TextStyle(fontSize: 15,),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                reject(nodues.id,reason);},
+                                                              child: const Text('YES'),
+                                                            ),
+                                                            TextButton(
+                                                              onPressed: () =>
+                                                                  Navigator.pop(context, 'Cancel'),
+                                                              child: const Text('Cancel'),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      child: Container(
+                                                        width: 80,
+                                                        height: 20,
+                                                        decoration: BoxDecoration(
+                                                          shape: BoxShape.rectangle,
+                                                          color: HexColor("#0E34A0"),
+                                                        ),
+                                                        margin: const EdgeInsets.only(left: 0.0),
+                                                        alignment: Alignment.center,
+                                                        child: Text(
+                                                          'Reject',
+                                                          style: TextStyle(
+                                                            fontSize: 15,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                  ),
+                                                  Row(
+                                                      children:[
+                                                        Text(
+                                                          nodues.get('branch'),
+                                                          style: TextStyle(
+                                                              fontSize: 20, color: HexColor("#0E34A0")),
+                                                        ),
+                                                        SizedBox(height: 30),
+                                                      ]),
+
+                                                ])),);
+                                    }
+                                    else if (nodues.get('status') == 'approved') {
+                                      return ListTile(
+
+                                          title: Container(
+                                              decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color: Colors.blue,
+                                                    width: 0.5,
+                                                  )),
+                                              margin: const EdgeInsets.only(left: 30.0, top: 30),
+                                              alignment: Alignment.topLeft,
+                                              child: Column(
+                                                  children: [
+                                                    Row(children:[
+
+                                                      SizedBox(width: 20,),
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            studentname = nodues.id;
+                                                            print(studentname);
+                                                            Navigator.of(context).push(
+                                                                new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
+                                                          },
+                                                          child: Text(nodues.id,
+                                                            style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
+                                                      TextButton(
+                                                        onPressed: () {},
+                                                        child: Container(
+                                                          width: 80,
+                                                          height: 20,
+
+                                                          margin: const EdgeInsets.only(left: 15.0),
+                                                          alignment: Alignment.center,
+                                                          child: Text(
+                                                            'Approved',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                              color: Colors.green,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                    ),
+                                                    Row(
+                                                        children:[
+                                                          Text(
+                                                            nodues.get('branch'),
+                                                            style: TextStyle(
+                                                                fontSize: 20, color: HexColor("#0E34A0")),
+                                                          ),
+                                                          SizedBox(height: 30),
+                                                        ]),
+                                                  ])));
+                                    }
+
+                                    else{
+                                      return ListTile(
+
+                                          title: Container(
+                                            decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.blue,
+                                                  width: 0.5,
+                                                )),
+                                            margin: const EdgeInsets.only(left: 30.0, top: 30),
+                                            alignment: Alignment.topLeft,
+                                            child: Column(
+                                                children: [
+                                                  Row(
+                                                    children: [
+
+                                                      SizedBox(width: 20,),
+                                                      TextButton(
+                                                          onPressed: () {
+                                                            studentname = nodues.id;
+                                                            print(studentname);
+                                                            Navigator.of(context).push(
+                                                                new MaterialPageRoute(builder: (context) => new StudentDetails_LOR()));
+                                                          },
+                                                          child: Text(nodues.id,
+                                                            style: TextStyle(fontSize: 20, color: HexColor("#0E34A0")),)),
+                                                      TextButton(
+                                                        onPressed: () => showDialog<String>(
+                                                          context: context,
+                                                          builder: (BuildContext context) => AlertDialog(
+                                                            title: const Text(
+                                                                'Are you sure you want undo the action??'),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                onPressed:() {
+                                                                  undo(nodues.id);
+                                                                },
+                                                                child: const Text('YES'),
+                                                              ),
+                                                              TextButton(
+                                                                onPressed: () =>
+                                                                    Navigator.pop(context, 'Cancel'),
+                                                                child: const Text('Cancel'),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        child: Container(
+                                                          width: 80,
+                                                          height: 20,
+
+                                                          margin: const EdgeInsets.only(left: 15.0),
+                                                          alignment: Alignment.center,
+                                                          child: Text(
+                                                            'Rejected',
+                                                            style: TextStyle(
+                                                              fontSize: 15,
+                                                              color: Colors.red,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                  Row(
+                                                      children:[
+                                                        Text(
+                                                          nodues.get('branch'),
+                                                          style: TextStyle(
+                                                              fontSize: 20, color: HexColor("#0E34A0")),
+                                                        ),
+
+                                                      ])]),));
+
+                                    }
+
+
+                                  });}
                             else {
                               // Still loading
                               return CircularProgressIndicator();

@@ -105,11 +105,18 @@ class _StudentDetails_LORState extends State<StudentDetails_LOR>{
                         style: TextStyle(fontSize: 20),),
                       SizedBox(width: 10),
                       FutureBuilder(
-                        future:FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
+                        future:
+                        // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
+                        // FirebaseFirestore.instance.collection('users')
+                        //     .doc(list.docs[0].id)
+                        //     .collection('LOR_General')
+                        //     .doc('General').get();
+                        // }),
                         FirebaseFirestore.instance.collection('users')
-                            .doc(list.docs[0].id)
-                            .collection('LOR_General')
-                            .doc('General').get();}),
+                              .doc(FirebaseAuth.instance.currentUser!.uid)
+                              .collection('LOR')
+                              .doc(studentname).get(),
+
                         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.hasData) {
                               return SizedBox(
@@ -140,11 +147,16 @@ class _StudentDetails_LORState extends State<StudentDetails_LOR>{
                         style: TextStyle(fontSize: 20),),
                       SizedBox(width: 10),
                       FutureBuilder(
-                        future:FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
-                          FirebaseFirestore.instance.collection('users')
-                              .doc(list.docs[0].id)
-                              .collection('LOR_General')
-                              .doc('General').get();}),
+                        future:
+                        // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
+                        //   FirebaseFirestore.instance.collection('users')
+                        //       .doc(list.docs[0].id)
+                        //       .collection('LOR_General')
+                        //       .doc('General').get();}),
+                        FirebaseFirestore.instance.collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection('LOR')
+                            .doc(studentname).get(),
                         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.hasData) {
                             return SizedBox(
@@ -174,16 +186,23 @@ class _StudentDetails_LORState extends State<StudentDetails_LOR>{
                         style: TextStyle(fontSize: 20),),
                       SizedBox(width: 10),
                       FutureBuilder(
-                        future:FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
-                          FirebaseFirestore.instance.collection('users')
-                              .doc(list.docs[0].id)
-                              .collection('LOR_General')
-                              .doc('General').get();}),
+                        future:
+                        // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
+                        //   FirebaseFirestore.instance.collection('users')
+                        //       .doc(list.docs[0].id)
+                        //       .collection('LOR_General')
+                        //       .doc('General').get();}),
+                        //FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).collection('LOR').doc().get(),
+                        FirebaseFirestore.instance.collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection('LOR')
+                            .doc(studentname).get(),
+
                         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.hasData) {
                             return SizedBox(
                               width: 170,
-                              child: Text(snapshot.data['beproject'],
+                              child: Text(snapshot.data['beproject'].toString(),
                                 style: TextStyle(fontSize: 20),
                               ),
                             );
@@ -208,11 +227,16 @@ class _StudentDetails_LORState extends State<StudentDetails_LOR>{
                         style: TextStyle(fontSize: 20),),
                       SizedBox(width: 10),
                       FutureBuilder(
-                        future:FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
-                          FirebaseFirestore.instance.collection('users')
-                              .doc(list.docs[0].id)
-                              .collection('LOR_General')
-                              .doc('General').get();}),
+                        future:
+                        // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
+                        //   FirebaseFirestore.instance.collection('users')
+                        //       .doc(list.docs[0].id)
+                        //       .collection('LOR_General')
+                        //       .doc('General').get();}),
+                        FirebaseFirestore.instance.collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection('LOR')
+                            .doc(studentname).get(),
                         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.hasData) {
                             return SizedBox(
@@ -242,11 +266,16 @@ class _StudentDetails_LORState extends State<StudentDetails_LOR>{
                         style: TextStyle(fontSize: 20),),
                       SizedBox(width: 10),
                       FutureBuilder(
-                        future:FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
-                          FirebaseFirestore.instance.collection('users')
-                              .doc(list.docs[0].id)
-                              .collection('LOR_General')
-                              .doc('General').get();}),
+                        future:
+                        // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
+                        //   FirebaseFirestore.instance.collection('users')
+                        //       .doc(list.docs[0].id)
+                        //       .collection('LOR_General')
+                        //       .doc('General').get();}),
+                        FirebaseFirestore.instance.collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection('LOR')
+                            .doc(studentname).get(),
                         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.hasData) {
                             return SizedBox(
@@ -275,11 +304,16 @@ class _StudentDetails_LORState extends State<StudentDetails_LOR>{
                         style: TextStyle(fontSize: 20),),
                       SizedBox(width: 10),
                       FutureBuilder(
-                        future:FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
-                          FirebaseFirestore.instance.collection('users')
-                              .doc(list.docs[0].id)
-                              .collection('LOR_General')
-                              .doc('General').get();}),
+                        future:
+                        // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
+                        //   FirebaseFirestore.instance.collection('users')
+                        //       .doc(list.docs[0].id)
+                        //       .collection('LOR_General')
+                        //       .doc('General').get();}),
+                        FirebaseFirestore.instance.collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection('LOR')
+                            .doc(studentname).get(),
                         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.hasData) {
                             return SizedBox(
@@ -309,11 +343,16 @@ class _StudentDetails_LORState extends State<StudentDetails_LOR>{
                         style: TextStyle(fontSize: 20),),
                       SizedBox(width: 10),
                       FutureBuilder(
-                        future:FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
-                          FirebaseFirestore.instance.collection('users')
-                              .doc(list.docs[0].id)
-                              .collection('LOR_General')
-                              .doc('General').get();}),
+                        future:
+                        // FirebaseFirestore.instance.collection('users').where("username", isEqualTo: studentname).get().then((list){
+                        //   FirebaseFirestore.instance.collection('users')
+                        //       .doc(list.docs[0].id)
+                        //       .collection('LOR_General')
+                        //       .doc('General').get();}),
+                        FirebaseFirestore.instance.collection('users')
+                            .doc(FirebaseAuth.instance.currentUser!.uid)
+                            .collection('LOR')
+                            .doc(studentname).get(),
                         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
                           if (snapshot.hasData) {
                             return SizedBox(
