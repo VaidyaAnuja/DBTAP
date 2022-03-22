@@ -7,6 +7,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_document_picker/flutter_document_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:hexcolor/hexcolor.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_file/open_file.dart';
@@ -183,8 +185,22 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
         new MaterialPageRoute(builder: (context) => new LOR_PROGRESS()));}
 
   }
+  Future<void> uploadpdf()async {
+    User user = FirebaseAuth.instance.currentUser!;
 
+    final DocumentSnapshot snap = await FirebaseFirestore.instance.collection('users').doc(user.uid).get();
+    String username = snap['username'];
+    String fileName = '$username.pdf';
+    firebase_storage.Reference reference = firebase_storage.FirebaseStorage
+        .instance.ref().child('LOR').child(fileName);
+    firebase_storage.UploadTask uploadTask = reference.putData(
+        await file.readAsBytes());
+    String url = await (await uploadTask.whenComplete(() => null)).ref
+        .getDownloadURL();
+  }
 
+  String filename = "None";
+  File file = File('');
   @override
   Widget build(BuildContext context){
     Color getColor(Set<MaterialState> states) {
@@ -578,7 +594,34 @@ class _LOR_PROGRESSState extends State<LOR_PROGRESS>{
                                             style: TextStyle(fontSize: 20),
                                           ),
                                         ),
+                                        SizedBox(height: 10),
+                                        Container(
 
+                                          margin: const EdgeInsets.only(left: 30.0),
+                                          alignment: Alignment.center,
+                                          child: Text(filename),),
+                                        SizedBox(height: 20),
+                                        FloatingActionButton(
+                                          // backgroundColor: Colors.purple,
+                                          child: Text("Upload",
+                                            style: TextStyle(color: Colors.white),),
+                                          onPressed: () async {
+                                            final path = await FlutterDocumentPicker.openDocument();
+                                            file = File(path);
+                                            setState(() {
+                                              filename = file.path.split('/').last;
+                                            });
+                                            //firebase_storage.UploadTask? task = await uploadFile(file);
+                                          },
+                                        ),
+                                        SizedBox(height: 10),
+                                        TextButton(
+                                            onPressed: () {
+                                              uploadpdf();
+                                            },
+                                            child: Text('Submit',
+                                                style: TextStyle(fontSize: 30, color: HexColor(
+                                                    "#0E34A0")))),
 
 
                                         SizedBox(height: 80),
